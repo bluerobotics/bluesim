@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/bluerovsimple.glb-c7442ecd72973bb6eb75164227440563.scn"
+path="res://.import/bluerovsimple.glb-373d6fed218096616d22779c86313c54.scn"
 
 [deps]
 
-source_file="res://bluerovsimple.glb"
-dest_files=[ "res://.import/bluerovsimple.glb-c7442ecd72973bb6eb75164227440563.scn" ]
+source_file="res://imports/bluerovsimple/bluerovsimple.glb"
+dest_files=[ "res://.import/bluerovsimple.glb-373d6fed218096616d22779c86313c54.scn" ]
 
 [params]
 
