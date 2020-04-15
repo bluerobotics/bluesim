@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://BlueROV2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/BlueROV2.gd" type="Script" id=3]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ViewportGlobal" type="ViewportContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportGlobal"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ViewportGlobal/Viewport"]
+transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, 0, 10.5029, -27.7329 )
+
+[node name="Spatial" parent="ViewportGlobal/Viewport" instance=ExtResource( 2 )]
+
+[node name="ViewportCamera" type="ViewportContainer" parent="."]
+margin_left = 722.0
+margin_top = 365.0
+margin_right = 1022.0
+margin_bottom = 600.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportCamera"]
+size = Vector2( 300, 235 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="BlueRov" parent="ViewportCamera/Viewport" instance=ExtResource( 1 )]
+transform = Transform( 0.947238, 0.32053, 0, -0.32053, 0.947238, 0, 0, 0, 1, 0, 3.34852, 0 )
+script = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="ViewportCamera/Viewport/BlueRov"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0.834443 )
