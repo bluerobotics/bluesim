@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="sitltest1"
-run/main_scene="res://teste.tscn"
+run/main_scene="res://gui.tscn"
 config/icon="res://icon.png"
 
 [rendering]
