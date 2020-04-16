@@ -42,10 +42,10 @@ func send_fdm():
 	#double imu_orientation_quat[4];
 	var orientation = Vector3(rotation.x, rotation.z, -rotation.y)
 	var quaternon = Quat(orientation)
+	buffer.put_double(quaternon.w)
 	buffer.put_double(quaternon.x)
 	buffer.put_double(quaternon.y)
 	buffer.put_double(quaternon.z)
-	buffer.put_double(quaternon.w)
 	#double velocity_xyz[3];
 	var _velocity = self.transform.basis.xform($".".linear_velocity)
 	buffer.put_double(_velocity.x)
