@@ -77,22 +77,22 @@ func actuate_servo(id, percentage):
 	if percentage == 0:
 		return
 
-	var force = (percentage - 0.5) * THRUST
+	var force = (percentage - 0.5) * 2 * THRUST
 	if id == 0:
-		$".".add_force_local($t1.translation, Vector3(force, 0, force))
+		$".".add_force_local(Vector3(force, 0, force), $t1.translation)
 		
 	if id == 1:
-		$".".add_force_local($t2.translation, Vector3(-force, 0, force))
+		$".".add_force_local(Vector3(-force, 0, force), $t2.translation)
 		
 	if id == 2:
-		$".".add_force_local($t3.translation, Vector3(force, 0, -force))
+		$".".add_force_local(Vector3(force, 0, -force), $t3.translation)
 		
 	if id == 3:
-		$".".add_force_local($t4.translation, Vector3(-force, 0, -force))
+		$".".add_force_local(Vector3(-force, 0, -force), $t4.translation)
 		
 	if id == 4:
-		$".".add_force_local($t5.translation, Vector3(0, force, 0))
+		$".".add_force_local(Vector3(0, force, 0), $t5.translation)
 		
 	if id == 5:
-		$".".add_force_local($t6.translation, Vector3(0, force, 0))
+		$".".add_force_local(Vector3(0, force, 0), $t6.translation)
 			
