@@ -1,10 +1,13 @@
 extends Spatial
 
-const THRUST = 40
+const THRUST = 60
 
 var fdm_in = PacketPeerUDP.new() # UDP socket for fdm in (server)
 var fdm_out = PacketPeerUDP.new() # UDP socket for fdm out (client)
 var start_time = OS.get_ticks_msec()
+
+var last_velocity = Vector3(0, 0, 0);
+var calculated_acceleration = Vector3(0, 0, 0);
 
 func connect_fmd_in():
 	if fdm_in.listen(9002) != OK:
@@ -20,22 +23,22 @@ func get_servos():
 			actuate_servo(i, buffer.get_float())
 
 func send_fdm():
-	if !fdm_out.is_listening():
-		connect_fdm_out()
 
-	fdm_out.set_dest_address("0.0.0.0", 9003)
+	fdm_out.set_dest_address("127.0.0.1", 9003)
 	var buffer = StreamPeerBuffer.new()
 	
 	#double timestamp;  // in seconds
 	buffer.put_double((OS.get_ticks_msec()-start_time)/1000.0)
 	#double imu_angular_velocity_rpy[3];
-	buffer.put_double($".".angular_velocity.x)
-	buffer.put_double($".".angular_velocity.z)
-	buffer.put_double(-$".".angular_velocity.y)
+	var _angular_velocity = self.transform.basis.xform($".".angular_velocity)
+	buffer.put_double(_angular_velocity.x)
+	buffer.put_double(_angular_velocity.z)
+	buffer.put_double(-_angular_velocity.y)
 	#double imu_linear_acceleration_xyz[3];
-	buffer.put_double(0)
-	buffer.put_double(0)
-	buffer.put_double(0)
+	var _acceleration = self.transform.basis.xform(calculated_acceleration)
+	buffer.put_double(_acceleration.x)
+	buffer.put_double(_acceleration.z)
+	buffer.put_double(-_acceleration.y - 10)
 	#double imu_orientation_quat[4];
 	var orientation = Vector3(rotation.x, rotation.z, -rotation.y)
 	var quaternon = Quat(orientation)
@@ -44,9 +47,10 @@ func send_fdm():
 	buffer.put_double(quaternon.z)
 	buffer.put_double(quaternon.w)
 	#double velocity_xyz[3];
-	buffer.put_double($".".linear_velocity.x)
-	buffer.put_double($".".linear_velocity.z)
-	buffer.put_double(-$".".linear_velocity.y)
+	var _velocity = self.transform.basis.xform($".".linear_velocity)
+	buffer.put_double(_velocity.x)
+	buffer.put_double(_velocity.z)
+	buffer.put_double(-_velocity.y)
 	#double position_xyz[3];
 	buffer.put_double(global_transform.origin.x)
 	buffer.put_double(global_transform.origin.z)
@@ -59,6 +63,8 @@ func _ready():
 	connect_fmd_in()
 
 func _process(delta):
+	calculated_acceleration = ($".".linear_velocity - last_velocity) / delta
+	last_velocity = $".".linear_velocity
 	get_servos()
 	send_fdm()
 	
