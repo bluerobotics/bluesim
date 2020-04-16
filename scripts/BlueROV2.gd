@@ -10,10 +10,6 @@ func connect_fmd_in():
 	if fdm_in.listen(9002) != OK:
 		print("Failed to connect fdm_in")
 
-func connect_fdm_out():
-	if (fdm_out.listen(9003, "0.0.0.0") != OK):
-		print("Failed to connect fdm_out")
-
 func get_servos():
 	while fdm_in.get_available_packet_count():
 		var buffer = StreamPeerBuffer.new()
@@ -60,7 +56,6 @@ func send_fdm():
 		
 func _ready():
 	set_process(true) # Enable process call
-	connect_fdm_out()
 	connect_fmd_in()
 
 func _process(delta):
