@@ -16,7 +16,7 @@ func calculate_buoyancy():
 
 		var surface_altitude = $surface.translation.y
 		var buoyancy =  min(vehicle.buoyancy, abs(vehicle.buoyancy*(vehicle.translation.y - HEIGHT/2 - surface_altitude)))
-		vehicle.add_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y*0.5)
+		vehicle.add_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y*0.05)
 
 func _physics_process(_delta):
 	calculate_buoyancy()
