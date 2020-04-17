@@ -1,8 +1,9 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://BlueROV2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://vehicles/BlueROV2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/BlueROV2.gd" type="Script" id=2]
 [ext_resource path="res://scripts/teste.gd" type="Script" id=3]
+
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 30, 2, 30 )
