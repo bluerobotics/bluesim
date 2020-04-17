@@ -8,6 +8,7 @@ extents = Vector3( 0.757701, 0.600013, 1.02568 )
 
 [node name="BlueRov" type="RigidBody"]
 mass = 11.0
+can_sleep = false
 linear_damp = 0.598
 angular_damp = -0.485
 
