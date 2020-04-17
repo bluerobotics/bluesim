@@ -1,4 +1,4 @@
-extends Spatial
+extends RigidBody
 
 const THRUST = 60
 
@@ -30,7 +30,7 @@ func send_fdm():
 	#double timestamp;  // in seconds
 	buffer.put_double((OS.get_ticks_msec()-start_time)/1000.0)
 	#double imu_angular_velocity_rpy[3];
-	var _angular_velocity = self.transform.basis.xform($".".angular_velocity)
+	var _angular_velocity = self.transform.basis.xform(self.angular_velocity)
 	buffer.put_double(_angular_velocity.x)
 	buffer.put_double(_angular_velocity.z)
 	buffer.put_double(-_angular_velocity.y)
@@ -47,7 +47,7 @@ func send_fdm():
 	buffer.put_double(quaternon.y)
 	buffer.put_double(quaternon.z)
 	#double velocity_xyz[3];
-	var _velocity = self.transform.basis.xform($".".linear_velocity)
+	var _velocity = self.transform.basis.xform(self.linear_velocity)
 	buffer.put_double(_velocity.x)
 	buffer.put_double(_velocity.z)
 	buffer.put_double(-_velocity.y)
@@ -63,37 +63,36 @@ func _ready():
 	connect_fmd_in()
 
 func _process(delta):
-	calculated_acceleration = ($".".linear_velocity - last_velocity) / delta
-	last_velocity = $".".linear_velocity
+	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
+	last_velocity = self.linear_velocity
 	get_servos()
 	send_fdm()
 	
 func add_force_local(force: Vector3, pos: Vector3):
 	var pos_local = self.transform.basis.xform(pos)
 	var force_local = self.transform.basis.xform(force)
-	$".".add_force(force_local, pos_local)
+	self.add_force(force_local, pos_local)
 
-#func _unhandled_input(event):
 func actuate_servo(id, percentage):
 	if percentage == 0:
 		return
 
 	var force = (percentage - 0.5) * 2 * THRUST
 	if id == 0:
-		$".".add_force_local(Vector3(force, 0, force), $t1.translation)
+		self.add_force_local(Vector3(force, 0, force), $t1.translation)
 		
 	if id == 1:
-		$".".add_force_local(Vector3(-force, 0, force), $t2.translation)
+		self.add_force_local(Vector3(-force, 0, force), $t2.translation)
 		
 	if id == 2:
-		$".".add_force_local(Vector3(force, 0, -force), $t3.translation)
+		self.add_force_local(Vector3(force, 0, -force), $t3.translation)
 		
 	if id == 3:
-		$".".add_force_local(Vector3(-force, 0, -force), $t4.translation)
+		self.add_force_local(Vector3(-force, 0, -force), $t4.translation)
 		
 	if id == 4:
-		$".".add_force_local(Vector3(0, force, 0), $t5.translation)
+		self.add_force_local(Vector3(0, force, 0), $t5.translation)
 		
 	if id == 5:
-		$".".add_force_local(Vector3(0, force, 0), $t6.translation)
+		self.add_force_local(Vector3(0, force, 0), $t6.translation)
 			
