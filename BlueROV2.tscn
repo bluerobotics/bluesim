@@ -36,7 +36,4 @@ transform = Transform( 1, 0, 0, 0, 0.999908, -0.0135782, 0, 0.0135782, 0.999908,
 [node name="t6" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.999908, -0.0135782, 0, 0.0135782, 0.999908, 0.446232, 0.203274, -0.15905 )
 
-[node name="target" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 1.72552, -5.33978 )
-
 [node name="BlueROV2" type="Spatial" parent="."]
