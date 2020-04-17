@@ -82,15 +82,15 @@ func actuate_servo(id, percentage):
 	var force = (percentage - 0.5) * 2 * THRUST
 	match id:
 		0:
-			self.add_force_local(Vector3(force, 0, force), $t1.translation)
+			self.add_force_local(Vector3(-force, 0, -force), $t1.translation)
 		1:
-			self.add_force_local(Vector3(-force, 0, force), $t2.translation)
+			self.add_force_local(Vector3(force, 0, -force), $t2.translation)
 		2:
-			self.add_force_local(Vector3(force, 0, -force), $t3.translation)
+			self.add_force_local(Vector3(-force, 0, force), $t3.translation)
 		3:
-			self.add_force_local(Vector3(-force, 0, -force), $t4.translation)
+			self.add_force_local(Vector3(force, 0, force), $t4.translation)
 		4:
-			self.add_force_local(Vector3(0, force, 0), $t5.translation)
+			self.add_force_local(Vector3(0, -force, 0), $t5.translation)
 		5:
-			self.add_force_local(Vector3(0, force, 0), $t6.translation)
+			self.add_force_local(Vector3(0, -force, 0), $t6.translation)
 			
