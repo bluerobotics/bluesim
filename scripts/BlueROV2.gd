@@ -9,6 +9,8 @@ var start_time = OS.get_ticks_msec()
 var last_velocity = Vector3(0, 0, 0);
 var calculated_acceleration = Vector3(0, 0, 0);
 
+export var buoyancy = 1.6 # Newtons
+
 func connect_fmd_in():
 	if fdm_in.listen(9002) != OK:
 		print("Failed to connect fdm_in")
