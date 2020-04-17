@@ -1,9 +1,5 @@
 extends Spatial
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 const BUOYANCY = 160 # newtons?
 const HEIGHT = 2 # TODO: get this programatically
 
