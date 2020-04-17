@@ -1,7 +1,7 @@
 extends Spatial
 
-const BUOYANCY = 160 # newtons?
-const HEIGHT = 2 # TODO: get this programatically
+const BUOYANCY = 160.0 # newtons?
+const HEIGHT = 2.0 # TODO: get this programatically
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
