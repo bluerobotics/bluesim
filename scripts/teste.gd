@@ -12,7 +12,6 @@ func calculate_buoyancy():
 	var bluerov = get_node("/root/Node2D/ReferenceRect/ViewportCamera/Viewport/BlueRov")
 	var buoyancy =  min(BUOYANCY, abs(BUOYANCY*(bluerov.translation.y - HEIGHT/2 - surface_altitude)))
 	bluerov.add_force(Vector3(0, buoyancy, 0), bluerov.transform.basis.y*0.5)
-	#$BlueRov.add_force(Vector3(0, -50, 0), Vector3(0, -1.0, 0))
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
