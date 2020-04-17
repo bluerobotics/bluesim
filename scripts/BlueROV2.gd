@@ -59,10 +59,10 @@ func send_fdm():
 	fdm_out.put_packet(buffer.data_array)
 		
 func _ready():
-	set_process(true) # Enable process call
+	set_physics_process(true)
 	connect_fmd_in()
 
-func _process(delta):
+func _physics_process(delta):
 	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
 	last_velocity = self.linear_velocity
 	get_servos()
