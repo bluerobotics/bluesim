@@ -59,6 +59,7 @@ render_target_update_mode = 3
 
 [node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 1 )]
 transform = Transform( 0.947238, 0.32053, 0, -0.32053, 0.947238, 0, 0, 0, 1, 0, 3.34852, 0 )
+can_sleep = true
 angular_damp = 0.725
 script = ExtResource( 3 )
 
