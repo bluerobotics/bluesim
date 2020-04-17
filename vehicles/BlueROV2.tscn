@@ -5,7 +5,9 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.757701, 0.600013, 1.02568 )
 
-[node name="BlueRov" type="RigidBody"]
+[node name="BlueRov" type="RigidBody" groups=[
+"vehicles",
+]]
 mass = 11.0
 can_sleep = false
 linear_damp = 0.598
