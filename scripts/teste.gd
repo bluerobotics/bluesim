@@ -10,6 +10,10 @@ func _ready():
 func calculate_buoyancy():
 	var vehicles = get_tree().get_nodes_in_group("vehicles")
 	for vehicle in vehicles:
+		if not vehicle is RigidBody:
+			push_warning("Component %s does not inherit RigidBody." % vehicle.name)
+			continue
+
 		var surface_altitude = $surface.translation.y
 		var buoyancy =  min(BUOYANCY, abs(BUOYANCY*(vehicle.translation.y - HEIGHT/2 - surface_altitude)))
 		vehicle.add_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y*0.5)
