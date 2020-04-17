@@ -8,10 +8,12 @@ func _ready():
 	pass # Replace with function body.
 
 func calculate_buoyancy():
-	var surface_altitude = $surface.translation.y
-	var bluerov = get_node("/root/Node2D/ReferenceRect/ViewportCamera/Viewport/BlueRov")
-	var buoyancy =  min(BUOYANCY, abs(BUOYANCY*(bluerov.translation.y - HEIGHT/2 - surface_altitude)))
-	bluerov.add_force(Vector3(0, buoyancy, 0), bluerov.transform.basis.y*0.5)
+	var vehicles = get_tree().get_nodes_in_group("vehicles")
+	for vehicle in vehicles:
+		var surface_altitude = $surface.translation.y
+		var buoyancy =  min(BUOYANCY, abs(BUOYANCY*(vehicle.translation.y - HEIGHT/2 - surface_altitude)))
+		vehicle.add_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y*0.5)
+
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
