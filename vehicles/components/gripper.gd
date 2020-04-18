@@ -21,7 +21,7 @@ func close():
 func stop():
 	direction = 0
 
-"""
+
 func _input(event):
 	if event.is_action_type():
 		match event.as_text():
@@ -29,4 +29,3 @@ func _input(event):
 				direction = -1 if event.is_pressed() else 0
 			"Down":
 				direction = 1 if event.is_pressed() else 0
-"""
