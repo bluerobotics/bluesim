@@ -4,7 +4,7 @@
 [ext_resource path="res://vehicles/components/gripper.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.338, 0.254, 0.457 )
+extents = Vector3( 0.338, 0.22, 0.457 )
 
 [node name="BlueRov" type="RigidBody" groups=[
 "vehicles",
@@ -16,7 +16,7 @@ linear_damp = 0.598
 angular_damp = -0.485
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.306805, -0.195509 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, -0.196 )
 shape = SubResource( 1 )
 
 [node name="bluerovsimple" parent="." instance=ExtResource( 1 )]
@@ -41,4 +41,4 @@ transform = Transform( 1, 0, 0, 0, 0.999908, -0.0135782, 0, 0.0135782, 0.999908,
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.203911, -0.169, -0.175999 )
 
 [node name="Gripper" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, -0.021342, -0.570352, -0.0597881 )
+transform = Transform( 0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, -0.021342, -0.58559, -0.011176 )
