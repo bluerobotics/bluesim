@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
@@ -11,6 +11,28 @@
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.913725, 0.0509804, 0.00784314, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.0588235, 0.113725, 0.913725, 1 )
+
+[sub_resource type="CylinderMesh" id=4]
+material = SubResource( 6 )
+
+[sub_resource type="CylinderShape" id=5]
+radius = 0.273109
+height = 10.1891
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.0512741, 0.0155378, 0.0431112 )
+
+[sub_resource type="BoxShape" id=8]
+
+[sub_resource type="CubeMesh" id=9]
+
+[sub_resource type="Skin" id=10]
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.396078, 0.662745, 0, 1 )
 
 [node name="Node2D" type="Node2D"]
 show_behind_parent = true
@@ -27,6 +49,8 @@ __meta__ = {
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 256.0
+margin_bottom = 117.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -37,12 +61,12 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportGlobal"]
-size = Vector2( 1024, 600 )
+size = Vector2( 1280, 717 )
 handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportGlobal/Viewport"]
-transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
+transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, 0.6139, 6.78851, 0.669571 )
 speed = 10.0
 enabled = true
 script = ExtResource( 4 )
@@ -54,8 +78,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -200.0
-margin_top = -200.0
+margin_left = -285.256
+margin_top = -348.011
+margin_right = 371.744
+margin_bottom = 110.989
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
@@ -64,12 +90,12 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportCamera"]
-size = Vector2( 200, 200 )
+size = Vector2( 657, 459 )
 handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 1 )]
-transform = Transform( 0.999847, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 5.51024, 0 )
+transform = Transform( 0.999847, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 6.18563, 0 )
 can_sleep = true
 angular_damp = 0.725
 script = ExtResource( 3 )
@@ -84,8 +110,37 @@ transform = Transform( -1, -8.9407e-08, -3.25841e-07, -8.9407e-08, 1, -2.84217e-
 [node name="FRD" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
 transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0, 0 )
 
-[node name="NorthIndicator" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.82365, 12.442 )
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
 material/0 = SubResource( 3 )
+
+[node name="RigidBody" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
+transform = Transform( -0.999992, -0.00404896, 0, 0.00404896, -0.999992, 0, 0, 0, 1, 0.0338481, 5.97524, 0.512072 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody"]
+transform = Transform( 0.00467098, 0, 0, -1.81899e-12, 0.132234, 0, 0, 0, 0.00467098, 0, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody"]
+transform = Transform( -0.02608, 0, 0, 0, -0.0231075, 8.48452e-11, 0, 5.42854e-08, 0.02608, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137291, -0.00463086 )
+shape = SubResource( 7 )
+
+[node name="StaticBody" type="StaticBody" parent="ReferenceRect/ViewportCamera/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.865807, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ReferenceRect/ViewportCamera/Viewport/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.78271, 0 )
+shape = SubResource( 8 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.79378, 0 )
+mesh = SubResource( 9 )
+skin = SubResource( 10 )
+material/0 = SubResource( 11 )

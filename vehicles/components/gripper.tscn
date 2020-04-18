@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://imports/newton/newton.dae" type="PackedScene" id=1]
 [ext_resource path="res://imports/newton/black_metal.tres" type="Material" id=2]
@@ -7,6 +7,12 @@
 [ext_resource path="res://vehicles/components/gripper.gd" type="Script" id=5]
 
 [sub_resource type="CylinderShape" id=1]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.0443641, 0.149182, 0.0575284 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.0569911, 0.114149, 0.0680078 )
 
 [node name="Gripper" type="Spatial"]
 script = ExtResource( 5 )
@@ -38,7 +44,7 @@ material/0 = ExtResource( 3 )
 material/0 = ExtResource( 2 )
 
 [node name="g1" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.157265, 1.30072, -0.007 )
+transform = Transform( 0.953502, -0.301388, 0, 0.301388, 0.953502, 0, 0, 0, 1, -0.157265, 1.30072, -0.007 )
 
 [node name="g1" parent="g1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
@@ -46,12 +52,15 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
 [node name="NEWTON-GRIPPER-ASSEM-R3-PUBLIC002" parent="g1/g1" index="0"]
 material/0 = ExtResource( 2 )
 
-[node name="CollisionPolygon" type="CollisionPolygon" parent="g1"]
-transform = Transform( 4.3, 0, 0, 0, 5.2, 0, 0, 0, 0.08, -0.052, -0.801699, 0.003 )
-polygon = PoolVector2Array( 0.0134211, 0.152776, 0.00982958, 0.179887, 0.021954, 0.210274, 0.0325601, 0.219573, 0.0419189, 0.220203, 0.0433133, 0.218063, 0.032053, 0.201479, 0.0279642, 0.182293, 0.0314675, 0.166123, 0.041573, 0.162292 )
+[node name="CollisionShape" type="CollisionShape" parent="g1"]
+shape = SubResource( 2 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="g1"]
+transform = Transform( 0.88061, 0.473842, 0, -0.473842, 0.88061, 0, 0, 0, 1, 0.0189557, 0.215257, 0 )
+shape = SubResource( 2 )
 
 [node name="g2" type="KinematicBody" parent="."]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.130752, 1.30072, -0.007 )
+transform = Transform( -0.953027, 0.302886, -3.10535e-07, 0.302886, 0.953027, 9.86925e-08, 3.25841e-07, 0, -1, 0.130752, 1.30072, -0.007 )
 
 [node name="g2" parent="g2" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
@@ -59,9 +68,12 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
 [node name="NEWTON-GRIPPER-ASSEM-R3-PUBLIC002" parent="g2/g2" index="0"]
 material/0 = ExtResource( 2 )
 
-[node name="CollisionPolygon" type="CollisionPolygon" parent="g2"]
-transform = Transform( 4.3, 0, 0, 0, 5.2, 0, 0, 0, 0.08, -0.052, -0.801699, 0.003 )
-polygon = PoolVector2Array( 0.0134211, 0.152776, 0.00982958, 0.179887, 0.021954, 0.210274, 0.0325601, 0.219573, 0.0419189, 0.220203, 0.0433133, 0.218063, 0.032053, 0.201479, 0.0279642, 0.182293, 0.0314675, 0.166123, 0.041573, 0.162292 )
+[node name="CollisionShape" type="CollisionShape" parent="g2"]
+shape = SubResource( 3 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="g2"]
+transform = Transform( 0.92235, 0.386357, -2.53018e-08, -0.386357, 0.92235, -1.25891e-07, -2.53017e-08, 1.25891e-07, 1, 0.0577463, 0.234695, 2.14204e-08 )
+shape = SubResource( 3 )
 
 [editable path="mainBody/newton"]
 
