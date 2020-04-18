@@ -71,13 +71,16 @@ func send_fdm():
 	buffer.put_double(_position.z)
 
 	fdm_out.put_packet(buffer.data_array)
-		
+
 func _ready():
+	_initial_position = get_global_transform().origin
 	set_physics_process(true)
 	connect_fmd_in()
 
+
 func _physics_process(delta):
 	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
+	calculated_acceleration.y += 10
 	last_velocity = self.linear_velocity
 	get_servos()
 	send_fdm()
@@ -106,3 +109,37 @@ func actuate_servo(id, percentage):
 		5:
 			self.add_force_local(Vector3(0, -force, 0), $t6.translation)
 			
+func _unhandled_input(event):
+	if event is InputEventKey:
+		# There are for debugging:
+		# Some forces:
+		if event.pressed and event.scancode == KEY_X:
+			self.add_central_force(Vector3(30, 0, 0))
+		if event.pressed and event.scancode == KEY_Y:
+			self.add_central_force(Vector3(0, 30, 0))
+		if event.pressed and event.scancode == KEY_Z:
+			self.add_central_force(Vector3(0, 0, 30))
+		# kills linear velocity
+		if event.pressed and event.scancode == KEY_C:
+			self.linear_velocity = Vector3(0,0,0)
+		# Reset position
+		if event.pressed and event.scancode == KEY_SPACE:
+			set_translation(_initial_position)
+		# Some torques
+		if event.pressed and event.scancode == KEY_Q:
+			self.add_torque(self.transform.basis.xform(Vector3(15,0,0)))
+		if event.pressed and event.scancode == KEY_W:
+			self.add_torque(self.transform.basis.xform(Vector3(0,15,0)))
+		if event.pressed and event.scancode == KEY_E:
+			self.add_torque(self.transform.basis.xform(Vector3(0,0,15)))
+		# Some hard-coded positions (used to check accelerometer)
+		if event.pressed and event.scancode == KEY_U:
+			self.look_at(Vector3(0,100,0),Vector3(0,0,1)) # expects +X
+			mode = RigidBody.MODE_STATIC
+		if event.pressed and event.scancode == KEY_I:
+			self.look_at(Vector3(100,0,0),Vector3(0,100,0)) #expects +Z
+			mode = RigidBody.MODE_STATIC
+		if event.pressed and event.scancode == KEY_O:
+			self.look_at(Vector3(100,0,0),Vector3(0,0,-100)) #expects +Y
+			mode = RigidBody.MODE_STATIC
+
