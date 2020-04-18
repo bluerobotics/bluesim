@@ -1,6 +1,6 @@
 extends RigidBody
 
-const THRUST = 60
+const THRUST = 20
 
 var fdm_in = PacketPeerUDP.new() # UDP socket for fdm in (server)
 var fdm_out = PacketPeerUDP.new() # UDP socket for fdm out (client)
