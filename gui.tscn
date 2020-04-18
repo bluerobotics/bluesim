@@ -75,7 +75,8 @@ angular_damp = 0.725
 script = ExtResource( 3 )
 
 [node name="Camera" type="Camera" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
-transform = Transform( -1, -2.08616e-07, -3.25841e-07, -2.08616e-07, 1, -7.81597e-14, 3.25841e-07, 0, -1, -0.0167401, -0.189716, 0.24215 )
+transform = Transform( -1, -2.08616e-07, -3.46452e-07, -2.08616e-07, 1, -6.86673e-14, 3.29688e-07, 0, -1, -0.0157046, -0.31953, 0.182824 )
+fov = 78.41
 
 [node name="BlueROVFarView" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
 transform = Transform( -1, -8.9407e-08, -3.25841e-07, -8.9407e-08, 1, -2.84217e-14, 3.25841e-07, 0, -1, -0.715581, 1.98509, -8.00526 )
