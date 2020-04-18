@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/BlueROV2.gd" type="Script" id=3]
 [ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=4]
+
+[sub_resource type="PrismMesh" id=1]
+
+[sub_resource type="Skin" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.913725, 0.0509804, 0.00784314, 1 )
 
 [node name="Node2D" type="Node2D"]
 show_behind_parent = true
@@ -72,3 +79,12 @@ transform = Transform( -1, -2.08616e-07, -3.25841e-07, -2.08616e-07, 1, -7.81597
 
 [node name="BlueROVFarView" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
 transform = Transform( -1, -8.9407e-08, -3.25841e-07, -8.9407e-08, 1, -2.84217e-14, 3.25841e-07, 0, -1, -0.715581, 1.98509, -8.00526 )
+
+[node name="FRD" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
+transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.82365, 12.442 )
+mesh = SubResource( 1 )
+skin = SubResource( 2 )
+material/0 = SubResource( 3 )
