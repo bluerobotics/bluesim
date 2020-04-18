@@ -1,0 +1,40 @@
+[gd_resource type="SpatialMaterial" load_steps=5 format=2]
+
+[ext_resource path="res://imports/Water_001_SD/Water_001_DISP.png" type="Texture" id=1]
+[ext_resource path="res://imports/Water_001_SD/Water_001_NORM.jpg" type="Texture" id=2]
+[ext_resource path="res://imports/Water_001_SD/Water_001_OCC.jpg" type="Texture" id=3]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 23
+load_path = "res://.import/Water_001_COLOR.jpg-79a7afdb227c998fe8f52f8bcae51cbd.s3tc.stex"
+
+[resource]
+flags_transparent = true
+params_specular_mode = 1
+params_cull_mode = 2
+params_line_width = 0.1
+params_point_size = 0.1
+albedo_color = Color( 1, 1, 1, 0 )
+albedo_texture = SubResource( 1 )
+metallic_specular = 0.49
+roughness = 0.4
+roughness_texture = ExtResource( 1 )
+normal_enabled = true
+normal_scale = 0.0
+normal_texture = ExtResource( 2 )
+ao_enabled = true
+ao_light_affect = 1.0
+ao_texture = ExtResource( 3 )
+ao_on_uv2 = false
+ao_texture_channel = 0
+depth_enabled = true
+depth_scale = -0.16
+depth_deep_parallax = false
+depth_flip_tangent = false
+depth_flip_binormal = false
+depth_texture = ExtResource( 1 )
+refraction_enabled = true
+refraction_scale = -0.04
+refraction_texture_channel = 0
+proximity_fade_enable = true
+proximity_fade_distance = 7.0
