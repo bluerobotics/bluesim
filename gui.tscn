@@ -42,7 +42,7 @@ handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportGlobal/Viewport"]
-transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, 0, 7.73511, -18.3701 )
+transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
 speed = 10.0
 enabled = true
 script = ExtResource( 4 )
@@ -69,7 +69,7 @@ handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 1 )]
-transform = Transform( 0.947238, 0.32053, 0, -0.32053, 0.947238, 0, 0, 0, 1, 0, 3.34852, 0 )
+transform = Transform( 0.999847, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 5.51024, 0 )
 can_sleep = true
 angular_damp = 0.725
 script = ExtResource( 3 )
