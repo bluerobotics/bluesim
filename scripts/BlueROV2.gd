@@ -10,6 +10,7 @@ var last_velocity = Vector3(0, 0, 0);
 var calculated_acceleration = Vector3(0, 0, 0);
 
 var buoyancy = 1.6 + self.mass * 9.8 # Newtons
+var _initial_position = 0
 
 func connect_fmd_in():
 	if fdm_in.listen(9002) != OK:
@@ -29,35 +30,46 @@ func send_fdm():
 	fdm_out.set_dest_address("127.0.0.1", 9003)
 	var buffer = StreamPeerBuffer.new()
 	
-	#double timestamp;  // in seconds
 	buffer.put_double((OS.get_ticks_msec()-start_time)/1000.0)
-	#double imu_angular_velocity_rpy[3];
-	var _angular_velocity = self.transform.basis.xform(self.angular_velocity)
+
+	var _basis =  transform.basis
+
+# These are the same but mean different things, let's keep both for now
+	var toNED = Basis(Vector3(0, -1, 0)
+					 ,Vector3(0, 0, -1)
+					 ,Vector3(1, 0, 0))
+
+	var toFRD = Basis(Vector3(0, -1, 0)
+					 ,Vector3(0, 0, -1)
+					 ,Vector3(1, 0, 0))
+
+	var _angular_velocity = toFRD.xform(_basis.xform_inv(angular_velocity))
 	buffer.put_double(_angular_velocity.x)
+	buffer.put_double(_angular_velocity.y)
 	buffer.put_double(_angular_velocity.z)
-	buffer.put_double(-_angular_velocity.y)
-	#double imu_linear_acceleration_xyz[3];
-	var _acceleration = self.transform.basis.xform(calculated_acceleration)
+
+	var _acceleration = toFRD.xform(_basis.xform_inv(calculated_acceleration))
 	buffer.put_double(_acceleration.x)
+	buffer.put_double(_acceleration.y)
 	buffer.put_double(_acceleration.z)
-	buffer.put_double(-_acceleration.y - 10)
-	#double imu_orientation_quat[4];
-	var orientation = Vector3(rotation.x, rotation.z, -rotation.y)
+
+	var orientation = toFRD.xform(Vector3(rotation.x, rotation.y, rotation.z))
 	var quaternon = Quat(orientation)
 	buffer.put_double(quaternon.w)
 	buffer.put_double(quaternon.x)
 	buffer.put_double(quaternon.y)
 	buffer.put_double(quaternon.z)
-	#double velocity_xyz[3];
-	var _velocity = self.transform.basis.xform(self.linear_velocity)
+
+	var _velocity = toNED.xform(self.linear_velocity)
 	buffer.put_double(_velocity.x)
+	buffer.put_double(_velocity.y)
 	buffer.put_double(_velocity.z)
-	buffer.put_double(-_velocity.y)
-	#double position_xyz[3];
-	buffer.put_double(global_transform.origin.x)
-	buffer.put_double(global_transform.origin.z)
-	buffer.put_double(-global_transform.origin.y)
-	
+
+	var _position = toNED.xform(self.transform.origin)
+	buffer.put_double(_position.x)
+	buffer.put_double(_position.y)
+	buffer.put_double(_position.z)
+
 	fdm_out.put_packet(buffer.data_array)
 		
 func _ready():
