@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://vehicles/bluerovheavy/bluerov cleaned decimated.gltf" type="PackedScene" id=1]
+[ext_resource path="res://vehicles/components/gripper.tscn" type="PackedScene" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.338, 0.22, 0.457 )
+
+[node name="BlueRov" type="RigidBody" groups=[
+"vehicles",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109867, 0.18579, 0.175741 )
+mass = 11.0
+can_sleep = false
+linear_damp = 0.776
+angular_damp = 0.979
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, -0.196 )
+shape = SubResource( 1 )
+
+[node name="t2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175974, -0.198844, 0.102 )
+
+[node name="t1" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.176, -0.198844, 0.102 )
+
+[node name="t3" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.176, -0.198844, -0.517077 )
+
+[node name="t4" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.146356, -0.198844, -0.517 )
+
+[node name="t5" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.999908, -0.0135782, 0, 0.0135782, 0.999908, -0.43358, -0.169, 0.0211797 )
+
+[node name="t6" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445236, -0.169, 0.0740065 )
+
+[node name="t8" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.999908, -0.0135782, 0, 0.0135782, 0.999908, 0.431022, -0.169, -0.352092 )
+
+[node name="t7" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.429783, -0.169, -0.353086 )
+
+[node name="Gripper" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.228264, -0.101959, 4.45678e-09, 0, -1.09278e-08, -0.25, 0.101959, 0.228264, -9.97772e-09, 0.145915, -0.485667, -0.043942 )
+
+[node name="light1" type="SpotLight" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.337544, -0.426069, 0.27467 )
+spot_angle = 43.5938
+
+[node name="light2" type="SpotLight" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.389553, -0.426069, 0.27467 )
+spot_angle = 40.536
+
+[node name="light4" type="SpotLight" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.337544, -0.0946505, 0.27467 )
+spot_angle = 43.5938
+
+[node name="light3" type="SpotLight" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.389553, -0.0946505, 0.27467 )
+spot_angle = 40.536
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.00410311, -0.213594, 0.155789 )
+
+[node name="bluerov cleaned decimated" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.176097, -0.324627, -0.338943 )
