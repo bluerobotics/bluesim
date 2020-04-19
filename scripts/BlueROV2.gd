@@ -12,24 +12,38 @@ var calculated_acceleration = Vector3(0, 0, 0);
 var buoyancy = 1.6 + self.mass * 9.8 # Newtons
 var _initial_position = 0
 
+# Gui settings
+export var use_gui = true
+export var gui_action = "F1"
+var _gui
+
+const NUMBER_OF_SERVOS = 16
+var servos = [0]
+
 func connect_fmd_in():
 	if fdm_in.listen(9002) != OK:
 		print("Failed to connect fdm_in")
 
 func get_servos():
+	var got_servo = false
 	while fdm_in.get_available_packet_count():
+		got_servo = true
 		var buffer = StreamPeerBuffer.new()
 		buffer.data_array = fdm_in.get_packet()
 		print("-")
 		for i in range(0, buffer.get_size()/4):
 			buffer.seek(i*4)
-			actuate_servo(i, buffer.get_float())
+			self.servos[i] = buffer.get_float()
+			_gui.update_slider(i, self.servos[i])
+	
+	if got_servo:
+		update_servos()
 
 func send_fdm():
 
 	fdm_out.set_dest_address("127.0.0.1", 9003)
 	var buffer = StreamPeerBuffer.new()
-	
+
 	buffer.put_double((OS.get_ticks_msec()-start_time)/1000.0)
 
 	var _basis =  transform.basis
@@ -73,10 +87,19 @@ func send_fdm():
 	fdm_out.put_packet(buffer.data_array)
 
 func _ready():
+	for id in range(0, NUMBER_OF_SERVOS):
+		self.servos.append(0)
+		
 	_initial_position = get_global_transform().origin
 	set_physics_process(true)
 	connect_fmd_in()
 
+	if use_gui:
+		_gui = preload("BlueROV2_ui.gd")
+		_gui = _gui.new(self.servos, gui_action)
+		add_child(_gui)
+		
+		_gui.connect("servos_changed", self, "got_servos")
 
 func _physics_process(delta):
 	process_keys()
@@ -85,11 +108,19 @@ func _physics_process(delta):
 	last_velocity = self.linear_velocity
 	get_servos()
 	send_fdm()
-	
+
 func add_force_local(force: Vector3, pos: Vector3):
 	var pos_local = self.transform.basis.xform(pos)
 	var force_local = self.transform.basis.xform(force)
 	self.add_force(force_local, pos_local)
+
+func got_servos(servos):
+	self.servos = servos
+	update_servos()
+
+func update_servos():
+	for id in range(0, self.servos.size()):
+		actuate_servo(id, self.servos[id])
 
 func actuate_servo(id, percentage):
 	if percentage == 0:
@@ -109,7 +140,7 @@ func actuate_servo(id, percentage):
 			self.add_force_local(Vector3(0, -force, 0), $t5.translation)
 		5:
 			self.add_force_local(Vector3(0, -force, 0), $t6.translation)
-			
+
 func _unhandled_input(event):
 	if event is InputEventKey:
 		# There are for debugging:
@@ -161,4 +192,3 @@ func process_keys():
 		self.add_torque(self.transform.basis.xform(Vector3(0,-20,0)))
 	if Input.is_action_pressed("rotate_right"):
 		self.add_torque(self.transform.basis.xform(Vector3(0,20,0)))
-
