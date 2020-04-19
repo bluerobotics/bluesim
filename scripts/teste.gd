@@ -1,7 +1,7 @@
 extends Spatial
 
 const BUOYANCY = 160.0 # newtons?
-const HEIGHT = 2.0 # TODO: get this programatically
+const HEIGHT = 2.4 # TODO: get this programatically
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,7 +14,7 @@ func calculate_buoyancy():
 			push_warning("Component %s does not inherit RigidBody." % vehicle.name)
 			continue
 
-		var surface_altitude = $surface.translation.y
+		var surface_altitude = $water.translation.y
 		var buoyancy =  min(vehicle.buoyancy, abs(vehicle.buoyancy*(vehicle.translation.y - HEIGHT/2 - surface_altitude)))
 		vehicle.add_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y*0.07)
 	
