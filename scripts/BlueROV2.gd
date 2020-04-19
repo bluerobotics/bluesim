@@ -79,6 +79,7 @@ func _ready():
 
 
 func _physics_process(delta):
+	process_keys()
 	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
 	calculated_acceleration.y += 10
 	last_velocity = self.linear_velocity
@@ -123,12 +124,12 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_C:
 			self.linear_velocity = Vector3(0,0,0)
 		# Reset position
-		if event.pressed and event.scancode == KEY_SPACE:
+		if event.pressed and event.scancode == KEY_R:
 			set_translation(_initial_position)
 		# Some torques
 		if event.pressed and event.scancode == KEY_Q:
 			self.add_torque(self.transform.basis.xform(Vector3(15,0,0)))
-		if event.pressed and event.scancode == KEY_W:
+		if event.pressed and event.scancode == KEY_T:
 			self.add_torque(self.transform.basis.xform(Vector3(0,15,0)))
 		if event.pressed and event.scancode == KEY_E:
 			self.add_torque(self.transform.basis.xform(Vector3(0,0,15)))
@@ -142,4 +143,22 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_O:
 			self.look_at(Vector3(100,0,0),Vector3(0,0,-100)) #expects +Y
 			mode = RigidBody.MODE_STATIC
+
+func process_keys():
+	if Input.is_action_pressed("forward"):
+		self.add_force_local(Vector3(0,0,40),Vector3(0,0,0))
+	if Input.is_action_pressed("backwards"):
+		self.add_force_local(Vector3(0,0,-40),Vector3(0,0,0))
+	if Input.is_action_pressed("strafe_right"):
+		self.add_force_local(Vector3(-40,0,0),Vector3(0,0,0))
+	if Input.is_action_pressed("strafe_left"):
+		self.add_force_local(Vector3(40,0,0),Vector3(0,0,0))
+	if Input.is_action_pressed("upwards"):
+		self.add_force_local(Vector3(0,70,0),Vector3(0,0,0))
+	if Input.is_action_pressed("downwards"):
+		self.add_force_local(Vector3(0,-70,0),Vector3(0,0,0))
+	if Input.is_action_pressed("rotate_left"):
+		self.add_torque(self.transform.basis.xform(Vector3(0,-20,0)))
+	if Input.is_action_pressed("rotate_right"):
+		self.add_torque(self.transform.basis.xform(Vector3(0,20,0)))
 
