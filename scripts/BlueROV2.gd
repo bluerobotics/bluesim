@@ -140,7 +140,12 @@ func actuate_servo(id, percentage):
 			self.add_force_local(Vector3(0, -force, 0), $t5.translation)
 		5:
 			self.add_force_local(Vector3(0, -force, 0), $t6.translation)
-
+		8:
+			$Camera.rotation_degrees.x = -45 +90*percentage
+		9:
+			$light1.light_energy = percentage
+			$light2.light_energy = percentage
+		
 func _unhandled_input(event):
 	if event is InputEventKey:
 		# There are for debugging:
