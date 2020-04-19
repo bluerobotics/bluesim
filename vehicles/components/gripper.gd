@@ -24,8 +24,7 @@ func stop():
 
 func _input(event):
 	if event.is_action_type():
-		match event.as_text():
-			"Up":
-				direction = -1 if event.is_pressed() else 0
-			"Down":
-				direction = 1 if event.is_pressed() else 0
+		if event.is_action("open_gripper"):
+			direction = -1 if event.is_pressed() else 0
+		if event.is_action("close_gripper"):
+			direction = 1 if event.is_pressed() else 0
