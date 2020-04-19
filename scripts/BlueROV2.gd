@@ -158,7 +158,7 @@ func process_keys():
 	if Input.is_action_pressed("downwards"):
 		self.add_force_local(Vector3(0,-70,0),Vector3(0,0,0))
 	if Input.is_action_pressed("rotate_left"):
-		self.add_torque(self.transform.basis.xform(Vector3(0,-20,0)))
-	if Input.is_action_pressed("rotate_right"):
 		self.add_torque(self.transform.basis.xform(Vector3(0,20,0)))
+	if Input.is_action_pressed("rotate_right"):
+		self.add_torque(self.transform.basis.xform(Vector3(0,-20,0)))
 
