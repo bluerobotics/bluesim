@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://imports/newton/newton.dae" type="PackedScene" id=1]
 [ext_resource path="res://imports/newton/black_metal.tres" type="Material" id=2]
@@ -6,18 +6,12 @@
 [ext_resource path="res://imports/newton/newton_gripper.dae" type="PackedScene" id=4]
 [ext_resource path="res://vehicles/components/gripper.gd" type="Script" id=5]
 
-[sub_resource type="CylinderShape" id=1]
-
 [node name="Gripper" type="Spatial"]
 script = ExtResource( 5 )
 
 [node name="mainBody" type="KinematicBody" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape" type="CollisionShape" parent="mainBody"]
-transform = Transform( 0.1, 0, 0, 0, 0.6, 0, 0, 0, 0.1, 0, 0.60904, 0 )
-shape = SubResource( 1 )
+collision_layer = 256
+collision_mask = 0
 
 [node name="newton" parent="mainBody" instance=ExtResource( 1 )]
 
@@ -46,10 +40,6 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
 [node name="NEWTON-GRIPPER-ASSEM-R3-PUBLIC002" parent="g1/g1" index="0"]
 material/0 = ExtResource( 2 )
 
-[node name="CollisionPolygon" type="CollisionPolygon" parent="g1"]
-transform = Transform( 4.3, 0, 0, 0, 5.2, 0, 0, 0, 0.08, -0.052, -0.801699, 0.003 )
-polygon = PoolVector2Array( 0.0134211, 0.152776, 0.00982958, 0.179887, 0.021954, 0.210274, 0.0325601, 0.219573, 0.0419189, 0.220203, 0.0433133, 0.218063, 0.032053, 0.201479, 0.0279642, 0.182293, 0.0314675, 0.166123, 0.041573, 0.162292 )
-
 [node name="g2" type="KinematicBody" parent="."]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.130752, 1.30072, -0.007 )
 
@@ -58,10 +48,6 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
 
 [node name="NEWTON-GRIPPER-ASSEM-R3-PUBLIC002" parent="g2/g2" index="0"]
 material/0 = ExtResource( 2 )
-
-[node name="CollisionPolygon" type="CollisionPolygon" parent="g2"]
-transform = Transform( 4.3, 0, 0, 0, 5.2, 0, 0, 0, 0.08, -0.052, -0.801699, 0.003 )
-polygon = PoolVector2Array( 0.0134211, 0.152776, 0.00982958, 0.179887, 0.021954, 0.210274, 0.0325601, 0.219573, 0.0419189, 0.220203, 0.0433133, 0.218063, 0.032053, 0.201479, 0.0279642, 0.182293, 0.0314675, 0.166123, 0.041573, 0.162292 )
 
 [editable path="mainBody/newton"]
 
