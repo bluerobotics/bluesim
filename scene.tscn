@@ -35,10 +35,12 @@ script = ExtResource( 2 )
 [node name="StaticBody" type="StaticBody" parent="."]
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.680408, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.731453, 0 )
 shape = SubResource( 2 )
 
 [node name="water" type="MeshInstance" parent="."]
