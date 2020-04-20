@@ -149,7 +149,7 @@ func actuate_servo(id, percentage):
 		5:
 			self.add_force_local(Vector3(0, -force, 0), $t6.translation)
 		8:
-			$Camera.rotation_degrees.x = -45 +90*percentage
+			$Camera.rotation_degrees.x = 80 * (percentage - 0.5)
 		9:
 			# Move lights power to be inside BlueROV2 model
 			$light1.light_energy = 10 * percentage
