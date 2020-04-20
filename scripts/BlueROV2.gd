@@ -154,6 +154,11 @@ func actuate_servo(id, percentage):
 			# Move lights power to be inside BlueROV2 model
 			$light1.light_energy = 10 * percentage
 			$light2.light_energy = $light1.light_energy
+		10:
+			if percentage > 0.5: 
+				$Gripper.close()
+			else:
+				$Gripper.open()
 		
 func _unhandled_input(event):
 	if event is InputEventKey:
