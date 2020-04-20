@@ -143,8 +143,9 @@ func actuate_servo(id, percentage):
 		8:
 			$Camera.rotation_degrees.x = -45 +90*percentage
 		9:
-			$light1.light_energy = percentage
-			$light2.light_energy = percentage
+			# Move lights power to be inside BlueROV2 model
+			$light1.light_energy = 10 * percentage
+			$light2.light_energy = $light1.light_energy
 		
 func _unhandled_input(event):
 	if event is InputEventKey:
