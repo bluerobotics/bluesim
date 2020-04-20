@@ -99,11 +99,10 @@ func _ready():
 		_gui = preload("BlueROV2_ui.gd")
 		_gui = _gui.new(self.servos, gui_action)
 		add_child(_gui)
+		_gui.connect("servos_changed", self, "got_servos")
+
 		_gui_system = preload("SimulationState.gd").new("F2")
 		add_child(_gui_system)
-		yield(_gui_system, "ready")
-		
-		_gui.connect("servos_changed", self, "got_servos")
 
 func _physics_process(delta):
 	process_keys()
