@@ -22,6 +22,9 @@ shape = SubResource( 1 )
 [node name="bluerovsimple" parent="." instance=ExtResource( 1 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0.0754869, -0.179945, -0.117328 )
 
+[node name="Untitled_354" parent="bluerovsimple/Z_UP/Untitled_282" index="37"]
+layers = 524288
+
 [node name="t2" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175974, -0.336, 0.102 )
 
@@ -54,4 +57,7 @@ spot_range = 10.0
 spot_angle = 40.536
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0220498, -0.377348, 0.155789 )
+transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, -0.0220498, -0.1933, 0.155789 )
+cull_mask = 524287
+
+[editable path="bluerovsimple"]
