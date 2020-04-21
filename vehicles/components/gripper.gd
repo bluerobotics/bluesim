@@ -5,6 +5,16 @@ const speed = 0.4
 
 func _ready():
 	set_physics_process(true)
+	$Area.contact_monitor = true
+	$Area.contacts_reported = 1
+	$Area.connect("body_entered", self, "_contact")
+	$Area.connect("body_exited", self, "_exit_contact")
+
+func _contact(node):
+	print("inside", node)
+	
+func _exit_contact(node):
+	print("outside", node)
 
 func _physics_process(delta):
 	if $"g1".rotation_degrees.z < 20 and direction > 0 \

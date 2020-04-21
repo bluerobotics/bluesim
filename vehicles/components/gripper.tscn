@@ -36,6 +36,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.157265, 1.30072, -0.007 )
 transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
 
 [node name="NEWTON-GRIPPER-ASSEM-R3-PUBLIC002" parent="g1/g1" index="0"]
+transform = Transform( 0.00387835, 0, 0, 0, 0.00387835, 0, 0, 0, 0.00387835, -0.133442, -0.0473643, -0.0921867 )
 material/0 = ExtResource( 2 )
 
 [node name="g2" type="KinematicBody" parent="."]
@@ -46,6 +47,15 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
 
 [node name="NEWTON-GRIPPER-ASSEM-R3-PUBLIC002" parent="g2/g2" index="0"]
 material/0 = ExtResource( 2 )
+
+[node name="Area" type="RigidBody" parent="."]
+sleeping = true
+can_sleep = false
+
+[node name="AreaShape" type="CollisionPolygon" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09012, 0 )
+depth = 0.1
+polygon = PoolVector2Array( -0.0863274, 0.32723, -0.00827863, 0.540108, 0.0624571, 0.331251 )
 
 [editable path="mainBody/newton"]
 
