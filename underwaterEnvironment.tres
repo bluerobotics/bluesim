@@ -1,0 +1,21 @@
+[gd_resource type="Environment" format=2]
+
+[resource]
+background_mode = 1
+background_color = Color( 0.0196078, 0.317647, 0.482353, 1 )
+background_energy = 4.7
+ambient_light_color = Color( 0.0196078, 0.317647, 0.482353, 1 )
+ambient_light_energy = 0.0
+ambient_light_sky_contribution = 0.0
+fog_enabled = true
+fog_color = Color( 0.0196078, 0.317647, 0.482353, 1 )
+fog_depth_begin = 0.1
+fog_depth_end = 20.0
+fog_height_enabled = true
+fog_height_min = 7.2
+fog_height_max = -16.2
+fog_height_curve = 0.90125
+auto_exposure_scale = 0.2
+auto_exposure_min_luma = 0.57
+auto_exposure_max_luma = 9.15
+auto_exposure_speed = 19.77

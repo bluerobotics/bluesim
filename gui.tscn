@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
@@ -11,23 +11,6 @@
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.913725, 0.0509804, 0.00784314, 1 )
-
-[sub_resource type="Environment" id=4]
-background_energy = 0.0
-ambient_light_color = Color( 0.941176, 0.941176, 0.941176, 1 )
-ambient_light_energy = 0.0
-ambient_light_sky_contribution = 0.0
-fog_enabled = true
-fog_color = Color( 0.0470588, 0.105882, 0.164706, 1 )
-fog_depth_begin = 0.1
-fog_depth_end = 20.0
-fog_height_enabled = true
-fog_height_min = -5.0
-fog_height_max = 10.0
-auto_exposure_scale = 0.2
-auto_exposure_min_luma = 0.57
-auto_exposure_max_luma = 9.15
-auto_exposure_speed = 19.77
 
 [node name="Node2D" type="Node2D"]
 show_behind_parent = true
@@ -116,6 +99,3 @@ transform = Transform( 1, 0, 0, 0, -0.477926, 0.8784, 0, -0.8784, -0.477926, 0, 
 light_color = Color( 0.239216, 0.501961, 0.729412, 1 )
 light_energy = 1.8
 light_indirect_energy = 16.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="ReferenceRect/ViewportCamera/Viewport"]
-environment = SubResource( 4 )
