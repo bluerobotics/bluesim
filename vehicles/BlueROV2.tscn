@@ -5,7 +5,7 @@
 [ext_resource path="res://underwaterEnvironment.tres" type="Environment" id=3]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.338, 0.22, 0.457 )
+extents = Vector3( 0.338, 0.22, 0.402446 )
 
 [node name="BlueRov" type="RigidBody" groups=[
 "vehicles",
@@ -17,7 +17,7 @@ linear_damp = 0.598
 angular_damp = -0.485
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, -0.196 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, -0.233295 )
 shape = SubResource( 1 )
 
 [node name="bluerovsimple" parent="." instance=ExtResource( 1 )]
