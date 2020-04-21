@@ -26,13 +26,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/dpi/allow_hidpi=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-
-[gui]
-
-theme/use_hidpi=true
 
 [input]
 
