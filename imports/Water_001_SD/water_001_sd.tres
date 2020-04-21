@@ -6,7 +6,6 @@
 
 [sub_resource type="StreamTexture" id=1]
 flags = 23
-load_path = "res://.import/Water_001_COLOR.jpg-79a7afdb227c998fe8f52f8bcae51cbd.s3tc.stex"
 
 [resource]
 flags_transparent = true
