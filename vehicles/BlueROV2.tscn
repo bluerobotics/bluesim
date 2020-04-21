@@ -60,5 +60,6 @@ spot_angle = 40.536
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, -0.0220498, -0.1933, 0.155789 )
 cull_mask = 524287
+environment = ExtResource( 3 )
 
 [editable path="bluerovsimple"]
