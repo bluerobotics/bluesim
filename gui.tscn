@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/BlueROV2.gd" type="Script" id=3]
 [ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=4]
+[ext_resource path="res://gripperTest.tscn" type="PackedScene" id=5]
 
 [sub_resource type="PrismMesh" id=1]
 
@@ -78,6 +79,9 @@ script = ExtResource( 3 )
 [node name="BlueROVFarView" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
 transform = Transform( -1, -8.9407e-08, -3.25841e-07, -8.9407e-08, 1, -2.84217e-14, 3.25841e-07, 0, -1, -0.715581, 1.98509, -8.00526 )
 
+[node name="BlueROVLateral" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 2.1728, -0.341506, 0.720083 )
+
 [node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.82365, 12.442 )
 mesh = SubResource( 1 )
@@ -99,3 +103,25 @@ transform = Transform( 1, 0, 0, 0, -0.477926, 0.8784, 0, -0.8784, -0.477926, 0, 
 light_color = Color( 0.239216, 0.501961, 0.729412, 1 )
 light_energy = 1.8
 light_indirect_energy = 16.0
+
+[node name="ViewportContainer" type="ViewportContainer" parent="ReferenceRect"]
+margin_left = 824.0
+margin_top = 232.0
+margin_right = 1024.0
+margin_bottom = 400.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportContainer"]
+size = Vector2( 200, 200 )
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportContainer/Viewport"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1.23694, 5.7916, 2.94429 )
+target = NodePath("../../../ViewportCamera/Viewport/BlueRov/BlueROVLateral")
+speed = 100.0
+enabled = true
+
+[node name="RigidBody" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66348, 2.03423, 3.69392 )
