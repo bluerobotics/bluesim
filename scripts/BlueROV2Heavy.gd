@@ -131,9 +131,6 @@ func _unhandled_input(event):
 			self.add_central_force(Vector3(0, 30, 0))
 		if event.pressed and event.scancode == KEY_Z:
 			self.add_central_force(Vector3(0, 0, 30))
-		# kills linear velocity
-		if event.pressed and event.scancode == KEY_C:
-			self.linear_velocity = Vector3(0,0,0)
 		# Reset position
 		if event.pressed and event.scancode == KEY_R:
 			set_translation(_initial_position)
