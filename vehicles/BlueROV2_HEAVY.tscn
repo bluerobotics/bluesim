@@ -49,24 +49,28 @@ transform = Transform( 0.228264, -0.101959, 4.45678e-09, 0, -1.09278e-08, -0.25,
 
 [node name="light1" type="SpotLight" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.337544, -0.426069, 0.27467 )
+spot_range = 13.9
 spot_attenuation = 6.0
 spot_angle = 72.0
 spot_angle_attenuation = 0.48
 
 [node name="light2" type="SpotLight" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.389553, -0.426069, 0.27467 )
+spot_range = 13.0
 spot_attenuation = 6.0
 spot_angle = 71.6
 spot_angle_attenuation = 0.48
 
 [node name="light4" type="SpotLight" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.337544, -0.0946505, 0.27467 )
+spot_range = 13.0
 spot_attenuation = 6.0
 spot_angle = 71.1
 spot_angle_attenuation = 0.48
 
 [node name="light3" type="SpotLight" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.389553, -0.0946505, 0.27467 )
+spot_range = 13.0
 spot_attenuation = 6.0
 spot_angle = 70.0
 spot_angle_attenuation = 0.48
