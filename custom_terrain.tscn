@@ -1,0 +1,173 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://scenery/tentacles_small.escn" type="PackedScene" id=1]
+[ext_resource path="res://scenery/rocknorth.escn" type="PackedScene" id=2]
+[ext_resource path="res://scenery/bigrock1.escn" type="PackedScene" id=3]
+[ext_resource path="res://scenery/terrain.escn" type="PackedScene" id=4]
+[ext_resource path="res://scenery/floor_plates2.escn" type="PackedScene" id=5]
+[ext_resource path="res://scenery/sunkenship.escn" type="PackedScene" id=6]
+[ext_resource path="res://scenery/reefrock.escn" type="PackedScene" id=7]
+[ext_resource path="res://scenery/pillarock.escn" type="PackedScene" id=8]
+[ext_resource path="res://scenery/floor_modul.escn" type="PackedScene" id=9]
+[ext_resource path="res://scenery/m_bottom_coral.escn" type="PackedScene" id=10]
+[ext_resource path="res://scenery/tentacles_newshader.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenery/pillarock2.escn" type="PackedScene" id=12]
+[ext_resource path="res://scenery/bottom_coral_large.escn" type="PackedScene" id=13]
+[ext_resource path="res://scenery/boat.escn" type="PackedScene" id=14]
+[ext_resource path="res://scenery/anchor1.escn" type="PackedScene" id=15]
+[ext_resource path="res://scenery/bunchrocks.escn" type="PackedScene" id=16]
+[ext_resource path="res://scenery/cannon.escn" type="PackedScene" id=17]
+[ext_resource path="res://scenery/barel.escn" type="PackedScene" id=18]
+
+[node name="Spatial" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27.9634, 0 )
+
+[node name="terrain" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21976, 40.4903, -5.54829 )
+
+[node name="bigrock1" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.752445, 15.8197, -41.1829 )
+
+[node name="bigrock2" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.446488, 0.237902, 0.862584, 0.470242, 0.882538, 1.31508e-08, -0.761263, 0.405623, -0.505913, -13.0644, 25.7862, -54.9464 )
+
+[node name="bigrock3" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.171206, -0.476064, 0.862584, -0.940999, 0.338409, -1.74229e-09, -0.291907, -0.811691, -0.505913, -43.7101, 25.7862, -36.9724 )
+
+[node name="pillarock" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3576, 23.6317, -45.2033 )
+
+[node name="pillarock3" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6148, 30.6563, -33.3313 )
+
+[node name="pillarock2" parent="." instance=ExtResource( 8 )]
+transform = Transform( -0.0386669, -0.999252, 0, 0.999252, -0.0386669, 0, 0, 0, 1, 7.1943, 23.6254, -52.2858 )
+
+[node name="floor_modul2" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.999254, -0.0385016, 0.00357168, 0.0386669, 0.994982, -0.0923016, -9.53926e-10, 0.0923707, 0.995725, -0.406495, 22.0436, -26.5859 )
+
+[node name="pillarock4" parent="." instance=ExtResource( 8 )]
+transform = Transform( -0.0386669, -0.999252, 0, 0.999252, -0.0386669, 0, 0, 0, 1, 0.488979, 25.7664, -52.2858 )
+
+[node name="rocknorth" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.785511, 0, -0.618847, 0, 1, 0, 0.618847, 0, 0.785511, 20.1429, 31.2636, -48.4169 )
+
+[node name="rocknorth2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.854622, 0, -0.519251, 0, 1, 0, 0.519251, 0, 0.854622, 34.2871, 32.3313, -23.5079 )
+
+[node name="rocknorth3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.676839, 0, -0.880113, 0, 1.44072, 0, 1.25472, 0, 0.474764, 32.9121, 32.3871, -39.2142 )
+
+[node name="reefrock" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.89213, 18.7479, -31.2417 )
+
+[node name="tentacles" parent="." instance=ExtResource( 11 )]
+transform = Transform( 0.239401, -0.270742, 0.932408, 0.00367673, 0.960581, 0.277978, -0.970914, -0.0631203, 0.230959, 13.0304, 21.7307, -33.3548 )
+
+[node name="bunchrocks" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.239401, -0.0807488, 0.967556, 0.00367674, 0.996604, 0.0822631, -0.970914, -0.0161365, 0.238885, 2.69544, 21.158, -34.7607 )
+
+[node name="bunchrocks2" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.239401, -0.0807488, 0.967556, 0.00367675, 0.996604, 0.0822631, -0.970914, -0.0161365, 0.238885, 0.854283, 21.0015, -35.2153 )
+
+[node name="tentacles2" parent="." instance=ExtResource( 11 )]
+transform = Transform( 0.239401, -0.0807487, 0.967556, 0.00367674, 0.996604, 0.0822631, -0.970914, -0.0161365, 0.238885, 0.0568534, 22.9146, -25.2635 )
+
+[node name="sunkenship" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.238804, -0.0439739, 0.970072, 0.346109, 0.937221, -0.0427176, -0.907293, 0.345952, 0.239032, -27.4427, 18.2085, 16.4135 )
+
+[node name="tentacles_small" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4175, 21.5738, -27.0149 )
+
+[node name="tentacles5" parent="." instance=ExtResource( 11 )]
+transform = Transform( 0.523447, 0, -1.00331, 0, 1.06213, 0, 0.81192, 0, 0.646836, -5.53398, 15.1481, 17.3696 )
+
+[node name="cannon" parent="." instance=ExtResource( 17 )]
+transform = Transform( -0.409965, -0.0311397, -1.08035, -0.146946, 1.04893, 0.046958, 0.862292, 0.163948, -0.505635, -8.52355, 19.1473, -4.23183 )
+
+[node name="tentacles6" parent="." instance=ExtResource( 11 )]
+transform = Transform( -0.295304, -0.302034, -1.08472, -0.114398, 1.01784, -0.310445, 0.912644, 0.0298555, -0.389897, -0.30884, 15.1481, 25.4743 )
+
+[node name="bottom_coral_large" parent="." instance=ExtResource( 13 )]
+transform = Transform( 0.997261, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -4.86916, 20.7547, -9.62177 )
+
+[node name="bunchrocks3" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.997262, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -2.30877, 19.5297, -17.0446 )
+
+[node name="bunchrocks4" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.997261, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -13.626, 19.6956, -11.5944 )
+
+[node name="bunchrocks6" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.569589, -0.0243531, 0.203485, 0.00209998, 1.0248, 0.0690725, -0.139059, -0.083443, 0.834582, -10.7983, 20.3345, -23.2416 )
+
+[node name="bunchrocks10" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1.48021, -0.0168707, 0.508771, -0.00131637, 0.709937, 0.141019, -0.449043, -0.0578054, 1.67665, -12.3282, 26.8888, -45.0694 )
+
+[node name="bunchrocks7" parent="." instance=ExtResource( 16 )]
+transform = Transform( -0.454817, -0.0243531, -0.543604, 0.0182966, 1.0248, -0.0636949, 0.369544, -0.0834429, -0.665717, -4.41534, 20.5935, -21.7522 )
+
+[node name="bunchrocks8" parent="." instance=ExtResource( 16 )]
+transform = Transform( -0.454817, -0.0243531, -0.543604, 0.0182966, 1.0248, -0.0636949, 0.369544, -0.0834429, -0.665717, -3.78308, 20.8348, -27.2204 )
+
+[node name="bunchrocks9" parent="." instance=ExtResource( 16 )]
+transform = Transform( -0.454817, -0.0243531, -0.543604, 0.0182966, 1.0248, -0.0636949, 0.369544, -0.0834429, -0.665717, -2.99717, 20.7719, -25.4652 )
+
+[node name="boat2" parent="." instance=ExtResource( 14 )]
+transform = Transform( 0.394818, 0.776786, 0.397651, 0.142894, -0.532828, 0.707431, 0.935093, -0.246555, -0.276002, -2.48794, 19.574, 18.1819 )
+
+[node name="bunchrocks12" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.997261, -0.023683, 0.242344, 0.00367675, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -2.76992, 19.3732, -18.936 )
+
+[node name="bunchrocks13" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1.36054, -0.0289895, -0.224851, 0.0516933, 1.2199, 0.080595, 0.271959, -0.0993286, 1.10872, -0.583748, 21.0019, -20.6282 )
+
+[node name="bunchrocks5" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.997261, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -13.673, 20.4957, -15.1515 )
+
+[node name="bunchrocks11" parent="." instance=ExtResource( 16 )]
+transform = Transform( -0.454817, -0.0243531, -0.543604, 0.0182966, 1.0248, -0.0636949, 0.369544, -0.0834428, -0.665717, -3.69667, -1.77465, -25.9786 )
+
+[node name="tentacles3" parent="." instance=ExtResource( 11 )]
+transform = Transform( 0.997262, -0.0712022, 0.232856, 0.00367673, 0.960581, 0.277978, -0.243469, -0.276361, 0.958211, 1.32244, 20.1024, -6.97195 )
+
+[node name="tentacles4" parent="." instance=ExtResource( 11 )]
+transform = Transform( 0.997262, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -12.2235, 22.0763, -14.9975 )
+
+[node name="sunkenship2" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.939084, -0.335703, 0.243405, 0.346109, 0.937221, -0.0427176, -0.213784, 0.12436, 0.99632, -63.1961, 16.5802, -20.1548 )
+
+[node name="tentacles_small2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.47514, 0, -0.90998, 0, 1, 0, 0.90998, 0, 0.47514, -5.68823, 19.9455, -6.33738 )
+
+[node name="floor_plates3" parent="." instance=ExtResource( 5 )]
+transform = Transform( 0.47514, 0, -0.90998, 0, 1, 0, 0.90998, 0, 0.47514, -2.09955, 21.0618, -12.632 )
+
+[node name="anchor1" parent="." instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, -0.271592, -0.962413, 0, 0.962413, -0.271592, -9.45984, 15.833, 4.00539 )
+
+[node name="m_bottom_coral" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 0.926974, -0.375124, 0, 0.375124, 0.926974, -3.96163, 21.0876, -19.8341 )
+
+[node name="pillarock5" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5217, 32.2871, -44.4153 )
+
+[node name="pillarock6" parent="." instance=ExtResource( 12 )]
+transform = Transform( 0.866428, -0.241054, 0.424121, -0.236654, -0.882537, -0.115843, -0.439657, -1.36326e-08, 0.898166, -32.846, 32.2871, -44.4153 )
+
+[node name="bunchrocks14" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1.05215, 0, -1.29995, 0, 2.16907, 0, 1.632, 0, 0.838084, -2.14108, 12.0825, 9.41737 )
+
+[node name="floor_modul" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.541855, 0, -0.840472, 0, 1, 0, 0.840472, 0, 0.541855, 2.04129, 15.1941, 14.8597 )
+
+[node name="floor_plates4" parent="." instance=ExtResource( 5 )]
+transform = Transform( 0.541855, 0, -0.840472, 0, 1, 0, 0.840472, 0, 0.541855, -1.7731, 15.0034, 22.0043 )
+
+[node name="floor_plates2" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.21316, 22.6902, -32.9415 )
+
+[node name="barel" parent="." instance=ExtResource( 18 )]
+transform = Transform( 0.610682, -0.791107, -0.0348931, 0.790879, 0.611531, -0.0232471, 0.0397291, -0.0133997, 0.999121, -11.0559, 20.5875, -19.6803 )
+
+[node name="boat" parent="." instance=ExtResource( 14 )]
+transform = Transform( 0.806064, -0.590799, -0.0348931, 0.590344, 0.806817, -0.0232471, 0.0418867, -0.00186031, 0.999121, -7.1678, 20.4563, -15.6497 )

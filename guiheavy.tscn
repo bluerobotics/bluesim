@@ -4,7 +4,7 @@
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/BlueROV2Heavy.gd" type="Script" id=3]
 [ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=4]
-[ext_resource path="res://scenery/tentacles_newshader.tscn" type="PackedScene" id=5]
+[ext_resource path="res://custom_terrain.tscn" type="PackedScene" id=5]
 [ext_resource path="res://default_env.tres" type="Environment" id=6]
 
 [sub_resource type="PrismMesh" id=1]
@@ -79,9 +79,9 @@ mesh = SubResource( 1 )
 skin = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="tentacles" parent="ReferenceRect/ViewportCamera/Viewport/MeshInstance" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.28217, -10.2594, 2.59839 )
-
 [node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109867, 2.03171, 0.175741 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109867, 5.92673, 0.175741 )
 script = ExtResource( 3 )
+
+[node name="Spatial" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2419, -20.4114, 26.6054 )
