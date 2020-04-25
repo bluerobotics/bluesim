@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2_HEAVY.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/BlueROV2Heavy.gd" type="Script" id=3]
 [ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=4]
-[ext_resource path="res://china.tscn" type="PackedScene" id=5]
 [ext_resource path="res://default_env.tres" type="Environment" id=6]
 
 [sub_resource type="PrismMesh" id=1]
@@ -53,9 +52,6 @@ enabled = true
 script = ExtResource( 4 )
 
 [node name="Spatial" parent="ReferenceRect/ViewportGlobal/Viewport" instance=ExtResource( 2 )]
-
-[node name="Spatial2" parent="ReferenceRect/ViewportGlobal/Viewport" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.2083, -12.1101, 44.7377 )
 
 [node name="ViewportCamera" type="ViewportContainer" parent="ReferenceRect"]
 anchor_left = 1.0
