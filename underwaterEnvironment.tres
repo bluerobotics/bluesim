@@ -2,16 +2,16 @@
 
 [resource]
 background_mode = 1
-background_color = Color( 0, 0.176471, 0.278431, 1 )
-background_energy = 4.7
-ambient_light_color = Color( 0.0196078, 0.317647, 0.482353, 1 )
+background_color = Color( 0, 0.117647, 0.372549, 1 )
+background_energy = 0.0
+ambient_light_color = Color( 0, 0.117647, 0.372549, 1 )
 ambient_light_energy = 0.0
 ambient_light_sky_contribution = 0.0
 fog_enabled = true
-fog_color = Color( 0.0196078, 0.317647, 0.482353, 1 )
+fog_color = Color( 0, 0.117647, 0.372549, 1 )
 fog_depth_begin = 0.7
-fog_depth_end = 13.2
-fog_height_enabled = true
+fog_depth_end = 21.9
+fog_depth_curve = 2.14355
 fog_height_min = 7.2
 fog_height_max = -16.2
 fog_height_curve = 0.90125
