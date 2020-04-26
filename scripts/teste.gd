@@ -41,6 +41,7 @@ func update_fog():
 		underwater_env.ambient_light_color = Color("a5d6f1").linear_interpolate(Color("001e5f"), 1-(fog_distance/50))
 
 		for camera in cameras:
+			depth = camera.global_transform.origin.y - surface_altitude
 			camera.environment = surface_env if depth > 0 else underwater_env
 
 func _physics_process(_delta):
