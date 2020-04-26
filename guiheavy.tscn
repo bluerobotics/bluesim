@@ -26,45 +26,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ViewportGlobal" type="ViewportContainer" parent="ReferenceRect"]
-pause_mode = 2
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -187.369
-margin_right = -187.369
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportGlobal"]
-size = Vector2( 1024, 600 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportGlobal/Viewport" groups=[
-"cameras",
-]]
-transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
-environment = ExtResource( 6 )
-target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
-speed = 10.0
-enabled = true
-script = ExtResource( 4 )
-
-[node name="Spatial" parent="ReferenceRect/ViewportGlobal/Viewport" instance=ExtResource( 2 )]
-
 [node name="ViewportCamera" type="ViewportContainer" parent="ReferenceRect"]
-anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -615.0
-margin_top = -360.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
@@ -73,11 +37,12 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportCamera"]
-size = Vector2( 615, 360 )
+size = Vector2( 1024, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="cameraPosition" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.58449, -1.43116 )
 script = ExtResource( 7 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport"]
@@ -92,6 +57,40 @@ script = ExtResource( 3 )
 
 [node name="cameraTarget" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372449, 0 )
+
+[node name="ViewportGlobal" type="ViewportContainer" parent="ReferenceRect"]
+pause_mode = 2
+anchor_top = 0.003
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 598.0
+margin_top = 0.2
+margin_bottom = -342.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportGlobal"]
+size = Vector2( 426, 256 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportGlobal/Viewport" groups=[
+"cameras",
+]]
+transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
+environment = ExtResource( 6 )
+target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
+speed = 10.0
+enabled = true
+script = ExtResource( 4 )
+
+[node name="Spatial" parent="ReferenceRect/ViewportGlobal/Viewport" instance=ExtResource( 2 )]
 
 [node name="Spatial" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2419, -20.4114, 26.6054 )
