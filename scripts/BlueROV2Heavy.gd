@@ -116,10 +116,11 @@ func actuate_servo(id, percentage):
 		8:
 			$Camera.rotation_degrees.x = -45 +90*percentage
 		9:
-			$light1.light_energy = percentage
-			$light2.light_energy = percentage
-			$light3.light_energy = percentage
-			$light4.light_energy = percentage
+			$light1.light_energy = percentage * 5
+			$light2.light_energy = percentage * 5
+			$light3.light_energy = percentage * 5
+			$light4.light_energy = percentage * 5
+			$scatterlight.light_energy = percentage * 2.5
 		
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -152,7 +153,7 @@ func _unhandled_input(event):
 			self.look_at(Vector3(100,0,0),Vector3(0,0,-100)) #expects +Y
 			mode = RigidBody.MODE_STATIC
 	if event.is_action("lights_up"):
-			var percentage = min(max(0,$light1.light_energy + 0.1), 1)
+			var percentage = min(max(0,$light1.light_energy + 0.1), 5)
 			$light1.light_energy = percentage
 			$light2.light_energy = percentage
 			$light3.light_energy = percentage
@@ -160,7 +161,7 @@ func _unhandled_input(event):
 			$scatterlight.light_energy = percentage * 0.5
 			
 	if event.is_action("lights_down"):
-			var percentage = min(max(0,$light1.light_energy - 0.1), 1)
+			var percentage = min(max(0,$light1.light_energy - 0.1), 5)
 			$light1.light_energy = percentage
 			$light2.light_energy = percentage
 			$light3.light_energy = percentage
