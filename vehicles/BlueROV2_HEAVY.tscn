@@ -83,3 +83,8 @@ environment = ExtResource( 3 )
 
 [node name="bluerov cleaned decimated" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.176097, -0.324627, -0.338943 )
+
+[node name="scatterlight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.236395, 0.544135 )
+light_energy = 0.5
+omni_attenuation = 9.18959

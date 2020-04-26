@@ -151,6 +151,21 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_O:
 			self.look_at(Vector3(100,0,0),Vector3(0,0,-100)) #expects +Y
 			mode = RigidBody.MODE_STATIC
+	if event.is_action("lights_up"):
+			var percentage = min(max(0,$light1.light_energy + 0.1), 1)
+			$light1.light_energy = percentage
+			$light2.light_energy = percentage
+			$light3.light_energy = percentage
+			$light4.light_energy = percentage
+			$scatterlight.light_energy = percentage * 0.5
+			
+	if event.is_action("lights_down"):
+			var percentage = min(max(0,$light1.light_energy - 0.1), 1)
+			$light1.light_energy = percentage
+			$light2.light_energy = percentage
+			$light3.light_energy = percentage
+			$light4.light_energy = percentage
+			$scatterlight.light_energy = percentage * 0.5
 
 func process_keys():
 	if Input.is_action_pressed("forward"):
