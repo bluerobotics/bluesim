@@ -80,6 +80,7 @@ spot_angle_attenuation = 0.48
 ]]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.00410311, -0.213594, 0.155789 )
 environment = ExtResource( 3 )
+fov = 80.0
 
 [node name="bluerov cleaned decimated" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.176097, -0.324627, -0.338943 )
