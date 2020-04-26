@@ -75,7 +75,9 @@ spot_attenuation = 6.0
 spot_angle = 70.0
 spot_angle_attenuation = 0.48
 
-[node name="Camera" type="Camera" parent="."]
+[node name="Camera" type="Camera" parent="." groups=[
+"cameras",
+]]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.00410311, -0.213594, 0.155789 )
 environment = ExtResource( 3 )
 
