@@ -40,6 +40,8 @@ __meta__ = {
 size = Vector2( 1024, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
+shadow_atlas_size = 2048
+shadow_atlas_quad_1 = 3
 
 [node name="cameraPosition" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.58449, -1.43116 )
@@ -79,6 +81,8 @@ __meta__ = {
 size = Vector2( 426, 256 )
 handle_input_locally = false
 render_target_update_mode = 3
+shadow_atlas_size = 512
+shadow_atlas_quad_1 = 3
 
 [node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportGlobal/Viewport" groups=[
 "cameras",
