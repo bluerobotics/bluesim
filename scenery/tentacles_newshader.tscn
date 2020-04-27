@@ -104,7 +104,7 @@ void fragment() {
 // Output:0
 	ALBEDO = n_out2p0;
 	ROUGHNESS = dot(n_out4p0, vec3(0.333333, 0.333333, 0.333333));
-	NORMAL = n_out3p0;
+	NORMALMAP = n_out3p0;
 
 }
 
@@ -113,7 +113,7 @@ void light() {
 
 }
 "
-graph_offset = Vector2( 0, -150 )
+graph_offset = Vector2( 0, 75 )
 nodes/vertex/0/position = Vector2( 640, 160 )
 nodes/vertex/2/node = SubResource( 5 )
 nodes/vertex/2/position = Vector2( -780, 60 )
@@ -138,10 +138,10 @@ nodes/fragment/0/position = Vector2( 820, 60 )
 nodes/fragment/2/node = SubResource( 1 )
 nodes/fragment/2/position = Vector2( 480, -160 )
 nodes/fragment/3/node = SubResource( 2 )
-nodes/fragment/3/position = Vector2( -20, 80 )
+nodes/fragment/3/position = Vector2( 280, 160 )
 nodes/fragment/4/node = SubResource( 3 )
 nodes/fragment/4/position = Vector2( 180, -80 )
-nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 3, 0, 0, 7, 4, 0, 0, 3 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 4, 0, 0, 3, 3, 0, 0, 8 )
 nodes/light/0/position = Vector2( 400, 160 )
 
 [sub_resource type="ShaderMaterial" id=14]
