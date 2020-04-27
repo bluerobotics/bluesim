@@ -101,9 +101,6 @@ transform = Transform( 1, 0, 0, 0, 0.999908, -0.0135782, 0, 0.0135782, 0.999908,
 [node name="t7" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.429783, -0.169, -0.353086 )
 
-[node name="Gripper" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.228264, -0.101959, 4.45678e-09, 0, -1.09278e-08, -0.25, 0.101959, 0.228264, -9.97772e-09, 0.145915, -0.485667, -0.043942 )
-
 [node name="light1" type="SpotLight" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.337544, -0.426069, 0.27467 )
 visible = false
