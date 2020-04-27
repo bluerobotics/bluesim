@@ -12,6 +12,8 @@ var calculated_acceleration = Vector3(0, 0, 0);
 var buoyancy = 1.6 + self.mass * 9.8 # Newtons
 var _initial_position = 0
 
+onready var light_glows = [$light_glow, $light_glow2, $light_glow3, $light_glow4]
+
 func connect_fmd_in():
 	if fdm_in.listen(9002) != OK:
 		print("Failed to connect fdm_in")
@@ -121,6 +123,7 @@ func actuate_servo(id, percentage):
 			$light3.light_energy = percentage * 5
 			$light4.light_energy = percentage * 5
 			$scatterlight.light_energy = percentage * 2.5
+			
 		
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -154,6 +157,9 @@ func _unhandled_input(event):
 			mode = RigidBody.MODE_STATIC
 	if event.is_action("lights_up"):
 			var percentage = min(max(0,$light1.light_energy + 0.1), 5)
+			if percentage > 0:
+				for light in light_glows:
+					self.add_child(light)
 			$light1.light_energy = percentage
 			$light2.light_energy = percentage
 			$light3.light_energy = percentage
@@ -167,6 +173,9 @@ func _unhandled_input(event):
 			$light3.light_energy = percentage
 			$light4.light_energy = percentage
 			$scatterlight.light_energy = percentage * 0.5
+			if percentage == 0:
+				for light in light_glows:
+					self.remove_child(light)
 
 func process_keys():
 	if Input.is_action_pressed("forward"):
