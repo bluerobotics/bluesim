@@ -80,3 +80,8 @@ material/0 = ExtResource( 1 )
 autoplay = "uv_water"
 playback_speed = 0.51
 anims/uv_water = SubResource( 6 )
+
+[node name="sun" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 33.518, 0 )
+light_energy = 0.19
+shadow_enabled = true

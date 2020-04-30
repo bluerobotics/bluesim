@@ -39,6 +39,7 @@ func update_fog():
 		underwater_env.fog_color = new_color
 		underwater_env.ambient_light_energy = fog_distance/100
 		underwater_env.ambient_light_color = Color("a5d6f1").linear_interpolate(Color("001e5f"), 1-(fog_distance/50))
+		$sun.light_energy = max(0.3 * (50 + 3 * depth)/50,0)
 
 		for camera in cameras:
 			depth = camera.global_transform.origin.y - surface_altitude
