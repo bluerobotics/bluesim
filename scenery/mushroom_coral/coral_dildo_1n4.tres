@@ -1,0 +1,82 @@
+[gd_resource type="ShaderMaterial" load_steps=10 format=2]
+
+[ext_resource path="res://scenery/dildo_coral/ThickStaghornCoral1n4_curve.TGA" type="Texture" id=1]
+[ext_resource path="res://scenery/dildo_coral/ThickStaghornCoral1n4_normals.TGA" type="Texture" id=2]
+[ext_resource path="res://scenery/dildo_coral/ThickStaghornCoral1n4_vcolor.TGA" type="Texture" id=3]
+[ext_resource path="res://scenery/dildo_coral/ThickStaghornCoral1n4_height.TGA" type="Texture" id=4]
+
+[sub_resource type="VisualShaderNodeTexture" id=1]
+texture = ExtResource( 3 )
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture" id=2]
+texture = ExtResource( 2 )
+texture_type = 2
+
+[sub_resource type="VisualShaderNodeTexture" id=3]
+texture = ExtResource( 1 )
+
+[sub_resource type="VisualShaderNodeTexture" id=4]
+texture = ExtResource( 4 )
+
+[sub_resource type="VisualShader" id=5]
+code = "shader_type spatial;
+uniform sampler2D tex_frg_2 : hint_albedo;
+uniform sampler2D tex_frg_5;
+uniform sampler2D tex_frg_3 : hint_normal;
+uniform sampler2D tex_frg_6;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Texture:2
+	vec4 tex_frg_2_read = texture(tex_frg_2, UV.xy);
+	vec3 n_out2p0 = tex_frg_2_read.rgb;
+	float n_out2p1 = tex_frg_2_read.a;
+
+// Texture:5
+	vec4 tex_frg_5_read = texture(tex_frg_5, UV.xy);
+	vec3 n_out5p0 = tex_frg_5_read.rgb;
+	float n_out5p1 = tex_frg_5_read.a;
+
+// Texture:3
+	vec4 tex_frg_3_read = texture(tex_frg_3, UV.xy);
+	vec3 n_out3p0 = tex_frg_3_read.rgb;
+	float n_out3p1 = tex_frg_3_read.a;
+
+// Texture:6
+	vec4 tex_frg_6_read = texture(tex_frg_6, UV.xy);
+	vec3 n_out6p0 = tex_frg_6_read.rgb;
+	float n_out6p1 = tex_frg_6_read.a;
+
+// Output:0
+	ALBEDO = n_out2p0;
+	ROUGHNESS = dot(n_out5p0, vec3(0.333333, 0.333333, 0.333333));
+	NORMALMAP = n_out3p0;
+	NORMALMAP_DEPTH = dot(n_out6p0, vec3(0.333333, 0.333333, 0.333333));
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -268, 220.5 )
+nodes/fragment/2/node = SubResource( 1 )
+nodes/fragment/2/position = Vector2( -140, 0 )
+nodes/fragment/3/node = SubResource( 2 )
+nodes/fragment/3/position = Vector2( -80, 540 )
+nodes/fragment/5/node = SubResource( 3 )
+nodes/fragment/5/position = Vector2( 100, 180 )
+nodes/fragment/6/node = SubResource( 4 )
+nodes/fragment/6/position = Vector2( -260, 240 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 3, 0, 0, 8, 5, 0, 0, 3, 6, 0, 0, 9 )
+
+[resource]
+shader = SubResource( 5 )

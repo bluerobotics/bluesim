@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scenery/mushroom_coral/tile0005.png" type="Texture" id=1]
+[ext_resource path="res://scenery/mushroom_coral/tile0003.png" type="Texture" id=2]
+[ext_resource path="res://scenery/mushroom_coral/coral_mushroom.escn" type="PackedScene" id=3]
+[ext_resource path="res://scenery/mushroom_coral/tile0001.png" type="Texture" id=4]
+[ext_resource path="res://scenery/mushroom_coral/tile0000.png" type="Texture" id=5]
+[ext_resource path="res://scenery/mushroom_coral/tile0004.png" type="Texture" id=6]
+[ext_resource path="res://scenery/mushroom_coral/tile0002.png" type="Texture" id=7]
+
+[sub_resource type="AnimatedTexture" id=1]
+flags = 7
+frames = 10
+fps = 7.6
+frame_0/texture = ExtResource( 5 )
+frame_1/texture = ExtResource( 4 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 7 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 2 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 6 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 1 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 6 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 2 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 4 )
+frame_8/delay_sec = 0.0
+frame_9/texture = ExtResource( 5 )
+frame_9/delay_sec = 0.0
+
+[sub_resource type="VisualShaderNodeTexture" id=2]
+texture = SubResource( 1 )
+
+[sub_resource type="VisualShaderNodeVectorOp" id=3]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 20, 20, 20 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id=4]
+input_name = "uv"
+
+[sub_resource type="VisualShader" id=5]
+code = "shader_type spatial;
+uniform sampler2D tex_frg_2;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:4
+	vec3 n_out4p0 = vec3(UV, 0.0);
+
+// VectorOp:3
+	vec3 n_in3p1 = vec3(20.00000, 20.00000, 20.00000);
+	vec3 n_out3p0 = n_out4p0 * n_in3p1;
+
+// Texture:2
+	vec4 tex_frg_2_read = texture(tex_frg_2, n_out3p0.xy);
+	vec3 n_out2p0 = tex_frg_2_read.rgb;
+	float n_out2p1 = tex_frg_2_read.a;
+
+// Output:0
+	ALBEDO = n_out2p0;
+	NORMALMAP_DEPTH = dot(n_out2p0, vec3(0.333333, 0.333333, 0.333333));
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -709, -20 )
+nodes/fragment/2/node = SubResource( 2 )
+nodes/fragment/2/position = Vector2( 140, 60 )
+nodes/fragment/3/node = SubResource( 3 )
+nodes/fragment/3/position = Vector2( -60, 160 )
+nodes/fragment/4/node = SubResource( 4 )
+nodes/fragment/4/position = Vector2( -260, 180 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 2, 0, 0, 9, 4, 0, 3, 0, 3, 0, 2, 0 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+
+[node name="coral_mushroom" instance=ExtResource( 3 )]
+
+[node name="Coral_Mushroom_42" parent="." index="0"]
+material/0 = SubResource( 6 )
