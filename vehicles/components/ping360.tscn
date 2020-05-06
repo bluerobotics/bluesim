@@ -8,7 +8,7 @@ size = Vector3( 0.1, 0.1, 0.1 )
 
 [sub_resource type="PrismMesh" id=2]
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.262745, 0.976471, 0.0352941, 1 )
 emission_enabled = true
 emission = Color( 0.313726, 1, 0, 1 )
@@ -16,7 +16,7 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="QuadMesh" id=5]
+[sub_resource type="QuadMesh" id=4]
 
 [node name="sonar" type="MeshInstance"]
 transform = Transform( 0.0614213, 0, 0, 0, 0.0614213, 0, 0, 0, 0.0614213, -0.0215761, -0.0488096, -0.000839435 )
@@ -28,12 +28,12 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0867386, 0, -0.0166039 )
 visible = false
 mesh = SubResource( 2 )
-material/0 = SubResource( 4 )
+material/0 = SubResource( 3 )
 
 [node name="display" type="MeshInstance" parent="."]
 transform = Transform( -8.97672, 0, -8.9366e-07, 0, 8.97672, 0, 4.35954e-07, 0, -1.90355, -3.13375, -6.91549, 14.4054 )
 layers = 2
-mesh = SubResource( 5 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
