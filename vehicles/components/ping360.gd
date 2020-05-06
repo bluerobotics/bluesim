@@ -11,6 +11,7 @@ var target_offsets = [0.0, 0.01, 0.02, 0.04, 0.07, 0.09, 0.11, 0.13, 0.15, 0.17,
 # var a = 2
 # var b = "text"
 var angle = 0
+var last_angle = angle
 # ColorRect is the Node on which I have my shader material attached
 var img = Image.new()
 var texture = ImageTexture.new()
@@ -44,7 +45,8 @@ func _ready():
 
 	
 func _physics_process(delta):
-
+	if last_angle == angle:
+		return
 	var space_state = get_world().direct_space_state
 	# use global coordinates, not local to node
 	var target_list = []
@@ -60,11 +62,7 @@ func _physics_process(delta):
 			var distance = distance_vector.length()*1000/max_distance
 			var intensity = abs(result['normal'].dot(distance_vector.normalized()))
 			last_points.append([distance, intensity])
-			$target2.look_at(result['normal'], self.global_transform.basis.xform(Vector3(0,0,100)))
-			$target2.global_transform.origin = result['position']
-		else:
-			$target2.global_transform.origin = global_transform.origin
-
+	last_angle = angle
 
 func _process(delta):
 	angle = (angle + 1) % 360
