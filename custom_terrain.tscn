@@ -28,35 +28,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.22, 40.49, -5.48 )
 [node name="bigrock1" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.752445, 15.8197, -41.1829 )
 
-[node name="bigrock2" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.446488, 0.237902, 0.862584, 0.470242, 0.882538, 1.31508e-08, -0.761263, 0.405623, -0.505913, -13.0644, 25.7862, -54.9464 )
-
-[node name="bigrock3" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.171206, -0.476064, 0.862584, -0.940999, 0.338409, -1.74229e-09, -0.291907, -0.811691, -0.505913, -43.7101, 25.7862, -36.9724 )
-
 [node name="pillarock" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3576, 23.6317, -45.2033 )
 
-[node name="pillarock3" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6148, 30.6563, -33.3313 )
-
-[node name="pillarock2" parent="." instance=ExtResource( 8 )]
-transform = Transform( -0.0386669, -0.999252, 0, 0.999252, -0.0386669, 0, 0, 0, 1, 7.1943, 23.6254, -52.2858 )
-
 [node name="floor_modul2" parent="." instance=ExtResource( 9 )]
-transform = Transform( 0.999254, -0.0385016, 0.00357168, 0.0386669, 0.994982, -0.0923016, -9.53926e-10, 0.0923707, 0.995725, -0.406495, 22.0436, -26.5859 )
-
-[node name="pillarock4" parent="." instance=ExtResource( 8 )]
-transform = Transform( -0.0386669, -0.999252, 0, 0.999252, -0.0386669, 0, 0, 0, 1, 0.488979, 25.7664, -52.2858 )
+transform = Transform( 0.999254, -0.0385016, 0.00357168, 0.0386301, 0.990008, -0.135629, 0.00168595, 0.135666, 0.990754, -0.406495, 21.7504, -26.5859 )
 
 [node name="rocknorth" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.785511, 0, -0.618847, 0, 1, 0, 0.618847, 0, 0.785511, 20.1429, 31.2636, -48.4169 )
+transform = Transform( 0.785511, 0, -0.618847, 0, 1, 0, 0.618847, 0, 0.785511, 16.6875, 31.2636, -41.406 )
 
 [node name="rocknorth2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.854622, 0, -0.519251, 0, 1, 0, 0.519251, 0, 0.854622, 34.2871, 32.3313, -23.5079 )
-
-[node name="rocknorth3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.676839, 0, -0.880113, 0, 1.44072, 0, 1.25472, 0, 0.474764, 32.9121, 32.3871, -39.2142 )
+transform = Transform( 0.629035, 0, -0.777377, 0, 1, 0, 0.777377, 0, 0.629035, 29.1698, 32.3313, -24.2952 )
 
 [node name="reefrock" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.89213, 18.7479, -31.2417 )
@@ -100,9 +82,6 @@ transform = Transform( 0.997261, -0.023683, 0.242344, 0.00367674, 0.996604, 0.08
 [node name="bunchrocks6" parent="." instance=ExtResource( 16 )]
 transform = Transform( 0.569589, -0.0243531, 0.203485, 0.00209998, 1.0248, 0.0690725, -0.139059, -0.083443, 0.834582, -10.7983, 20.3345, -23.2416 )
 
-[node name="bunchrocks10" parent="." instance=ExtResource( 16 )]
-transform = Transform( 1.48021, -0.0168707, 0.508771, -0.00131637, 0.709937, 0.141019, -0.449043, -0.0578054, 1.67665, -12.3282, 26.8888, -45.0694 )
-
 [node name="bunchrocks7" parent="." instance=ExtResource( 16 )]
 transform = Transform( -0.454817, -0.0243531, -0.543604, 0.0182966, 1.0248, -0.0636949, 0.369544, -0.0834429, -0.665717, -4.41534, 20.5935, -21.7522 )
 
@@ -123,9 +102,6 @@ transform = Transform( 1.36054, -0.0289895, -0.224851, 0.0516933, 1.2199, 0.0805
 
 [node name="bunchrocks5" parent="." instance=ExtResource( 16 )]
 transform = Transform( 0.997261, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -13.673, 20.4957, -15.1515 )
-
-[node name="bunchrocks11" parent="." instance=ExtResource( 16 )]
-transform = Transform( -0.454817, -0.0243531, -0.543604, 0.0182966, 1.0248, -0.0636949, 0.369544, -0.0834428, -0.665717, -3.69667, -1.77465, -25.9786 )
 
 [node name="tentacles3" parent="." instance=ExtResource( 11 )]
 transform = Transform( 0.997262, -0.0712022, 0.232856, 0.00367673, 0.960581, 0.277978, -0.243469, -0.276361, 0.958211, 1.32244, 20.1024, -6.97195 )
@@ -151,11 +127,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5217, 32.2871, -44.4153 )
 [node name="pillarock6" parent="." instance=ExtResource( 12 )]
 transform = Transform( 0.866428, -0.241054, 0.424121, -0.236654, -0.882537, -0.115843, -0.439657, -1.36326e-08, 0.898166, -32.846, 32.2871, -44.4153 )
 
-[node name="bunchrocks14" parent="." instance=ExtResource( 16 )]
-transform = Transform( 1.05215, 0, -1.29995, 0, 2.16907, 0, 1.632, 0, 0.838084, -2.14108, 12.0825, 9.41737 )
-
 [node name="floor_modul" parent="." instance=ExtResource( 9 )]
-transform = Transform( 0.541855, 0, -0.840472, 0, 1, 0, 0.840472, 0, 0.541855, 2.04129, 15.1941, 14.8597 )
+transform = Transform( 0.541855, 0, -0.840472, 0, 1, 0, 0.840472, 0, 0.541855, -3.92583, 14.5953, 9.75777 )
 
 [node name="floor_plates4" parent="." instance=ExtResource( 5 )]
 transform = Transform( 0.541855, 0, -0.840472, 0, 1, 0, 0.840472, 0, 0.541855, -1.7731, 15.0034, 22.0043 )
