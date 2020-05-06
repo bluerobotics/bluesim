@@ -133,9 +133,6 @@ transform = Transform( 0.997262, -0.0712022, 0.232856, 0.00367673, 0.960581, 0.2
 [node name="tentacles4" parent="." instance=ExtResource( 11 )]
 transform = Transform( 0.997262, -0.023683, 0.242344, 0.00367674, 0.996604, 0.0822631, -0.24347, -0.0811469, 0.993961, -12.2235, 22.0763, -14.9975 )
 
-[node name="sunkenship2" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.939084, -0.335703, 0.243405, 0.346109, 0.937221, -0.0427176, -0.213784, 0.12436, 0.99632, -63.1961, 16.5802, -20.1548 )
-
 [node name="tentacles_small2" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.47514, 0, -0.90998, 0, 1, 0, 0.90998, 0, 0.47514, -5.68823, 19.9455, -6.33738 )
 
