@@ -6,4 +6,3 @@
 shader = ExtResource( 1 )
 shader_param/sun_direction = Vector3( 0, 1, 0 )
 shader_param/Intensity = 1.888
-shader_param/mix = 0.674

@@ -1,29 +1,29 @@
-[gd_resource type="VisualShader" load_steps=34 format=2]
+[gd_resource type="VisualShader" load_steps=35 format=2]
 
 [ext_resource path="res://scenery/Ground034_2K_Color.jpg" type="Texture" id=2]
 
-[sub_resource type="VisualShaderNodeTexture" id=2]
+[sub_resource type="VisualShaderNodeTexture" id=1]
 texture = ExtResource( 2 )
 texture_type = 1
 
-[sub_resource type="VisualShaderNodeVectorOp" id=7]
+[sub_resource type="VisualShaderNodeVectorOp" id=2]
 output_port_for_preview = 0
 default_input_values = [ 0, Vector3( 0, 1, 0 ), 1, Vector3( 3, 3, 3 ) ]
 operator = 2
 
-[sub_resource type="VisualShaderNodeVectorOp" id=9]
+[sub_resource type="VisualShaderNodeVectorOp" id=3]
 output_port_for_preview = 0
 default_input_values = [ 0, Vector3( 0, 1, 0 ), 1, Vector3( 3, 3, 3 ) ]
 operator = 2
 
-[sub_resource type="VisualShaderNodeColorConstant" id=12]
+[sub_resource type="VisualShaderNodeColorConstant" id=4]
 constant = Color( 0.587891, 0.54932, 0.386377, 1 )
 
-[sub_resource type="VisualShaderNodeScalarUniform" id=16]
+[sub_resource type="VisualShaderNodeScalarUniform" id=5]
 uniform_name = "Intensity"
 
-[sub_resource type="VisualShaderNodeExpression" id=46]
-size = Vector2( 447, 180 )
+[sub_resource type="VisualShaderNodeExpression" id=6]
+size = Vector2( 562, 282 )
 expression = "vec3 world_normal = (vec4(NORMAL, 1.0) * INV_CAMERA_MATRIX).xyz;
 
 float clamped = clamp(dot(world_normal, direction), 0., 1.);
@@ -32,10 +32,10 @@ intensity_out = length(vec3(clamped) * vec3(intensity_in));
 	
 	"
 
-[sub_resource type="VisualShaderNodeVec3Uniform" id=47]
+[sub_resource type="VisualShaderNodeVec3Uniform" id=7]
 uniform_name = "sun_direction"
 
-[sub_resource type="VisualShaderNodeExpression" id=19]
+[sub_resource type="VisualShaderNodeExpression" id=8]
 output_port_for_preview = 0
 size = Vector2( 453, 241 )
 expression = "vec3 coord = c * 10.0;
@@ -62,72 +62,79 @@ for(float x = -1.0; x <= 1.0; x++) {
 output = pow(vec3(min_dist), vec3(3.,3.,3.)) * input_color
 ;"
 
-[sub_resource type="VisualShaderNodeInput" id=20]
+[sub_resource type="VisualShaderNodeInput" id=9]
 input_name = "uv"
 
-[sub_resource type="VisualShaderNodeInput" id=23]
+[sub_resource type="VisualShaderNodeInput" id=10]
 input_name = "transmission"
 
-[sub_resource type="VisualShaderNodeVectorOp" id=24]
+[sub_resource type="VisualShaderNodeVectorOp" id=11]
 default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 1, 1, 1 ) ]
 operator = 2
 
-[sub_resource type="VisualShaderNodeInput" id=25]
+[sub_resource type="VisualShaderNodeInput" id=12]
 input_name = "albedo"
 
-[sub_resource type="VisualShaderNodeInput" id=26]
+[sub_resource type="VisualShaderNodeInput" id=13]
 input_name = "attenuation"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=14]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id=15]
+operator = 2
+
+[sub_resource type="VisualShaderNodeDotProduct" id=16]
+
+[sub_resource type="VisualShaderNodeInput" id=17]
+input_name = "normal"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=18]
+
+[sub_resource type="VisualShaderNodeInput" id=19]
+input_name = "diffuse"
+
+[sub_resource type="VisualShaderNodeInput" id=20]
+input_name = "albedo"
+
+[sub_resource type="VisualShaderNodeInput" id=21]
+input_name = "attenuation"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=22]
+operator = 2
+
+[sub_resource type="VisualShaderNodeDotProduct" id=23]
+
+[sub_resource type="VisualShaderNodeInput" id=24]
+input_name = "normal"
+
+[sub_resource type="VisualShaderNodeInput" id=25]
+input_name = "light_color"
+
+[sub_resource type="VisualShaderNodeVectorScalarMix" id=26]
 
 [sub_resource type="VisualShaderNodeVectorOp" id=27]
 operator = 2
 
-[sub_resource type="VisualShaderNodeVectorOp" id=28]
-operator = 2
-
-[sub_resource type="VisualShaderNodeDotProduct" id=29]
+[sub_resource type="VisualShaderNodeVectorClamp" id=29]
 
 [sub_resource type="VisualShaderNodeInput" id=30]
-input_name = "normal"
-
-[sub_resource type="VisualShaderNodeVectorOp" id=31]
-
-[sub_resource type="VisualShaderNodeInput" id=32]
-input_name = "diffuse"
+input_name = "light_color"
 
 [sub_resource type="VisualShaderNodeInput" id=33]
-input_name = "albedo"
+input_name = "light"
 
-[sub_resource type="VisualShaderNodeInput" id=34]
-input_name = "attenuation"
+[sub_resource type="VisualShaderNodeExpression" id=34]
+size = Vector2( 545, 267 )
+expression = "vec3 world_light = (vec4(light, 1.0) * INV_CAMERA_MATRIX).xyz;
+out = length(world_light.xy) <= 0.999999;
 
-[sub_resource type="VisualShaderNodeVectorOp" id=35]
-operator = 2
+//out = abs(clamped) <= 0.0001;"
 
-[sub_resource type="VisualShaderNodeDotProduct" id=36]
-
-[sub_resource type="VisualShaderNodeInput" id=37]
-input_name = "normal"
-
-[sub_resource type="VisualShaderNodeInput" id=38]
-input_name = "light_color"
-
-[sub_resource type="VisualShaderNodeVectorScalarMix" id=39]
-
-[sub_resource type="VisualShaderNodeVectorOp" id=40]
-operator = 2
-
-[sub_resource type="VisualShaderNodeScalarUniform" id=41]
-uniform_name = "mix"
-
-[sub_resource type="VisualShaderNodeVectorClamp" id=42]
-
-[sub_resource type="VisualShaderNodeInput" id=43]
-input_name = "light_color"
-
-[sub_resource type="VisualShaderNodeInput" id=44]
+[sub_resource type="VisualShaderNodeInput" id=31]
 input_name = "inv_camera"
 
-[sub_resource type="VisualShaderNodeTransformMult" id=45]
+[sub_resource type="VisualShaderNodeTransformMult" id=32]
 
 [resource]
 code = "shader_type spatial;
@@ -136,7 +143,6 @@ render_mode cull_disabled;
 uniform sampler2D tex_frg_11 : hint_albedo;
 uniform vec3 sun_direction;
 uniform float Intensity;
-uniform float mix;
 
 
 
@@ -268,11 +274,21 @@ void light() {
 // VectorOp:45
 	vec3 n_out45p0 = n_out39p0 * vec3(n_out40p0);
 
-// ScalarUniform:46
-	float n_out46p0 = mix;
+// Input:49
+	vec3 n_out49p0 = LIGHT;
+
+// Expression:50
+	bool n_out50p0;
+	n_out50p0 = false;
+	{
+		vec3 world_light = (vec4(n_out49p0, 1.0) * INV_CAMERA_MATRIX).xyz;
+		n_out50p0 = length(world_light.xy) <= 0.999999;
+		
+		//n_out50p0 = abs(clamped) <= 0.0001;
+	}
 
 // VectorScalarMix:44
-	vec3 n_out44p0 = mix(n_out31p0, n_out45p0, n_out46p0);
+	vec3 n_out44p0 = mix(n_out31p0, n_out45p0, n_out50p0 ? 1.0 : 0.0);
 
 // Input:36
 	vec3 n_out36p0 = DIFFUSE_LIGHT;
@@ -290,16 +306,16 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -2407, 79.5 )
+graph_offset = Vector2( -766, 58.375 )
 modes/cull = 2
-nodes/vertex/2/node = SubResource( 44 )
+nodes/vertex/2/node = SubResource( 31 )
 nodes/vertex/2/position = Vector2( -1443, -323 )
-nodes/vertex/3/node = SubResource( 45 )
+nodes/vertex/3/node = SubResource( 32 )
 nodes/vertex/3/position = Vector2( -1167, -287 )
 nodes/fragment/0/position = Vector2( -1088, 48 )
-nodes/fragment/3/node = SubResource( 12 )
+nodes/fragment/3/node = SubResource( 4 )
 nodes/fragment/3/position = Vector2( -2260, 540 )
-nodes/fragment/6/node = SubResource( 19 )
+nodes/fragment/6/node = SubResource( 8 )
 nodes/fragment/6/position = Vector2( -2080, 440 )
 nodes/fragment/6/size = Vector2( 453, 241 )
 nodes/fragment/6/input_ports = "0,1,c;1,1,input_color;"
@@ -327,19 +343,19 @@ for(float x = -1.0; x <= 1.0; x++) {
 }
 output = pow(vec3(min_dist), vec3(3.,3.,3.)) * input_color
 ;"
-nodes/fragment/7/node = SubResource( 20 )
+nodes/fragment/7/node = SubResource( 9 )
 nodes/fragment/7/position = Vector2( -2280, 460 )
-nodes/fragment/11/node = SubResource( 2 )
+nodes/fragment/11/node = SubResource( 1 )
 nodes/fragment/11/position = Vector2( -1320, -80 )
-nodes/fragment/21/node = SubResource( 7 )
+nodes/fragment/21/node = SubResource( 2 )
 nodes/fragment/21/position = Vector2( -1500, 380 )
-nodes/fragment/23/node = SubResource( 9 )
+nodes/fragment/23/node = SubResource( 3 )
 nodes/fragment/23/position = Vector2( -1320, 380 )
-nodes/fragment/39/node = SubResource( 16 )
-nodes/fragment/39/position = Vector2( -2260, 320 )
-nodes/fragment/41/node = SubResource( 46 )
-nodes/fragment/41/position = Vector2( -2080, 240 )
-nodes/fragment/41/size = Vector2( 447, 180 )
+nodes/fragment/39/node = SubResource( 5 )
+nodes/fragment/39/position = Vector2( -2400, 180 )
+nodes/fragment/41/node = SubResource( 6 )
+nodes/fragment/41/position = Vector2( -2100, 80 )
+nodes/fragment/41/size = Vector2( 562, 282 )
 nodes/fragment/41/input_ports = "0,1,direction;1,0,intensity_in;"
 nodes/fragment/41/output_ports = "0,0,intensity_out;"
 nodes/fragment/41/expression = "vec3 world_normal = (vec4(NORMAL, 1.0) * INV_CAMERA_MATRIX).xyz;
@@ -349,50 +365,59 @@ float clamped = clamp(dot(world_normal, direction), 0., 1.);
 intensity_out = length(vec3(clamped) * vec3(intensity_in));
 	
 	"
-nodes/fragment/42/node = SubResource( 47 )
-nodes/fragment/42/position = Vector2( -2260, 260 )
+nodes/fragment/42/node = SubResource( 7 )
+nodes/fragment/42/position = Vector2( -2400, 120 )
 nodes/fragment/connections = PoolIntArray( 7, 0, 6, 0, 11, 0, 0, 0, 23, 0, 0, 17, 42, 0, 41, 0, 39, 0, 41, 1, 41, 0, 21, 1, 6, 0, 21, 0, 3, 0, 6, 1, 21, 0, 23, 0 )
 nodes/light/0/position = Vector2( 1280, -20 )
-nodes/light/15/node = SubResource( 23 )
+nodes/light/15/node = SubResource( 10 )
 nodes/light/15/position = Vector2( -260, -40 )
-nodes/light/24/node = SubResource( 24 )
+nodes/light/24/node = SubResource( 11 )
 nodes/light/24/position = Vector2( 20, -40 )
-nodes/light/28/node = SubResource( 25 )
+nodes/light/28/node = SubResource( 12 )
 nodes/light/28/position = Vector2( -140, -280 )
-nodes/light/29/node = SubResource( 26 )
+nodes/light/29/node = SubResource( 13 )
 nodes/light/29/position = Vector2( -160, -220 )
-nodes/light/30/node = SubResource( 27 )
+nodes/light/30/node = SubResource( 14 )
 nodes/light/30/position = Vector2( 260, -200 )
-nodes/light/31/node = SubResource( 28 )
+nodes/light/31/node = SubResource( 15 )
 nodes/light/31/position = Vector2( 480, -180 )
-nodes/light/32/node = SubResource( 29 )
+nodes/light/32/node = SubResource( 16 )
 nodes/light/32/position = Vector2( 256.25, -67.25 )
-nodes/light/33/node = SubResource( 30 )
+nodes/light/33/node = SubResource( 17 )
 nodes/light/33/position = Vector2( 20, -120 )
-nodes/light/35/node = SubResource( 31 )
+nodes/light/35/node = SubResource( 18 )
 nodes/light/35/position = Vector2( 860, -40 )
-nodes/light/36/node = SubResource( 32 )
+nodes/light/36/node = SubResource( 19 )
 nodes/light/36/position = Vector2( 460, -20 )
-nodes/light/37/node = SubResource( 33 )
-nodes/light/37/position = Vector2( -60, 140 )
-nodes/light/38/node = SubResource( 34 )
-nodes/light/38/position = Vector2( -120, 200 )
-nodes/light/39/node = SubResource( 35 )
-nodes/light/39/position = Vector2( 140, 140 )
-nodes/light/40/node = SubResource( 36 )
-nodes/light/40/position = Vector2( 160, 340 )
-nodes/light/41/node = SubResource( 37 )
-nodes/light/41/position = Vector2( -60, 280 )
-nodes/light/43/node = SubResource( 38 )
-nodes/light/43/position = Vector2( -60, 360 )
-nodes/light/44/node = SubResource( 39 )
+nodes/light/37/node = SubResource( 20 )
+nodes/light/37/position = Vector2( -300, 380 )
+nodes/light/38/node = SubResource( 21 )
+nodes/light/38/position = Vector2( -360, 440 )
+nodes/light/39/node = SubResource( 22 )
+nodes/light/39/position = Vector2( -100, 380 )
+nodes/light/40/node = SubResource( 23 )
+nodes/light/40/position = Vector2( -80, 580 )
+nodes/light/41/node = SubResource( 24 )
+nodes/light/41/position = Vector2( -300, 520 )
+nodes/light/43/node = SubResource( 25 )
+nodes/light/43/position = Vector2( -300, 600 )
+nodes/light/44/node = SubResource( 26 )
 nodes/light/44/position = Vector2( 640, 60 )
-nodes/light/45/node = SubResource( 40 )
-nodes/light/45/position = Vector2( 380, 220 )
-nodes/light/46/node = SubResource( 41 )
-nodes/light/46/position = Vector2( 360, 120 )
-nodes/light/47/node = SubResource( 42 )
+nodes/light/45/node = SubResource( 27 )
+nodes/light/45/position = Vector2( 140, 460 )
+nodes/light/47/node = SubResource( 29 )
 nodes/light/47/position = Vector2( 1060, -20 )
-nodes/light/48/node = SubResource( 43 )
+nodes/light/48/node = SubResource( 30 )
 nodes/light/48/position = Vector2( -220, 40 )
-nodes/light/connections = PoolIntArray( 28, 0, 30, 0, 30, 0, 31, 0, 33, 0, 32, 0, 32, 0, 31, 1, 24, 0, 32, 1, 37, 0, 39, 0, 41, 0, 40, 0, 39, 0, 45, 0, 40, 0, 45, 1, 45, 0, 44, 1, 46, 0, 44, 2, 43, 0, 40, 1, 35, 0, 47, 0, 47, 0, 0, 0, 48, 0, 24, 1, 15, 0, 24, 0, 44, 0, 35, 0, 36, 0, 35, 1, 31, 0, 44, 0, 29, 0, 30, 1, 38, 0, 39, 1 )
+nodes/light/49/node = SubResource( 33 )
+nodes/light/49/position = Vector2( -560, 140 )
+nodes/light/50/node = SubResource( 34 )
+nodes/light/50/position = Vector2( -400, 100 )
+nodes/light/50/size = Vector2( 545, 267 )
+nodes/light/50/input_ports = "0,1,light;"
+nodes/light/50/output_ports = "0,2,out;"
+nodes/light/50/expression = "vec3 world_light = (vec4(light, 1.0) * INV_CAMERA_MATRIX).xyz;
+out = length(world_light.xy) <= 0.999999;
+
+//out = abs(clamped) <= 0.0001;"
+nodes/light/connections = PoolIntArray( 28, 0, 30, 0, 30, 0, 31, 0, 33, 0, 32, 0, 32, 0, 31, 1, 24, 0, 32, 1, 37, 0, 39, 0, 41, 0, 40, 0, 39, 0, 45, 0, 40, 0, 45, 1, 45, 0, 44, 1, 43, 0, 40, 1, 35, 0, 47, 0, 47, 0, 0, 0, 48, 0, 24, 1, 15, 0, 24, 0, 44, 0, 35, 0, 36, 0, 35, 1, 31, 0, 44, 0, 29, 0, 30, 1, 38, 0, 39, 1, 49, 0, 50, 0, 50, 0, 44, 2 )
