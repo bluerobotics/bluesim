@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://scenery/terrain/terrain_shader.tres" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/tiling_sand = 29.92
+shader_param/saturatesand = 0.999
+shader_param/darken_mask_tiling = 0.442
+shader_param/darkening_rock_moss = 0.326
+shader_param/cavity_dark = 1.209
+shader_param/tiling_moss = 31.849
+shader_param/darkenmoss = 0.511
+shader_param/darkenmask_tiling = 30.844
+shader_param/cavity_bright = 2.051
+shader_param/AO_str = 0.708
+shader_param/tiling_mask = 0.008
+shader_param/tiling_param = 3.501
