@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenery/tentacles_small.escn" type="PackedScene" id=1]
 [ext_resource path="res://scenery/rocknorth.escn" type="PackedScene" id=2]
@@ -19,12 +19,14 @@
 [ext_resource path="res://scenery/cannon.escn" type="PackedScene" id=17]
 [ext_resource path="res://scenery/barel.escn" type="PackedScene" id=18]
 [ext_resource path="res://scenery/tablecoral_shaded.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenery/terrain/terrain_origuv.tscn" type="PackedScene" id=20]
 
 [node name="Spatial" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27.9634, 0 )
 
 [node name="terrain2" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.22, 40.49, -5.48 )
+visible = false
 
 [node name="bigrock1" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.752445, 15.8197, -41.1829 )
@@ -151,3 +153,6 @@ transform = Transform( 0.873366, 0.187122, 0, -0.187122, 0.873366, 0, 0, 0, 0.89
 
 [node name="tablecoral3" parent="." instance=ExtResource( 19 )]
 transform = Transform( 0.707506, 0.151586, -0.0604286, -0.152113, 0.709969, 0, 0.0590876, 0.0126597, 0.723562, -16.5999, 19.5221, -5.42808 )
+
+[node name="terrain_origuv" parent="." instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31335, 3.43812, -16.6796 )

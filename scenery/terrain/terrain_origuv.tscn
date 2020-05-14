@@ -8,6 +8,3 @@
 [node name="chinese_project_terrain_p1_263" parent="." index="0"]
 transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 165.122, 31.9552, -14.3246 )
 material/0 = ExtResource( 2 )
-
-[node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
-transform = Transform( 1, 0, 0, 0, 0.81138, 0.584519, 0, -0.584519, 0.81138, 0, 0, 0 )

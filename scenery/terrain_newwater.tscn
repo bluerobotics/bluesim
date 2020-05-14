@@ -9,4 +9,11 @@
 material/0 = ExtResource( 2 )
 
 [node name="chinese_project_terrain_p1_263" parent="." index="1"]
+visible = false
 material/0 = ExtResource( 2 )
+
+[node name="static_collision" parent="chinese_project_terrain_p1_263" index="0"]
+visible = false
+
+[node name="shape0" parent="chinese_project_terrain_p1_263/static_collision" index="0"]
+visible = false

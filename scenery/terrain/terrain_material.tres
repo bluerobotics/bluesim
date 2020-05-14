@@ -16,3 +16,4 @@ shader_param/cavity_bright = 2.051
 shader_param/AO_str = 0.708
 shader_param/tiling_mask = 0.008
 shader_param/tiling_param = 3.501
+shader_param/light_mixer_angle = 0.999
