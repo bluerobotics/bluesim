@@ -10,7 +10,7 @@
 [ext_resource path="res://vehicles/components/Metallic blue.material" type="Material" id=8]
 [ext_resource path="res://vehicles/components/Metallic black.material" type="Material" id=9]
 [ext_resource path="res://vehicles/components/Plastic black.material" type="Material" id=10]
-[ext_resource path="res://body.gd" type="Script" id=11]
+[ext_resource path="res://vehicles/components/gripper.gd" type="Script" id=11]
 
 [sub_resource type="PrismMesh" id=1]
 
@@ -88,27 +88,22 @@ surfaces/2 = {
 "vertex_count": 3805
 }
 
-[sub_resource type="CubeMesh" id=7]
-
-[sub_resource type="BoxShape" id=8]
-extents = Vector3( 0.0336481, 0.501482, 0.0318039 )
-
-[sub_resource type="CylinderMesh" id=9]
+[sub_resource type="CylinderMesh" id=7]
 top_radius = 0.01
 bottom_radius = 0.01
-height = 10.0
-radial_segments = 4
+height = 20.0
+radial_segments = 5
 rings = 100
 
-[sub_resource type="SpatialMaterial" id=10]
-albedo_color = Color( 0.792157, 0.686275, 0, 1 )
-emission_enabled = true
-emission = Color( 0.972549, 0.862745, 0.247059, 1 )
-emission_energy = 0.19
-emission_operator = 0
-emission_on_uv2 = false
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.992157, 0.882353, 0, 1 )
 transmission_enabled = true
-transmission = Color( 0.917647, 0.760784, 0.0627451, 1 )
+transmission = Color( 0.945098, 0.996078, 0.0431373, 1 )
+
+[sub_resource type="CubeMesh" id=9]
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 0.0336481, 0.501482, 0.0318039 )
 
 [node name="Node2D" type="Node2D"]
 show_behind_parent = true
@@ -149,7 +144,7 @@ skin = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="joint4" type="HingeJoint" parent="ReferenceRect/ViewportCamera/Viewport"]
-transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, -0.0228159, 5.43957, 0.427923 )
+transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, -0.0241967, 5.53423, 0.62481 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody")
 params/bias = 0.99
@@ -160,7 +155,7 @@ motor/enable = true
 motor/target_velocity = 0.0
 
 [node name="joint3" type="HingeJoint" parent="ReferenceRect/ViewportCamera/Viewport"]
-transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, 0.0596453, 5.43957, 0.464448 )
+transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, 0.0582645, 5.53423, 0.661335 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody2")
 params/bias = 0.99
@@ -171,7 +166,7 @@ motor/enable = true
 motor/target_velocity = 0.0
 
 [node name="RigidBody" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
-transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.279379, 5.56163, -0.135018 )
+transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.277998, 5.65629, 0.0618688 )
 gravity_scale = 0.0
 
 [node name="g2" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody"]
@@ -185,7 +180,7 @@ depth = 0.05
 polygon = PoolVector2Array( -0.00219463, 0.650362, 0.00064522, 0.66482, -0.00946018, 0.696714, -0.00206122, 0.742216, -0.0181659, 0.74858, 0.0151964, 0.77932, -0.0110906, 0.778022, -0.0394649, 0.750117, -0.0550356, 0.684003, -0.0453913, 0.634722, -0.0220332, 0.633642 )
 
 [node name="RigidBody2" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
-transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.263481, 5.56163, -0.146306 )
+transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.2621, 5.65629, 0.0505808 )
 gravity_scale = 0.0
 
 [node name="g1" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody2"]
@@ -204,7 +199,7 @@ angular_damp = 0.996
 script = ExtResource( 3 )
 
 [node name="body" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
-transform = Transform( -8.04086e-11, -0.000784931, 0.00183953, 0.002, 3.82137e-18, 8.74228e-11, -3.43104e-11, 0.00183953, 0.000784931, 0.242594, -0.407743, -0.0855138 )
+transform = Transform( -8.04086e-11, -0.000784931, 0.00183953, 0.002, 3.82137e-18, 8.74228e-11, -3.43104e-11, 0.00183953, 0.000784931, 0.241213, -0.313083, 0.111373 )
 mesh = SubResource( 6 )
 material/0 = null
 material/1 = null
@@ -215,9 +210,9 @@ script = ExtResource( 11 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372449, 0 )
 
 [node name="SoftBody" type="SoftBody" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
-transform = Transform( 1, 0, 0, 0, 0.24221, 0.970224, 0, -0.970224, 0.24221, 0.237083, 1.18123, -5.41684 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
+transform = Transform( 1, 0, 0, 0, 0.24221, 0.970224, 0, -0.970224, 0.24221, 0.196496, 2.40483, -10.1891 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
 simulation_precision = 50
 total_mass = 0.01
 linear_stiffness = 1.0
@@ -225,10 +220,10 @@ areaAngular_stiffness = 1.0
 volume_stiffness = 1.0
 damping_coefficient = 0.56
 drag_coefficient = 0.91
-pinned_points = [ 405 ]
-attachments/0/point_index = 405
+pinned_points = [ 511 ]
+attachments/0/point_index = 511
 attachments/0/spatial_attachment_path = NodePath("..")
-attachments/0/offset = Vector3( 0.247083, -0.02982, -0.56572 )
+attachments/0/offset = Vector3( 0.196496, -0.0172682, -0.486908 )
 
 [node name="ViewportGlobal" type="ViewportContainer" parent="ReferenceRect"]
 pause_mode = 2
@@ -272,12 +267,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91449, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportGlobal/Viewport/Spatial/RigidBody"]
 transform = Transform( 0.0384637, 0, 0, 0, 0.514566, 0, 0, 0, 0.0384637, 5.96817e-05, 0.1759, -0.00120203 )
-mesh = SubResource( 7 )
+mesh = SubResource( 9 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="ReferenceRect/ViewportGlobal/Viewport/Spatial/RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.192323, 0 )
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 
 [node name="Spatial" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2419, -20.4114, 26.6054 )
