@@ -21,7 +21,7 @@ func calculate_buoyancy():
 			push_warning("Component %s does not inherit RigidBody." % vehicle.name)
 			continue
 
-		var buoyancy =  min(vehicle.buoyancy, abs(vehicle.buoyancy*(vehicle.translation.y - HEIGHT/2 - surface_altitude)))
+		var buoyancy =  min(vehicle.buoyancy, abs(vehicle.buoyancy*(vehicle.translation.y - HEIGHT/3 - surface_altitude)))
 		vehicle.add_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y*0.07)
 	
 func update_fog():
