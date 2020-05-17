@@ -116,25 +116,25 @@ input_name = "light_color"
 [sub_resource type="VisualShaderNodeVectorOp" id=27]
 operator = 2
 
-[sub_resource type="VisualShaderNodeVectorClamp" id=29]
+[sub_resource type="VisualShaderNodeVectorClamp" id=28]
 
-[sub_resource type="VisualShaderNodeInput" id=30]
+[sub_resource type="VisualShaderNodeInput" id=29]
 input_name = "light_color"
 
-[sub_resource type="VisualShaderNodeInput" id=33]
+[sub_resource type="VisualShaderNodeInput" id=30]
 input_name = "light"
 
-[sub_resource type="VisualShaderNodeExpression" id=34]
+[sub_resource type="VisualShaderNodeExpression" id=31]
 size = Vector2( 545, 267 )
 expression = "vec3 world_light = (vec4(light, 1.0) * INV_CAMERA_MATRIX).xyz;
 out = length(world_light.xy) <= 0.999999;
 
 //out = abs(clamped) <= 0.0001;"
 
-[sub_resource type="VisualShaderNodeInput" id=31]
+[sub_resource type="VisualShaderNodeInput" id=32]
 input_name = "inv_camera"
 
-[sub_resource type="VisualShaderNodeTransformMult" id=32]
+[sub_resource type="VisualShaderNodeTransformMult" id=33]
 
 [resource]
 code = "shader_type spatial;
@@ -308,9 +308,9 @@ void light() {
 "
 graph_offset = Vector2( -766, 58.375 )
 modes/cull = 2
-nodes/vertex/2/node = SubResource( 31 )
+nodes/vertex/2/node = SubResource( 32 )
 nodes/vertex/2/position = Vector2( -1443, -323 )
-nodes/vertex/3/node = SubResource( 32 )
+nodes/vertex/3/node = SubResource( 33 )
 nodes/vertex/3/position = Vector2( -1167, -287 )
 nodes/fragment/0/position = Vector2( -1088, 48 )
 nodes/fragment/3/node = SubResource( 4 )
@@ -405,13 +405,13 @@ nodes/light/44/node = SubResource( 26 )
 nodes/light/44/position = Vector2( 640, 60 )
 nodes/light/45/node = SubResource( 27 )
 nodes/light/45/position = Vector2( 140, 460 )
-nodes/light/47/node = SubResource( 29 )
+nodes/light/47/node = SubResource( 28 )
 nodes/light/47/position = Vector2( 1060, -20 )
-nodes/light/48/node = SubResource( 30 )
+nodes/light/48/node = SubResource( 29 )
 nodes/light/48/position = Vector2( -220, 40 )
-nodes/light/49/node = SubResource( 33 )
+nodes/light/49/node = SubResource( 30 )
 nodes/light/49/position = Vector2( -560, 140 )
-nodes/light/50/node = SubResource( 34 )
+nodes/light/50/node = SubResource( 31 )
 nodes/light/50/position = Vector2( -400, 100 )
 nodes/light/50/size = Vector2( 545, 267 )
 nodes/light/50/input_ports = "0,1,light;"
