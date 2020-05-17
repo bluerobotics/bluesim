@@ -138,9 +138,11 @@ uniform_name = "tiling_sand"
 
 [sub_resource type="VisualShaderNodeTexture" id=42]
 texture = ExtResource( 9 )
+texture_type = 2
 
 [sub_resource type="VisualShaderNodeTexture" id=43]
 texture = ExtResource( 7 )
+texture_type = 2
 
 [sub_resource type="VisualShaderNodeVectorOp" id=44]
 operator = 2
@@ -223,6 +225,7 @@ input_name = "uv"
 
 [sub_resource type="VisualShaderNodeExpression" id=67]
 output_port_for_preview = 0
+size = Vector2( 692, 702 )
 expression = "vec3 coord = c * 100.0;
 vec2 i = floor(coord.xy);
 vec2 f = fract(coord.xy);
@@ -256,9 +259,11 @@ input_name = "uv"
 constant = Color( 0.759277, 0.667787, 0.499759, 1 )
 
 [sub_resource type="VisualShaderNodeGlobalExpression" id=71]
+size = Vector2( 246, 82 )
 expression = "//Diffuse"
 
 [sub_resource type="VisualShaderNodeExpression" id=72]
+size = Vector2( 773, 1191 )
 expression = "// VectorOp:30
 	vec3 n_out30p0 = ALBEDO * ATTENUATION;
 
@@ -326,18 +331,28 @@ uniform_name = "light_mixer_angle"
 [resource]
 code = "shader_type spatial;
 uniform float tiling_sand;
-uniform sampler2D tex_frg_10;uniform float saturatesand;
+uniform sampler2D tex_frg_10;
+uniform float saturatesand;
 uniform float darken_mask_tiling;
-uniform sampler2D tex_frg_34;uniform float darkening_rock_moss;
-uniform sampler2D tex_frg_38;uniform float cavity_dark;
+uniform sampler2D tex_frg_34;
+uniform float darkening_rock_moss;
+uniform sampler2D tex_frg_38;
+uniform float cavity_dark;
 uniform float tiling_moss;
-uniform sampler2D tex_frg_11;uniform float darkenmoss;
+uniform sampler2D tex_frg_11;
+uniform float darkenmoss;
 uniform float darkenmask_tiling;
-uniform sampler2D tex_frg_23;uniform float cavity_bright;
-uniform sampler2D tex_frg_31;uniform float AO_str;
+uniform sampler2D tex_frg_23;
+uniform float cavity_bright;
+uniform sampler2D tex_frg_31;
+uniform float AO_str;
 uniform float tiling_mask;
-uniform sampler2D tex_frg_17;uniform float tiling_param;
-uniform sampler2D tex_frg_49;uniform sampler2D tex_frg_50;uniform sampler2D tex_frg_51;uniform float light_mixer_angle;
+uniform sampler2D tex_frg_17;
+uniform float tiling_param;
+uniform sampler2D tex_frg_49;
+uniform sampler2D tex_frg_50 : hint_normal;
+uniform sampler2D tex_frg_51 : hint_normal;
+uniform float light_mixer_angle;
 
 
 // GlobalExpression:0
@@ -350,334 +365,256 @@ void vertex() {
 
 void fragment() {
 // Input:7
-	vec3 n_out7p0;
-	n_out7p0 = vec3(UV,0.0);
+	vec3 n_out7p0 = vec3(UV, 0.0);
 
 // ScalarUniform:5
-	float n_out5p0;
-	n_out5p0 = tiling_sand;
+	float n_out5p0 = tiling_sand;
 
 // VectorOp:4
-	vec3 n_out4p0;
-	n_out4p0 = n_out7p0 * vec3(n_out5p0);
+	vec3 n_out4p0 = n_out7p0 * vec3(n_out5p0);
 
 // Texture:10
-	vec3 n_out10p0;
-	float n_out10p1;
-	vec4 tex_frg_10_read = texture( tex_frg_10 , n_out4p0.xy );
-	n_out10p0 = tex_frg_10_read.rgb;
-	n_out10p1 = tex_frg_10_read.a;
+	vec4 tex_frg_10_read = texture(tex_frg_10, n_out4p0.xy);
+	vec3 n_out10p0 = tex_frg_10_read.rgb;
+	float n_out10p1 = tex_frg_10_read.a;
 
 // ScalarUniform:13
-	float n_out13p0;
-	n_out13p0 = saturatesand;
+	float n_out13p0 = saturatesand;
 
 // ColorOp:12
-	vec3 n_out12p0;
-	n_out12p0=min(n_out10p0,vec3(n_out13p0));
+	vec3 n_out12p0 = min(n_out10p0, vec3(n_out13p0));
 
 // Input:78
-	vec3 n_out78p0;
-	n_out78p0 = vec3(UV,0.0);
+	vec3 n_out78p0 = vec3(UV, 0.0);
 
 // ScalarUniform:37
-	float n_out37p0;
-	n_out37p0 = darken_mask_tiling;
+	float n_out37p0 = darken_mask_tiling;
 
 // VectorOp:77
-	vec3 n_out77p0;
-	n_out77p0 = n_out78p0 * vec3(n_out37p0);
+	vec3 n_out77p0 = n_out78p0 * vec3(n_out37p0);
 
 // Texture:34
-	vec3 n_out34p0;
-	float n_out34p1;
-	vec4 tex_frg_34_read = texture( tex_frg_34 , n_out77p0.xy );
-	n_out34p0 = tex_frg_34_read.rgb;
-	n_out34p1 = tex_frg_34_read.a;
+	vec4 tex_frg_34_read = texture(tex_frg_34, n_out77p0.xy);
+	vec3 n_out34p0 = tex_frg_34_read.rgb;
+	float n_out34p1 = tex_frg_34_read.a;
 
 // ScalarUniform:36
-	float n_out36p0;
-	n_out36p0 = darkening_rock_moss;
+	float n_out36p0 = darkening_rock_moss;
 
 // VectorOp:35
-	vec3 n_out35p0;
-	n_out35p0 = n_out34p0 * vec3(n_out36p0);
+	vec3 n_out35p0 = n_out34p0 * vec3(n_out36p0);
 
 // Texture:38
-	vec3 n_out38p0;
-	float n_out38p1;
-	vec4 tex_frg_38_read = texture( tex_frg_38 , n_out77p0.xy );
-	n_out38p0 = tex_frg_38_read.rgb;
-	n_out38p1 = tex_frg_38_read.a;
+	vec4 tex_frg_38_read = texture(tex_frg_38, n_out77p0.xy);
+	vec3 n_out38p0 = tex_frg_38_read.rgb;
+	float n_out38p1 = tex_frg_38_read.a;
 
 // VectorScalarMix:39
-	vec3 n_out39p0;
-	n_out39p0 = mix( n_out35p0 , n_out34p0 , dot(n_out38p0,vec3(0.333333,0.333333,0.333333)) );
+	vec3 n_out39p0 = mix(n_out35p0, n_out34p0, dot(n_out38p0, vec3(0.333333, 0.333333, 0.333333)));
 
 // ScalarUniform:29
-	float n_out29p0;
-	n_out29p0 = cavity_dark;
+	float n_out29p0 = cavity_dark;
 
 // ScalarUniform:6
-	float n_out6p0;
-	n_out6p0 = tiling_moss;
+	float n_out6p0 = tiling_moss;
 
 // VectorOp:8
-	vec3 n_out8p0;
-	n_out8p0 = n_out7p0 * vec3(n_out6p0);
+	vec3 n_out8p0 = n_out7p0 * vec3(n_out6p0);
 
 // VectorOp:57
-	vec3 n_in57p1 = vec3(0.00000,0.00000,0.00000);
-	vec3 n_out57p0;
-	n_out57p0 = n_out8p0 + n_in57p1;
+	vec3 n_in57p1 = vec3(0.00000, 0.00000, 0.00000);
+	vec3 n_out57p0 = n_out8p0 + n_in57p1;
 
 // Texture:11
-	vec3 n_out11p0;
-	float n_out11p1;
-	vec4 tex_frg_11_read = texture( tex_frg_11 , n_out57p0.xy );
-	n_out11p0 = tex_frg_11_read.rgb;
-	n_out11p1 = tex_frg_11_read.a;
+	vec4 tex_frg_11_read = texture(tex_frg_11, n_out57p0.xy);
+	vec3 n_out11p0 = tex_frg_11_read.rgb;
+	float n_out11p1 = tex_frg_11_read.a;
 
 // ScalarUniform:15
-	float n_out15p0;
-	n_out15p0 = darkenmoss;
+	float n_out15p0 = darkenmoss;
 
 // VectorOp:21
-	vec3 n_out21p0;
-	n_out21p0 = n_out11p0 * vec3(n_out15p0);
+	vec3 n_out21p0 = n_out11p0 * vec3(n_out15p0);
 
 // Input:25
-	vec3 n_out25p0;
-	n_out25p0 = vec3(UV,0.0);
+	vec3 n_out25p0 = vec3(UV, 0.0);
 
 // ScalarUniform:26
-	float n_out26p0;
-	n_out26p0 = darkenmask_tiling;
+	float n_out26p0 = darkenmask_tiling;
 
 // VectorOp:24
-	vec3 n_out24p0;
-	n_out24p0 = n_out25p0 * vec3(n_out26p0);
+	vec3 n_out24p0 = n_out25p0 * vec3(n_out26p0);
 
 // Texture:23
-	vec3 n_out23p0;
-	float n_out23p1;
-	vec4 tex_frg_23_read = texture( tex_frg_23 , n_out24p0.xy );
-	n_out23p0 = tex_frg_23_read.rgb;
-	n_out23p1 = tex_frg_23_read.a;
+	vec4 tex_frg_23_read = texture(tex_frg_23, n_out24p0.xy);
+	vec3 n_out23p0 = tex_frg_23_read.rgb;
+	float n_out23p1 = tex_frg_23_read.a;
 
 // VectorMix:22
-	vec3 n_out22p0;
-	n_out22p0 = mix( n_out21p0 , n_out11p0 , n_out23p0 );
+	vec3 n_out22p0 = mix(n_out21p0, n_out11p0, n_out23p0);
 
 // VectorOp:27
-	vec3 n_out27p0;
-	n_out27p0 = vec3(n_out29p0) * n_out22p0;
+	vec3 n_out27p0 = vec3(n_out29p0) * n_out22p0;
 
 // ScalarUniform:30
-	float n_out30p0;
-	n_out30p0 = cavity_bright;
+	float n_out30p0 = cavity_bright;
 
 // VectorOp:28
-	vec3 n_out28p0;
-	n_out28p0 = vec3(n_out30p0) * n_out22p0;
+	vec3 n_out28p0 = vec3(n_out30p0) * n_out22p0;
 
 // Texture:31
-	vec3 n_out31p0;
-	float n_out31p1;
-	vec4 tex_frg_31_read = texture( tex_frg_31 , n_out57p0.xy );
-	n_out31p0 = tex_frg_31_read.rgb;
-	n_out31p1 = tex_frg_31_read.a;
+	vec4 tex_frg_31_read = texture(tex_frg_31, n_out57p0.xy);
+	vec3 n_out31p0 = tex_frg_31_read.rgb;
+	float n_out31p1 = tex_frg_31_read.a;
 
 // VectorDecompose:33
-	float n_out33p0;
-	float n_out33p1;
-	float n_out33p2;
-	n_out33p0 = n_out31p0.x;
-	n_out33p1 = n_out31p0.y;
-	n_out33p2 = n_out31p0.z;
+	float n_out33p0 = n_out31p0.x;
+	float n_out33p1 = n_out31p0.y;
+	float n_out33p2 = n_out31p0.z;
 
 // VectorScalarMix:32
-	vec3 n_out32p0;
-	n_out32p0 = mix( n_out27p0 , n_out28p0 , n_out33p0 );
+	vec3 n_out32p0 = mix(n_out27p0, n_out28p0, n_out33p0);
 
 // Color:47
-	vec3 n_out47p0;
-	float n_out47p1;
-	n_out47p0 = vec3(0.323040,0.360000,0.280800);
-	n_out47p1 = 1.000000;
+	vec3 n_out47p0 = vec3(0.323040, 0.360000, 0.280800);
+	float n_out47p1 = 1.000000;
 
 // ScalarUniform:46
-	float n_out46p0;
-	n_out46p0 = AO_str;
+	float n_out46p0 = AO_str;
 
 // VectorScalarMix:45
-	vec3 n_out45p0;
-	n_out45p0 = mix( n_out47p0 , vec3(n_out33p2) , n_out46p0 );
+	vec3 n_out45p0 = mix(n_out47p0, vec3(n_out33p2), n_out46p0);
 
 // VectorOp:44
-	vec3 n_out44p0;
-	n_out44p0 = n_out32p0 * n_out45p0;
+	vec3 n_out44p0 = n_out32p0 * n_out45p0;
 
 // Input:65
-	mat4 n_out65p0;
-	n_out65p0 = INV_CAMERA_MATRIX;
+	mat4 n_out65p0 = INV_CAMERA_MATRIX;
 
 // Input:66
-	vec3 n_out66p0;
-	n_out66p0 = NORMAL;
+	vec3 n_out66p0 = NORMAL;
 
 // TransformVectorMult:67
-	vec3 n_out67p0;
-	n_out67p0 = ( vec4(n_out66p0, 1.0) * n_out65p0 ).xyz;
+	vec3 n_out67p0 = (vec4(n_out66p0, 1.0) * n_out65p0).xyz;
 
 // DotProduct:68
-	vec3 n_in68p1 = vec3(0.00000,1.00000,0.00000);
-	float n_out68p0;
-	n_out68p0 = dot( n_out67p0 , n_in68p1 );
+	vec3 n_in68p1 = vec3(0.00000, 1.00000, 0.00000);
+	float n_out68p0 = dot(n_out67p0, n_in68p1);
 
 // ScalarOp:73
 	float n_in73p1 = 3.00000;
-	float n_out73p0;
-	n_out73p0 = n_out68p0 * n_in73p1;
+	float n_out73p0 = n_out68p0 * n_in73p1;
 
 // ScalarOp:69
 	float n_in69p0 = 3.00000;
-	float n_out69p0;
-	n_out69p0 = n_in69p0 - n_out73p0;
+	float n_out69p0 = n_in69p0 - n_out73p0;
 
 // ScalarClamp:70
 	float n_in70p1 = 0.00000;
 	float n_in70p2 = 1.00000;
-	float n_out70p0;
-	n_out70p0 = clamp( n_out69p0, n_in70p1, n_in70p2 );
+	float n_out70p0 = clamp(n_out69p0, n_in70p1, n_in70p2);
 
 // Input:41
-	vec3 n_out41p0;
-	n_out41p0 = COLOR.rgb;
+	vec3 n_out41p0 = COLOR.rgb;
 
 // VectorDecompose:43
-	float n_out43p0;
-	float n_out43p1;
-	float n_out43p2;
-	n_out43p0 = n_out41p0.x;
-	n_out43p1 = n_out41p0.y;
-	n_out43p2 = n_out41p0.z;
+	float n_out43p0 = n_out41p0.x;
+	float n_out43p1 = n_out41p0.y;
+	float n_out43p2 = n_out41p0.z;
 
 // Input:19
-	vec3 n_out19p0;
-	n_out19p0 = vec3(UV,0.0);
+	vec3 n_out19p0 = vec3(UV, 0.0);
 
 // ScalarUniform:20
-	float n_out20p0;
-	n_out20p0 = tiling_mask;
+	float n_out20p0 = tiling_mask;
 
 // VectorOp:18
-	vec3 n_out18p0;
-	n_out18p0 = n_out19p0 * vec3(n_out20p0);
+	vec3 n_out18p0 = n_out19p0 * vec3(n_out20p0);
 
 // Texture:17
-	vec3 n_out17p0;
-	float n_out17p1;
-	vec4 tex_frg_17_read = texture( tex_frg_17 , n_out18p0.xy );
-	n_out17p0 = tex_frg_17_read.rgb;
-	n_out17p1 = tex_frg_17_read.a;
+	vec4 tex_frg_17_read = texture(tex_frg_17, n_out18p0.xy);
+	vec3 n_out17p0 = tex_frg_17_read.rgb;
+	float n_out17p1 = tex_frg_17_read.a;
 
 // ScalarUniform:76
-	float n_out76p0;
-	n_out76p0 = tiling_param;
+	float n_out76p0 = tiling_param;
 
 // ColorOp:75
 	vec3 n_out75p0;
 	{
-		float base=n_out17p0.x;
-		float blend=vec3(n_out76p0).x;
+		float base = n_out17p0.x;
+		float blend = vec3(n_out76p0).x;
 		if (base < 0.5) {
-			n_out75p0.x = (base * (blend+0.5));
+			n_out75p0.x = (base * (blend + 0.5));
 		} else {
-			n_out75p0.x = (1.0 - (1.0-base) * (1.0-(blend-0.5)));
+			n_out75p0.x = (1.0 - (1.0 - base) * (1.0 - (blend - 0.5)));
 		}
 	}
 	{
-		float base=n_out17p0.y;
-		float blend=vec3(n_out76p0).y;
+		float base = n_out17p0.y;
+		float blend = vec3(n_out76p0).y;
 		if (base < 0.5) {
-			n_out75p0.y = (base * (blend+0.5));
+			n_out75p0.y = (base * (blend + 0.5));
 		} else {
-			n_out75p0.y = (1.0 - (1.0-base) * (1.0-(blend-0.5)));
+			n_out75p0.y = (1.0 - (1.0 - base) * (1.0 - (blend - 0.5)));
 		}
 	}
 	{
-		float base=n_out17p0.z;
-		float blend=vec3(n_out76p0).z;
+		float base = n_out17p0.z;
+		float blend = vec3(n_out76p0).z;
 		if (base < 0.5) {
-			n_out75p0.z = (base * (blend+0.5));
+			n_out75p0.z = (base * (blend + 0.5));
 		} else {
-			n_out75p0.z = (1.0 - (1.0-base) * (1.0-(blend-0.5)));
+			n_out75p0.z = (1.0 - (1.0 - base) * (1.0 - (blend - 0.5)));
 		}
 	}
 
 // VectorOp:74
-	vec3 n_out74p0;
-	n_out74p0 = min( vec3(n_out43p0) , n_out75p0 );
+	vec3 n_out74p0 = min(vec3(n_out43p0), n_out75p0);
 
 // VectorOp:42
-	vec3 n_out42p0;
-	n_out42p0 = max( vec3(n_out70p0) , n_out74p0 );
+	vec3 n_out42p0 = max(vec3(n_out70p0), n_out74p0);
 
 // VectorScalarMix:40
-	vec3 n_out40p0;
-	n_out40p0 = mix( n_out39p0 , n_out44p0 , dot(n_out42p0,vec3(0.333333,0.333333,0.333333)) );
+	vec3 n_out40p0 = mix(n_out39p0, n_out44p0, dot(n_out42p0, vec3(0.333333, 0.333333, 0.333333)));
 
 // VectorMix:16
-	vec3 n_out16p0;
-	n_out16p0 = mix( n_out12p0 , n_out40p0 , n_out42p0 );
+	vec3 n_out16p0 = mix(n_out12p0, n_out40p0, n_out42p0);
 
 // Texture:49
-	vec3 n_out49p0;
-	float n_out49p1;
-	vec4 tex_frg_49_read = texture( tex_frg_49 , n_out57p0.xy );
-	n_out49p0 = tex_frg_49_read.rgb;
-	n_out49p1 = tex_frg_49_read.a;
+	vec4 tex_frg_49_read = texture(tex_frg_49, n_out57p0.xy);
+	vec3 n_out49p0 = tex_frg_49_read.rgb;
+	float n_out49p1 = tex_frg_49_read.a;
 
 // Texture:50
-	vec3 n_out50p0;
-	float n_out50p1;
-	vec4 tex_frg_50_read = texture( tex_frg_50 , n_out57p0.xy );
-	n_out50p0 = tex_frg_50_read.rgb;
-	n_out50p1 = tex_frg_50_read.a;
+	vec4 tex_frg_50_read = texture(tex_frg_50, n_out57p0.xy);
+	vec3 n_out50p0 = tex_frg_50_read.rgb;
+	float n_out50p1 = tex_frg_50_read.a;
 
 // Texture:51
-	vec3 n_out51p0;
-	float n_out51p1;
-	vec4 tex_frg_51_read = texture( tex_frg_51 , n_out57p0.xy );
-	n_out51p0 = tex_frg_51_read.rgb;
-	n_out51p1 = tex_frg_51_read.a;
+	vec4 tex_frg_51_read = texture(tex_frg_51, n_out57p0.xy);
+	vec3 n_out51p0 = tex_frg_51_read.rgb;
+	float n_out51p1 = tex_frg_51_read.a;
 
 // VectorOp:52
-	vec3 n_out52p0;
-	n_out52p0 = n_out50p0 * n_out51p0;
+	vec3 n_out52p0 = n_out50p0 * n_out51p0;
 
 // VectorScalarMix:48
-	vec3 n_out48p0;
-	n_out48p0 = mix( n_out49p0 , n_out52p0 , dot(n_out42p0,vec3(0.333333,0.333333,0.333333)) );
+	vec3 n_out48p0 = mix(n_out49p0, n_out52p0, dot(n_out42p0, vec3(0.333333, 0.333333, 0.333333)));
 
 // Scalar:55
-	float n_out55p0;
-	n_out55p0 = 1.000000;
+	float n_out55p0 = 1.000000;
 
 // Input:80
-	vec3 n_out80p0;
-	n_out80p0 = vec3(UV,0.0);
+	vec3 n_out80p0 = vec3(UV, 0.0);
 
 // Color:81
-	vec3 n_out81p0;
-	float n_out81p1;
-	n_out81p0 = vec3(0.759277,0.667787,0.499759);
-	n_out81p1 = 1.000000;
+	vec3 n_out81p0 = vec3(0.759277, 0.667787, 0.499759);
+	float n_out81p1 = 1.000000;
 
 // Expression:79
 	vec3 n_out79p0;
-	n_out79p0=vec3(0.0, 0.0, 0.0);
+	n_out79p0 = vec3(0.0, 0.0, 0.0);
 	{
 		vec3 coord = n_out80p0 * 100.0;
 		vec2 i = floor(coord.xy);
@@ -702,9 +639,10 @@ void fragment() {
 		}
 		n_out79p0 = pow(vec3(min_dist), vec3(3.,3.,3.)) * n_out81p0;
 	}
+
 // Output:0
 	ALBEDO = n_out16p0;
-	AO = dot(n_out48p0,vec3(0.333333,0.333333,0.333333));
+	AO = dot(n_out48p0, vec3(0.333333, 0.333333, 0.333333));
 	NORMALMAP = n_out48p0;
 	NORMALMAP_DEPTH = n_out55p0;
 	TRANSMISSION = n_out79p0;
@@ -713,12 +651,11 @@ void fragment() {
 
 void light() {
 // ScalarUniform:3
-	float n_out3p0;
-	n_out3p0 = light_mixer_angle;
+	float n_out3p0 = light_mixer_angle;
 
 // Expression:2
 	vec3 n_out2p0;
-	n_out2p0=vec3(0.0, 0.0, 0.0);
+	n_out2p0 = vec3(0.0, 0.0, 0.0);
 	{
 		// VectorOp:30
 			vec3 n_out30p0 = ALBEDO * ATTENUATION;
@@ -781,12 +718,13 @@ void light() {
 			n_out2p0 = n_out47p0;
 		
 	}
+
 // Output:0
 	DIFFUSE_LIGHT = n_out2p0;
 
 }
 "
-graph_offset = Vector2( -953.5, 112.75 )
+graph_offset = Vector2( -1054, 648 )
 nodes/fragment/0/position = Vector2( 400, 200 )
 nodes/fragment/4/node = SubResource( 30 )
 nodes/fragment/4/position = Vector2( -3220, -280 )
