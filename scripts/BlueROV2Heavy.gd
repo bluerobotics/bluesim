@@ -179,17 +179,17 @@ func _unhandled_input(event):
 
 func process_keys():
 	if Input.is_action_pressed("forward"):
-		self.add_force_local(Vector3(0,0,40),Vector3(0,0,0))
+		self.add_force_local(Vector3(0,0,40),Vector3(0,-0.05,0))
 	if Input.is_action_pressed("backwards"):
-		self.add_force_local(Vector3(0,0,-40),Vector3(0,0,0))
+		self.add_force_local(Vector3(0,0,-40),Vector3(0,-0.05,0))
 	if Input.is_action_pressed("strafe_right"):
-		self.add_force_local(Vector3(-40,0,0),Vector3(0,0,0))
+		self.add_force_local(Vector3(-40,0,0),Vector3(0,-0.05,0))
 	if Input.is_action_pressed("strafe_left"):
-		self.add_force_local(Vector3(40,0,0),Vector3(0,0,0))
+		self.add_force_local(Vector3(40,0,0),Vector3(0,-0.05,0))
 	if Input.is_action_pressed("upwards"):
-		self.add_force_local(Vector3(0,70,0),Vector3(0,0,0))
+		self.add_force_local(Vector3(0,70,0),Vector3(0,-0.05,0))
 	if Input.is_action_pressed("downwards"):
-		self.add_force_local(Vector3(0,-70,0),Vector3(0,0,0))
+		self.add_force_local(Vector3(0,-70,0),Vector3(0,-0.05,0))
 	if Input.is_action_pressed("rotate_left"):
 		self.add_torque(self.transform.basis.xform(Vector3(0,20,0)))
 	if Input.is_action_pressed("rotate_right"):
