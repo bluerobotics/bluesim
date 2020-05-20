@@ -66,6 +66,7 @@ tracks/0/keys = {
 }
 
 [node name="BlueRov" type="RigidBody" groups=[
+"buoyant",
 "vehicles",
 ]]
 mass = 11.0

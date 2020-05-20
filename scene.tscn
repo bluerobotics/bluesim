@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/maujoe.basic_water_material/materials/basic_water_material.material" type="Material" id=1]
 [ext_resource path="res://scripts/teste.gd" type="Script" id=2]
+[ext_resource path="res://RigidBody.gd" type="Script" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 30, 2, 30 )
@@ -45,6 +46,22 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 1, 0, 0 ) ]
 }
 
+[sub_resource type="SphereShape" id=7]
+radius = 0.239168
+
+[sub_resource type="SphereMesh" id=8]
+
+[sub_resource type="PhysicsMaterial" id=9]
+friction = 3.0
+rough = true
+bounce = 1.0
+absorbent = true
+
+[sub_resource type="CubeMesh" id=10]
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.0336481, 0.438682, 0.0318039 )
+
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -86,3 +103,43 @@ anims/uv_water = SubResource( 6 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 33.518, 0 )
 light_energy = 0.19
 shadow_enabled = true
+
+[node name="boia" type="RigidBody" parent="." groups=[
+"buoyant",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.71692, -4.93734 )
+mass = 2.16
+linear_damp = 0.664
+angular_damp = 0.869
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="boia"]
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="boia"]
+transform = Transform( 0.236609, 0, 0, 0, 0.236609, 0, 0, 0, 0.236609, 0, 0, 0 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="pino" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.90713, -4.93734 )
+mass = 2.0
+physics_material_override = SubResource( 9 )
+linear_damp = 0.993
+angular_damp = 0.994
+
+[node name="MeshInstance" type="MeshInstance" parent="pino"]
+transform = Transform( 0.0384637, 0, 0, 0, 0.514566, 0, 0, 0, 0.0384637, 5.96817e-05, 0.1759, -0.00120203 )
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="pino"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.103801, 0 )
+shape = SubResource( 11 )
+
+[node name="ConeTwistJoint" type="ConeTwistJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.45982, -4.94516 )
+nodes/node_a = NodePath("../boia")
+nodes/node_b = NodePath("../pino")
+swing_span = 9.0
+twist_span = -1495.0

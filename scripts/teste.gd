@@ -15,7 +15,7 @@ func _ready():
 	set_physics_process(true)
 
 func calculate_buoyancy():
-	var vehicles = get_tree().get_nodes_in_group("vehicles")
+	var vehicles = get_tree().get_nodes_in_group("buoyant")
 	for vehicle in vehicles:
 		if not vehicle is RigidBody:
 			push_warning("Component %s does not inherit RigidBody." % vehicle.name)
