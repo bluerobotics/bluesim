@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/maujoe.basic_water_material/materials/basic_water_material.material" type="Material" id=1]
 [ext_resource path="res://scripts/teste.gd" type="Script" id=2]
-[ext_resource path="res://RigidBody.gd" type="Script" id=3]
+[ext_resource path="res://scenery/buoy.gd" type="Script" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 30, 2, 30 )
