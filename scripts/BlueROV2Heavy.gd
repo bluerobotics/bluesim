@@ -194,4 +194,8 @@ func process_keys():
 		self.add_torque(self.transform.basis.xform(Vector3(0,20,0)))
 	if Input.is_action_pressed("rotate_right"):
 		self.add_torque(self.transform.basis.xform(Vector3(0,-20,0)))
-
+	if Input.is_action_pressed("camera_up"):
+		$Camera.rotation_degrees.x = min($Camera.rotation_degrees.x+0.1, 45)
+	if Input.is_action_pressed("camera_down"):
+		$Camera.rotation_degrees.x = max($Camera.rotation_degrees.x-0.1, -45)
+	
