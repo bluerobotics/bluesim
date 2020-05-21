@@ -70,9 +70,7 @@ render_target_update_mode = 3
 
 [node name="Spatial" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 2 )]
 
-[node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" groups=[
-"buoyant",
-] instance=ExtResource( 1 )]
+[node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 1 )]
 transform = Transform( 0.999847, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 6.06423, 2.2808 )
 can_sleep = true
 angular_damp = 0.725
@@ -118,8 +116,6 @@ __meta__ = {
 
 [node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportContainer"]
 size = Vector2( 200, 200 )
-handle_input_locally = false
-render_target_update_mode = 3
 
 [node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportContainer/Viewport"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1.23694, 5.7916, 2.94429 )
