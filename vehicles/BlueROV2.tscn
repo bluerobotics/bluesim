@@ -46,6 +46,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.203911, -0.169, -0.175999 )
 
 [node name="Gripper" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, -0.021342, -0.58559, -0.011176 )
+script = null
 
 [node name="light1" type="SpotLight" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.293089, -0.426069, 0.271956 )
