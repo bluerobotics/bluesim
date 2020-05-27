@@ -1,7 +1,7 @@
 extends MeshInstance
 
 signal updatePing360Display
-var last_points = [[-1,0],[-1,0],[-1,0]]
+var last_points = [[0,0],[0,0],[0,0]]
 var max_distance = 400
 var n_offsets = 40
 var max_offset = 0.3
