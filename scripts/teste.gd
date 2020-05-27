@@ -1,12 +1,9 @@
 extends Spatial
-
 const BUOYANCY = 160.0 # newtons?
 const HEIGHT = 2.4 # TODO: get this programatically
-
 var underwater_env = load("res://underwaterEnvironment.tres")
 var surface_env = load("res://default_env.tres")
 # darkest it gets
-var deep_color = underwater_env.background_color
 onready var cameras = get_tree().get_nodes_in_group("cameras")
 onready var surface_altitude = $water.translation.y
 
@@ -34,12 +31,19 @@ func update_fog():
 		var depth = rov_camera.global_transform.origin.y - surface_altitude
 		var fog_distance = max(50 + 3 * depth, 20)
 		underwater_env.fog_depth_end = fog_distance
-		var new_color = Color("28a4e9").linear_interpolate(Color("001e5f"), 1-(fog_distance/55))
+		var deep_factor = min(max(-depth/20, 0), 1.0)
+		Globals.deep_factor = deep_factor
+		var new_color = Globals.surface_ambient.linear_interpolate(Globals.deep_ambient, deep_factor)
+		Globals.current_ambient = new_color.darkened(0.5)
 		underwater_env.background_color = new_color
+		underwater_env.background_sky.sky_horizon_color = new_color;
+		underwater_env.background_sky.ground_bottom_color = new_color;
+		underwater_env.background_sky.ground_horizon_color = new_color;
 		underwater_env.fog_color = new_color
-		underwater_env.ambient_light_energy = fog_distance/100
-		underwater_env.ambient_light_color = Color("a5d6f1").linear_interpolate(Color("001e5f"), 1-(fog_distance/50))
-		$sun.light_energy = max(0.3 * (50 + 3 * depth)/50,0)
+		underwater_env.ambient_light_energy = 1.0 - deep_factor
+		underwater_env.ambient_light_color = new_color; #surface_ambient.linear_interpolate(deep_ambient, max(1 - depth/50, 0))
+		$sun.light_energy = max(0.3 - 0.5*deep_factor, 0)
+		#underwater_env.background_sky.sky_energy = max(5.0 - 5*deep_factor, 0.0)
 
 		for camera in cameras:
 			depth = camera.global_transform.origin.y - surface_altitude

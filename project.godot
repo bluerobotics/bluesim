@@ -108,6 +108,10 @@ config/name="sitltest1"
 run/main_scene="res://menu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Globals="*res://Globals.tscn"
+
 [display]
 
 window/stretch/mode="viewport"

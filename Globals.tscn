@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/globals.gd" type="Script" id=1]
+
+[node name="Node" type="Node"]
+script = ExtResource( 1 )
+surface_ambient = Color( 0.494118, 0.854902, 0.952941, 1 )
+deep_ambient = Color( 0, 0.0392157, 0.305882, 1 )
+current_ambient = Color( 0, 0, 0, 1 )

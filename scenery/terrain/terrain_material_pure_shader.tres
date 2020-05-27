@@ -1,0 +1,472 @@
+[gd_resource type="ShaderMaterial" load_steps=11 format=2]
+
+[ext_resource path="res://scenery/terrain/textures/T_stain_M.TGA" type="Texture" id=1]
+[ext_resource path="res://scenery/terrain/textures/T_sand_BC.TGA" type="Texture" id=2]
+[ext_resource path="res://scenery/terrain/textures/T_mossy_stone_BC.TGA" type="Texture" id=3]
+[ext_resource path="res://scenery/terrain/textures/T_mossy_stone_N.TGA" type="Texture" id=4]
+[ext_resource path="res://scenery/terrain/textures/T_Rock_Generic_BC.TGA" type="Texture" id=5]
+[ext_resource path="res://scenery/terrain/textures/T_Rock_Generic_M1.TGA" type="Texture" id=6]
+[ext_resource path="res://scenery/terrain/textures/T_Rock_Generic_N.TGA" type="Texture" id=7]
+[ext_resource path="res://scenery/terrain/textures/T_sand_N.TGA" type="Texture" id=8]
+[ext_resource path="res://scenery/terrain/textures/caustic_texture.tres" type="Texture" id=9]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform float tiling_sand;
+uniform sampler2D tex_frg_10;
+uniform float saturatesand;
+uniform float darken_mask_tiling;
+uniform sampler2D tex_frg_34;
+uniform float darkening_rock_moss;
+uniform sampler2D tex_frg_38;
+uniform float cavity_dark;
+uniform float tiling_moss;
+uniform sampler2D tex_frg_11;
+uniform float darkenmoss;
+uniform float darkenmask_tiling;
+uniform sampler2D tex_frg_23;
+uniform float cavity_bright;
+uniform sampler2D tex_frg_31;
+uniform float AO_str;
+uniform float tiling_mask;
+uniform sampler2D tex_frg_17;
+uniform float tiling_param;
+uniform float normal_depth;
+uniform sampler2D tex_frg_49;
+uniform sampler2D tex_frg_50 : hint_normal;
+uniform sampler2D tex_frg_51 : hint_normal;
+uniform sampler2D caustics;
+uniform float light_mixer_angle;
+uniform vec4 ambient_color : hint_color = vec4(0.0, 0.0, 0.3, 1.0);
+
+
+float SchlickFresnel(float u) {
+	float m = 1.0 - u;
+	float m2 = m * m;
+	return m2 * m2 * m; // pow(m,5)
+}
+
+// GlobalExpression:0
+	//Diffuse
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:7
+
+	ROUGHNESS = 0.9;
+	vec3 n_out7p0 = vec3(UV, 0.0);
+
+// ScalarUniform:5
+	float n_out5p0 = tiling_sand;
+
+// VectorOp:4
+	vec3 n_out4p0 = n_out7p0 * vec3(n_out5p0);
+
+// Texture:10
+	vec4 tex_frg_10_read = texture(tex_frg_10, n_out4p0.xy);
+	vec3 n_out10p0 = tex_frg_10_read.rgb;
+	float n_out10p1 = tex_frg_10_read.a;
+
+// ScalarUniform:13
+	float n_out13p0 = saturatesand;
+
+// ColorOp:12
+	vec3 n_out12p0 = min(n_out10p0, vec3(n_out13p0));
+
+// Input:78
+	vec3 n_out78p0 = vec3(UV, 0.0);
+
+// ScalarUniform:37
+	float n_out37p0 = darken_mask_tiling;
+
+// VectorOp:77
+	vec3 n_out77p0 = n_out78p0 * vec3(n_out37p0);
+
+// Texture:34
+	vec4 tex_frg_34_read = texture(tex_frg_34, n_out77p0.xy);
+	vec3 n_out34p0 = tex_frg_34_read.rgb;
+	float n_out34p1 = tex_frg_34_read.a;
+
+// ScalarUniform:36
+	float n_out36p0 = darkening_rock_moss;
+
+// VectorOp:35
+	vec3 n_out35p0 = n_out34p0 * vec3(n_out36p0);
+
+// Texture:38
+	vec4 tex_frg_38_read = texture(tex_frg_38, n_out77p0.xy);
+	vec3 n_out38p0 = tex_frg_38_read.rgb;
+	float n_out38p1 = tex_frg_38_read.a;
+
+// VectorScalarMix:39
+	vec3 n_out39p0 = mix(n_out35p0, n_out34p0, dot(n_out38p0, vec3(0.333333, 0.333333, 0.333333)));
+
+// ScalarUniform:29
+	float n_out29p0 = cavity_dark;
+
+// ScalarUniform:6
+	float n_out6p0 = tiling_moss;
+
+// VectorOp:8
+	vec3 n_out8p0 = n_out7p0 * vec3(n_out6p0);
+
+// VectorOp:57
+	vec3 n_in57p1 = vec3(0.00000, 0.00000, 0.00000);
+	vec3 n_out57p0 = n_out8p0 + n_in57p1;
+
+// Texture:11
+	vec4 tex_frg_11_read = texture(tex_frg_11, n_out57p0.xy);
+	vec3 n_out11p0 = tex_frg_11_read.rgb;
+	float n_out11p1 = tex_frg_11_read.a;
+
+// ScalarUniform:15
+	float n_out15p0 = darkenmoss;
+
+// VectorOp:21
+	vec3 n_out21p0 = n_out11p0 * vec3(n_out15p0);
+
+// Input:25
+	vec3 n_out25p0 = vec3(UV, 0.0);
+
+// ScalarUniform:26
+	float n_out26p0 = darkenmask_tiling;
+
+// VectorOp:24
+	vec3 n_out24p0 = n_out25p0 * vec3(n_out26p0);
+
+// Texture:23
+	vec4 tex_frg_23_read = texture(tex_frg_23, n_out24p0.xy);
+	vec3 n_out23p0 = tex_frg_23_read.rgb;
+	float n_out23p1 = tex_frg_23_read.a;
+
+// VectorMix:22
+	vec3 n_out22p0 = mix(n_out21p0, n_out11p0, n_out23p0);
+
+// VectorOp:27
+	vec3 n_out27p0 = vec3(n_out29p0) * n_out22p0;
+
+// ScalarUniform:30
+	float n_out30p0 = cavity_bright;
+
+// VectorOp:28
+	vec3 n_out28p0 = vec3(n_out30p0) * n_out22p0;
+
+// Texture:31
+	vec4 tex_frg_31_read = texture(tex_frg_31, n_out57p0.xy);
+	vec3 n_out31p0 = tex_frg_31_read.rgb;
+	float n_out31p1 = tex_frg_31_read.a;
+
+// VectorDecompose:33
+	float n_out33p0 = n_out31p0.x;
+	float n_out33p1 = n_out31p0.y;
+	float n_out33p2 = n_out31p0.z;
+
+// VectorScalarMix:32
+	vec3 n_out32p0 = mix(n_out27p0, n_out28p0, n_out33p0);
+
+// Color:47
+	vec3 n_out47p0 = vec3(0.323040, 0.360000, 0.280800);
+	float n_out47p1 = 1.000000;
+
+// ScalarUniform:46
+	float n_out46p0 = AO_str;
+
+// VectorScalarMix:45
+	vec3 n_out45p0 = mix(n_out47p0, vec3(n_out33p2), n_out46p0);
+
+// VectorOp:44
+	vec3 n_out44p0 = n_out32p0 * n_out45p0;
+
+// Input:65
+	mat4 n_out65p0 = INV_CAMERA_MATRIX;
+
+// Input:66
+	vec3 n_out66p0 = NORMAL;
+
+// TransformVectorMult:67
+	vec3 n_out67p0 = (vec4(n_out66p0, 1.0) * n_out65p0).xyz;
+
+// DotProduct:68
+	vec3 n_in68p1 = vec3(0.00000, 1.00000, 0.00000);
+	float n_out68p0 = dot(n_out67p0, n_in68p1);
+
+// ScalarOp:73
+	float n_in73p1 = 3.00000;
+	float n_out73p0 = n_out68p0 * n_in73p1;
+
+// ScalarOp:69
+	float n_in69p0 = 3.00000;
+	float n_out69p0 = n_in69p0 - n_out73p0;
+
+// ScalarClamp:70
+	float n_in70p1 = 0.00000;
+	float n_in70p2 = 1.00000;
+	float n_out70p0 = clamp(n_out69p0, n_in70p1, n_in70p2);
+
+// Input:41
+	vec3 n_out41p0 = COLOR.rgb;
+
+// VectorDecompose:43
+	float n_out43p0 = n_out41p0.x;
+	float n_out43p1 = n_out41p0.y;
+	float n_out43p2 = n_out41p0.z;
+
+// Input:19
+	vec3 n_out19p0 = vec3(UV, 0.0);
+
+// ScalarUniform:20
+	float n_out20p0 = tiling_mask;
+
+// VectorOp:18
+	vec3 n_out18p0 = n_out19p0 * vec3(n_out20p0);
+
+// Texture:17
+	vec4 tex_frg_17_read = texture(tex_frg_17, n_out18p0.xy);
+	vec3 n_out17p0 = tex_frg_17_read.rgb;
+	float n_out17p1 = tex_frg_17_read.a;
+
+// ScalarUniform:76
+	float n_out76p0 = tiling_param;
+
+// ColorOp:75
+	vec3 n_out75p0;
+	{
+		float base = n_out17p0.x;
+		float blend = vec3(n_out76p0).x;
+		if (base < 0.5) {
+			n_out75p0.x = (base * (blend + 0.5));
+		} else {
+			n_out75p0.x = (1.0 - (1.0 - base) * (1.0 - (blend - 0.5)));
+		}
+	}
+	{
+		float base = n_out17p0.y;
+		float blend = vec3(n_out76p0).y;
+		if (base < 0.5) {
+			n_out75p0.y = (base * (blend + 0.5));
+		} else {
+			n_out75p0.y = (1.0 - (1.0 - base) * (1.0 - (blend - 0.5)));
+		}
+	}
+	{
+		float base = n_out17p0.z;
+		float blend = vec3(n_out76p0).z;
+		if (base < 0.5) {
+			n_out75p0.z = (base * (blend + 0.5));
+		} else {
+			n_out75p0.z = (1.0 - (1.0 - base) * (1.0 - (blend - 0.5)));
+		}
+	}
+
+// VectorOp:74
+	vec3 n_out74p0 = min(vec3(n_out43p0), n_out75p0);
+
+// VectorOp:42
+	vec3 n_out42p0 = max(vec3(n_out70p0), n_out74p0);
+
+// VectorScalarMix:40
+	vec3 n_out40p0 = mix(n_out39p0, n_out44p0, dot(n_out42p0, vec3(0.333333, 0.333333, 0.333333)));
+
+// VectorMix:16
+	vec3 n_out16p0 = mix(n_out12p0, n_out40p0, n_out42p0);
+
+// Texture:49
+	vec4 tex_frg_49_read = texture(tex_frg_49, n_out57p0.xy);
+	vec3 n_out49p0 = tex_frg_49_read.rgb;
+	float n_out49p1 = tex_frg_49_read.a;
+
+// Texture:50
+	vec4 tex_frg_50_read = texture(tex_frg_50, n_out57p0.xy);
+	vec3 n_out50p0 = tex_frg_50_read.rgb;
+	float n_out50p1 = tex_frg_50_read.a;
+
+// Texture:51
+	vec4 tex_frg_51_read = texture(tex_frg_51, n_out57p0.xy);
+	vec3 n_out51p0 = tex_frg_51_read.rgb;
+	float n_out51p1 = tex_frg_51_read.a;
+
+// VectorOp:52
+	vec3 n_out52p0 = n_out50p0 * n_out51p0;
+
+// VectorScalarMix:48
+	vec3 n_out48p0 = mix(n_out49p0, n_out52p0, dot(n_out42p0, vec3(0.333333, 0.333333, 0.333333)));
+
+// Scalar:55
+	float n_out55p0 = 1.000000;
+
+// Input:80
+	vec3 n_out80p0 = vec3(UV, 0.0);
+
+// Color:81
+	vec3 n_out81p0 = vec3(0.759277, 0.667787, 0.499759);
+	float n_out81p1 = 1.000000;
+
+/*
+// Expression:79
+	vec3 n_out79p0;
+	n_out79p0 = vec3(0.0, 0.0, 0.0);
+	{
+		vec3 coord = n_out80p0 * 500.0;
+		vec2 i = floor(coord.xy);
+		vec2 f = fract(coord.xy);
+		
+		float min_dist = 99999.0;
+		// going through the current tile and the tiles surrounding it
+		for(float x = -1.0; x <= 1.0; x++) {
+			for(float y = -1.0; y <= 1.0; y++) {
+				
+				// generate a random point in each tile,
+				// but also account for whether it's a farther, neighbouring tile
+				vec2 randseed = i + vec2(x, y);
+				vec2 rand = fract(sin( vec2( dot(randseed.xy,vec2(1237.41,311.7)), dot(randseed,vec2(269.5,183.3)) ) ) * 437.5453 * (0.001+sin(TIME*50.0)*0.0005));
+				vec2 node = rand + vec2(x, y);
+				
+				// check for distance to the point in that tile
+				// decide whether it's the minimum
+				float dist = sqrt((f - node).x * (f - node).x + (f - node).y * (f - node).y);
+				min_dist = min(min_dist, dist);
+			}
+		}
+		n_out79p0 = pow(vec3(min_dist), vec3(3.,3.,3.)) * n_out81p0;
+	}
+*/
+
+// Output:0
+	ALBEDO = n_out16p0;
+	AO = dot(n_out48p0, vec3(0.333333, 0.333333, 0.333333));
+	NORMALMAP = n_out48p0;
+	NORMALMAP_DEPTH = normal_depth;
+	TRANSMISSION = texture(caustics, 70.0*UV.xy).xyz;
+
+}
+
+void light() {
+// ScalarUniform:3
+	float n_out3p0 = light_mixer_angle;
+
+// Expression:2
+	vec3 n_out2p0;
+	n_out2p0 = vec3(0.0, 0.0, 0.0);
+	{
+		//lambert
+		vec3 L = LIGHT;
+		vec3 N = NORMAL;
+		vec3 V = VIEW;
+		float NdotL = dot(N, L);
+		float cNdotL = max(NdotL, 0.0); // clamped NdotL
+		float NdotV = dot(N, V);
+		float cNdotV = max(NdotV, 0.0);
+
+		vec3 H = normalize(V + L);
+		float cLdotH = max(dot(L, H), 0.0);		
+		float diffuse_brdf_NL; // BRDF times N.L for calculating diffuse radiance
+		vec3 regular_light;
+		
+		{
+			float FD90_minus_1 = 2.0 * cLdotH * cLdotH * ROUGHNESS - 0.5;
+			float FdV = 1.0 + FD90_minus_1 * SchlickFresnel(cNdotV);
+			float FdL = 1.0 + FD90_minus_1 * SchlickFresnel(cNdotL);
+			diffuse_brdf_NL = (1.0 / 3.14519) * FdV * FdL * cNdotL;
+			/*
+			float energyBias = mix(roughness, 0.0, 0.5);
+			float energyFactor = mix(roughness, 1.0, 1.0 / 1.51);
+			float fd90 = energyBias + 2.0 * VoH * VoH * roughness;
+			float f0 = 1.0;
+			float lightScatter = f0 + (fd90 - f0) * pow(1.0 - cNdotL, 5.0);
+			float viewScatter = f0 + (fd90 - f0) * pow(1.0 - cNdotV, 5.0);
+
+			diffuse_brdf_NL = lightScatter * viewScatter * energyFactor;
+			*/
+			regular_light = LIGHT_COLOR * ALBEDO * diffuse_brdf_NL * ATTENUATION;
+		}
+
+		// Input:33
+			vec3 n_out33p0 = NORMAL;
+		
+		// VectorOp:24
+			vec3 n_out24p0 = TRANSMISSION * LIGHT_COLOR;
+		
+		// DotProduct:32
+			vec3 n_out32p0 = n_out24p0 * cNdotL * (1.0 / 3.14159);
+		
+		// VectorOp:31
+			vec3 caustic = ambient_color.xyz + clamp(vec3(n_out32p0) * ATTENUATION, vec3(0.0), vec3(1.0));
+		
+		// Input:37
+			vec3 n_out37p0 = ALBEDO;
+		
+		// Input:38
+			vec3 n_out38p0 = ATTENUATION;
+		
+		// VectorOp:39
+			vec3 n_out39p0 = n_out37p0 * n_out38p0;
+		
+		// Input:41
+			vec3 n_out41p0 = NORMAL;
+		
+		// Input:43
+			vec3 n_out43p0 = LIGHT_COLOR;
+		
+		// DotProduct:40
+			float n_out40p0 = dot(n_out41p0, n_out43p0);
+		
+		// Expression:50
+		
+			vec3 world_light = (vec4(LIGHT, 1.0) * INV_CAMERA_MATRIX).xyz;
+			//bool use_caustics = length(world_light.xz) <= n_out3p0;
+			bool use_caustics = dot(normalize(world_light), vec3(0.,1.,0.)) >= n_out3p0;
+		
+		// VectorScalarMix:44
+			vec3 n_out44p0 = mix(caustic, regular_light, use_caustics ? 0.0 : 1.0);
+		
+		// VectorOp:35
+			vec3 n_out35p0 = n_out44p0;
+		
+		// VectorClamp:47
+			vec3 n_in47p1 = vec3(0.00000, 0.00000, 0.00000);
+			vec3 n_in47p2 = vec3(1.00000, 1.00000, 1.00000);
+			vec3 n_out47p0 = clamp(n_out35p0, n_in47p1, n_in47p2);
+		
+		// Output:0
+			n_out2p0 = n_out47p0;
+		
+	}
+
+// Output:0
+	DIFFUSE_LIGHT += n_out2p0;
+
+}
+"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/tiling_sand = 19.719
+shader_param/saturatesand = 0.938
+shader_param/darken_mask_tiling = 8.665
+shader_param/darkening_rock_moss = 0.468
+shader_param/cavity_dark = 1.13
+shader_param/tiling_moss = 19.096
+shader_param/darkenmoss = 1.324
+shader_param/darkenmask_tiling = 7.236
+shader_param/cavity_bright = 0.468
+shader_param/AO_str = 0.438
+shader_param/tiling_mask = 0.035
+shader_param/tiling_param = 2.251
+shader_param/normal_depth = 0.458
+shader_param/light_mixer_angle = 0.999
+shader_param/ambient_color = Color( 0.0313726, 0.0392157, 0.0431373, 1 )
+shader_param/tex_frg_10 = ExtResource( 2 )
+shader_param/tex_frg_34 = ExtResource( 5 )
+shader_param/tex_frg_38 = ExtResource( 1 )
+shader_param/tex_frg_11 = ExtResource( 3 )
+shader_param/tex_frg_23 = ExtResource( 1 )
+shader_param/tex_frg_17 = ExtResource( 6 )
+shader_param/tex_frg_49 = ExtResource( 8 )
+shader_param/tex_frg_50 = ExtResource( 4 )
+shader_param/tex_frg_51 = ExtResource( 7 )
+shader_param/caustics = ExtResource( 9 )

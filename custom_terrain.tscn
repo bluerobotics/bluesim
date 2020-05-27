@@ -26,7 +26,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27.9634, 0 )
 
 [node name="terrain2" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.22, 40.49, -5.48 )
-visible = false
 
 [node name="bigrock1" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.752445, 15.8197, -41.1829 )

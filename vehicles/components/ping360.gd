@@ -1,6 +1,6 @@
 extends MeshInstance
 
-
+signal updatePing360Display
 var last_points = [[-1,0],[-1,0],[-1,0]]
 var max_distance = 400
 var n_offsets = 40
@@ -13,7 +13,7 @@ var target_offsets = [0.0, 0.01, 0.02, 0.04, 0.07, 0.09, 0.11, 0.13, 0.15, 0.17,
 var angle = 0
 var last_angle = angle
 # ColorRect is the Node on which I have my shader material attached
-var img = Image.new()
+
 var texture = ImageTexture.new()
 
 func _ready():
@@ -25,23 +25,6 @@ func _ready():
 		new_targets.append(max_offset - i*increment)
 	target_offsets = new_targets
 	print(target_offsets)
-	var array = []
-	for y in range(360):
-		for x in range(100):
-			array.append(0)
-	
-
-	# You'll have to get thoose the way you want
-	var array_width = 100
-	var array_heigh = 360
-
-	# The following is used to convert the array into a Texture
-	var byte_array = PoolByteArray(array)
-
-
-	# I don't want any mipmaps generated : use_mipmaps = false
-	# I'm only interested with 1 component per pixel (the corresponding array value) : Format = Image.FORMAT_R8
-	img.create_from_data(array_width, array_heigh, false, Image.FORMAT_R8, byte_array)
 
 	
 func _physics_process(delta):
@@ -65,22 +48,6 @@ func _physics_process(delta):
 	last_angle = angle
 
 func _process(delta):
+	emit_signal("updatePing360Display", angle, last_points)
 	angle = (angle + 1) % 360
-	img.lock()
-	for x in range(100):
-		img.set_pixel(x, angle, 0)
-	for point in last_points:
-		var distance = point[0]
-		var intensity = point[1]
-		img.set_pixel(int(distance), angle, Color(intensity, intensity, intensity))
-
-	img.unlock()
-	#var image = texture.get_data()
-	#img.set_pixel(angle, angle, 6)
-	# Override the default flag with 0 since I don't want texture repeat/filtering/mipmaps/etc
-	var texture = ImageTexture.new()
-	texture.create_from_image(img, 0)
-	# Upload the texture to my shader
-	$display.get_surface_material(0).set_shader_param("my_array", texture)
-
 

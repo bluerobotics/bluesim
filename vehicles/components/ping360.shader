@@ -1,4 +1,4 @@
-shader_type spatial;
+shader_type canvas_item;
 
 uniform sampler2D my_array;
 
@@ -19,7 +19,7 @@ void fragment() {
 
     //Move position to the center
     vec2 relPos = UV - vec2(0.5 ,0.5);
-
+    relPos.y = -relPos.y;
     //Adjust for screen ratio
     relPos *= sizeOverRadius;
 
@@ -64,7 +64,7 @@ void fragment() {
     vec4 one = texelFetch(my_array,   ivec2 (int(polar.y*75.0),   int((1.0 - polar.x  - xOffset)*360.0) ), 0);
     vec4 two = texelFetch(my_array,   ivec2 (int(polar.y*75.0),   int((1.0 - polar.x)*360.0) ),            0);
     vec4 three = texelFetch(my_array, ivec2 (int(polar.y*75.0),   int((1.0 - polar.x + xOffset)*360.0) ),  0);
-    ALBEDO.rb = vec2(0.0,0.0);
-    ALBEDO.g = max(((one.r + two.r + three.r) / 3.0), pow(1.-polar.y,6));
-	ALPHA = 1.0 - smoothstep(0.9, 1.0 ,polar.y);
+    COLOR.rb = vec2(0.0,0.0);
+    COLOR.g = max(((one.r + two.r + three.r) / 3.0), pow(1.-polar.y,6));
+	COLOR.a = 1.0 - smoothstep(0.9, 1.0 ,polar.y);
 }

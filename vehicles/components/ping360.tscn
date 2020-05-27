@@ -18,7 +18,9 @@ emission_on_uv2 = false
 
 [sub_resource type="QuadMesh" id=4]
 
-[node name="sonar" type="MeshInstance"]
+[node name="ping360" type="MeshInstance" groups=[
+"ping360",
+]]
 transform = Transform( 0.0614213, 0, 0, 0, 0.0614213, 0, 0, 0, 0.0614213, -0.0215761, -0.0488096, -0.000839435 )
 mesh = SubResource( 1 )
 material/0 = null
@@ -32,7 +34,7 @@ material/0 = SubResource( 3 )
 
 [node name="display" type="MeshInstance" parent="."]
 transform = Transform( -8.97672, 0, -8.9366e-07, 0, 8.97672, 0, 4.35954e-07, 0, -1.90355, -3.13375, -6.91549, 14.4054 )
-layers = 2
+layers = 0
 mesh = SubResource( 4 )
 material/0 = ExtResource( 2 )
 __meta__ = {
