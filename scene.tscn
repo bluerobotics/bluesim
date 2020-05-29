@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scenery/shaders/underwater_shader.tres" type="Material" id=1]
 [ext_resource path="res://scripts/teste.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scripts/godrays.gd" type="Script" id=5]
 [ext_resource path="res://scenery/shaders/water_shader.tres" type="Material" id=6]
 [ext_resource path="res://scenery/shaders/shader_textures/Sky Background-56.jpg" type="Texture" id=7]
+[ext_resource path="res://scripts/suspended_particles.gd" type="Script" id=8]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 30, 2, 30 )
@@ -20,7 +21,7 @@ subdivide_depth = 256
 
 [sub_resource type="Skin" id=4]
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=5]
 script/source = "extends MeshInstance
 
 
@@ -41,37 +42,37 @@ func _process(delta):
 	self.get_surface_material(0).set_shader_param(\"alpha_factor\", Globals.deep_factor)
 "
 
-[sub_resource type="SphereShape" id=5]
+[sub_resource type="SphereShape" id=6]
 radius = 0.239168
 
-[sub_resource type="SphereMesh" id=6]
+[sub_resource type="SphereMesh" id=7]
 
-[sub_resource type="PhysicsMaterial" id=7]
+[sub_resource type="PhysicsMaterial" id=8]
 friction = 3.0
 rough = true
 bounce = 1.0
 absorbent = true
 
-[sub_resource type="CubeMesh" id=8]
+[sub_resource type="CubeMesh" id=9]
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=10]
 extents = Vector3( 0.0336481, 0.438682, 0.0318039 )
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=11]
 offsets = PoolRealArray( 0, 0.415929, 0.823009 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.946903, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=13]
 emission_shape = 2
 emission_box_extents = Vector3( 5, 5, 0 )
 direction = Vector3( 0, 0, 0 )
 gravity = Vector3( 0, 0, 0 )
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 12 )
 
-[sub_resource type="ShaderMaterial" id=13]
+[sub_resource type="ShaderMaterial" id=14]
 render_priority = 1
 shader = ExtResource( 4 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
@@ -84,13 +85,29 @@ shader_param/uv1_offset = Vector3( 0, 0, 0 )
 shader_param/uv2_scale = Vector3( 1, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
 
-[sub_resource type="PlaneMesh" id=14]
-material = SubResource( 13 )
+[sub_resource type="PlaneMesh" id=15]
+material = SubResource( 14 )
 size = Vector2( 1, 10 )
 
-[sub_resource type="CubeMesh" id=15]
+[sub_resource type="SpatialMaterial" id=18]
+params_billboard_mode = 2
 
-[sub_resource type="SpatialMaterial" id=16]
+[sub_resource type="ParticlesMaterial" id=19]
+lifetime_randomness = 0.56
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector3( 0, 0, 0 )
+spread = 68.95
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.65
+initial_velocity_random = 0.24
+
+[sub_resource type="PlaneMesh" id=20]
+size = Vector2( 0.01, 0.01 )
+
+[sub_resource type="CubeMesh" id=16]
+
+[sub_resource type="SpatialMaterial" id=17]
 albedo_texture = ExtResource( 7 )
 emission_enabled = true
 emission = Color( 0, 0, 0, 1 )
@@ -118,7 +135,7 @@ shape = SubResource( 2 )
 
 [node name="water" type="MeshInstance" parent="."]
 transform = Transform( 200, 0, 0, 0, 200, 0, 0, 0, 200, 0, 6.31718, 0 )
-visible = false
+layers = 2
 cast_shadow = 0
 mesh = SubResource( 3 )
 skin = SubResource( 4 )
@@ -126,11 +143,12 @@ material/0 = ExtResource( 6 )
 
 [node name="underwater" type="MeshInstance" parent="."]
 transform = Transform( -200, 3.01992e-05, 0, -3.01992e-05, -200, 0, 0, 0, 200, 0, 6.31718, 0 )
+layers = 4
 cast_shadow = 0
 mesh = SubResource( 3 )
 skin = SubResource( 4 )
 material/0 = ExtResource( 1 )
-script = SubResource( 17 )
+script = SubResource( 5 )
 
 [node name="sun" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 33.518, 0 )
@@ -147,28 +165,28 @@ angular_damp = 0.869
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="boia"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="boia"]
 transform = Transform( 0.236609, 0, 0, 0, 0.236609, 0, 0, 0, 0.236609, 0, 0, 0 )
-mesh = SubResource( 6 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="pino" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.90713, -4.93734 )
 mass = 2.0
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 8 )
 linear_damp = 0.993
 angular_damp = 0.994
 
 [node name="MeshInstance" type="MeshInstance" parent="pino"]
 transform = Transform( 0.0384637, 0, 0, 0, 0.514566, 0, 0, 0, 0.0384637, 5.96817e-05, 0.1759, -0.00120203 )
-mesh = SubResource( 8 )
+mesh = SubResource( 9 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="pino"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.103801, 0 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="ConeTwistJoint" type="ConeTwistJoint" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.45982, -4.94516 )
@@ -177,19 +195,31 @@ nodes/node_b = NodePath("../pino")
 swing_span = 9.0
 twist_span = -1495.0
 
-[node name="Particles" type="Particles" parent="."]
+[node name="Godrays" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.33043, 1.32175, 1.52878e-07 )
+visible = false
 amount = 60
 explosiveness = 0.05
 fract_delta = false
 visibility_aabb = AABB( -4, -5.82476, -6.64017, 8, 11.6495, 13.2803 )
 local_coords = false
-process_material = SubResource( 12 )
-draw_pass_1 = SubResource( 14 )
+process_material = SubResource( 13 )
+draw_pass_1 = SubResource( 15 )
 script = ExtResource( 5 )
+
+[node name="SuspendedParticles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.33043, 1.32175, 1.52878e-07 )
+material_override = SubResource( 18 )
+amount = 300
+fract_delta = false
+visibility_aabb = AABB( -0.885532, -1.37454, -1.06985, 1.77106, 2.74906, 2.13966 )
+local_coords = false
+process_material = SubResource( 19 )
+draw_pass_1 = SubResource( 20 )
+script = ExtResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 41.441, 0, 0, 0, 1, 0, 0, 0, 27.4994, 0, 19.2836, 0 )
 visible = false
-mesh = SubResource( 15 )
-material/0 = SubResource( 16 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 17 )

@@ -48,6 +48,10 @@ func update_fog():
 		for camera in cameras:
 			depth = camera.global_transform.origin.y - surface_altitude
 			camera.environment = surface_env if depth > 0 else underwater_env
+			if depth > 0:
+				camera.cull_mask = 3
+			else:
+				camera.cull_mask = 5
 
 func _physics_process(_delta):
 	calculate_buoyancy()

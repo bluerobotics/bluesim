@@ -302,7 +302,7 @@ shadow_atlas_quad_1 = 3
 "cameras",
 ]]
 transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
-cull_mask = 1048573
+cull_mask = 3
 environment = ExtResource( 6 )
 target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
