@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2_HEAVY.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
@@ -25,15 +25,12 @@ export (int) var loops = 1
 # var a = 2
 # var b = \"text\"
 var vehicle
-
 func _ready():
-	var parent = get_parent().find_node(\"BlueRov\")
-	print(parent)
+	var parent = get_parent().find_node(\"tetherAttachment\")
 	for i in range (loops):
 		var child = addLoop(parent, i)
 		addLink(parent, child, i)
 		parent = child
-		print(parent.global_transform.origin)
 		
 func addLoop(parent, i):
 	var loop = LOOP.instance()
@@ -130,7 +127,14 @@ surfaces/2 = {
 "vertex_count": 3805
 }
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="SphereShape" id=7]
+radius = 0.0250406
+
+[sub_resource type="SphereMesh" id=8]
+radius = 0.024
+height = 0.052
+
+[sub_resource type="ShaderMaterial" id=9]
 shader = ExtResource( 12 )
 
 [node name="Node2D" type="Node2D"]
@@ -239,6 +243,26 @@ script = ExtResource( 11 )
 [node name="cameraTarget" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372449, 0 )
 
+[node name="tetherAttachment" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.254361, 5.91714, -0.246872 )
+mass = 0.01
+
+[node name="CollisionShape" type="CollisionShape" parent="ReferenceRect/ViewportCamera/Viewport/tetherAttachment"]
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/tetherAttachment"]
+visible = false
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="tetherJoint" type="ConeTwistJoint" parent="ReferenceRect/ViewportCamera/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.255621, 5.91625, -0.211218 )
+nodes/node_a = NodePath("../BlueRov")
+nodes/node_b = NodePath("../tetherAttachment")
+swing_span = 13.7
+twist_span = 61.2
+bias = 1.19
+
 [node name="ViewportGlobal" type="ViewportContainer" parent="ReferenceRect"]
 pause_mode = 2
 anchor_top = 0.003
@@ -286,7 +310,7 @@ omni_range = 5.9
 
 [node name="Ping360Viewport" type="ViewportContainer" parent="ReferenceRect"]
 pause_mode = 2
-material = SubResource( 7 )
+material = SubResource( 9 )
 anchor_top = 0.003
 anchor_right = 1.0
 anchor_bottom = 1.0
