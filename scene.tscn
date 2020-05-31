@@ -99,7 +99,7 @@ gradient = SubResource( 16 )
 [sub_resource type="ParticlesMaterial" id=18]
 lifetime_randomness = 0.56
 emission_shape = 1
-emission_sphere_radius = 0.78
+emission_sphere_radius = 2.02
 direction = Vector3( 0, 0, 0 )
 spread = 68.95
 gravity = Vector3( 0, 0, 0 )
@@ -218,9 +218,9 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.14477
 script = ExtResource( 8 )
 
 [node name="SuspendedParticles" type="Particles" parent="SuspendedParticleHolder"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1387, -0.742295, 2.14633 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1387, -0.153001, 2.14633 )
 cast_shadow = 0
-amount = 105
+amount = 154
 lifetime = 5.0
 fract_delta = false
 visibility_aabb = AABB( -1.73599, -1.9446, -2.08239, 3.80694, 4.64408, 4.91673 )
