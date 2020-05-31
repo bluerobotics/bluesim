@@ -5,7 +5,7 @@
 [ext_resource path="res://scenery/bigrock1.escn" type="PackedScene" id=3]
 [ext_resource path="res://scenery/terrain_newwater.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenery/floor_plates2.escn" type="PackedScene" id=5]
-[ext_resource path="res://scenery/sunkenship.escn" type="PackedScene" id=6]
+[ext_resource path="res://scenery/sunkenship_lowpoly_collisions.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenery/reefrock.escn" type="PackedScene" id=7]
 [ext_resource path="res://scenery/pillarock.escn" type="PackedScene" id=8]
 [ext_resource path="res://scenery/floor_modul.escn" type="PackedScene" id=9]
@@ -56,9 +56,6 @@ transform = Transform( 0.239401, -0.0807488, 0.967556, 0.00367675, 0.996604, 0.0
 
 [node name="tentacles2" parent="." instance=ExtResource( 11 )]
 transform = Transform( 0.239401, -0.0807487, 0.967556, 0.00367674, 0.996604, 0.0822631, -0.970914, -0.0161365, 0.238885, 0.0568534, 22.9146, -25.2635 )
-
-[node name="sunkenship" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.238804, -0.0439739, 0.970072, 0.346109, 0.937221, -0.0427176, -0.907293, 0.345952, 0.239032, -27.4427, 18.2085, 16.4135 )
 
 [node name="tentacles_small" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4175, 21.5738, -27.0149 )
@@ -155,3 +152,6 @@ transform = Transform( 0.707506, 0.151586, -0.0604286, -0.152113, 0.709969, 0, 0
 
 [node name="terrain_origuv" parent="." instance=ExtResource( 20 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31335, 3.43812, -16.6796 )
+
+[node name="sunkenship_lowpoly_collisions" parent="." instance=ExtResource( 6 )]
+transform = Transform( -0.309569, -0.459753, 0.832343, 0.3728, 0.74658, 0.551034, -0.87475, 0.480881, -0.0597215, -18.9692, -2.25126, 52.9983 )
