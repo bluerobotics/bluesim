@@ -37,7 +37,7 @@ func _ready():
 		
 func addLoop(parent, i):
 	var loop = LOOP.instance()
-	loop.transform.origin =  Vector3(0,0,-0.13) * i
+	loop.transform.origin =  Vector3(0,0,-0.145) * i
 	for child in loop.get_children():
 		child.transform.origin = Vector3(0,0,0)
 	add_child(loop)
@@ -46,7 +46,7 @@ func addLoop(parent, i):
 func addLink(parent, child, i):
 
 	var pin = LINK.instance()
-	pin.global_transform.origin = -Vector3(0,0,0.07)
+	pin.global_transform.origin = -Vector3(0,0,0.145/2)
 	pin.set_node_a(parent.get_path())
 	pin.set_node_b(child.get_path())
 	parent.add_child(pin)

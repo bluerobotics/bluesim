@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Spatial
 
 const LOOP = preload(\"res://rope/section.tscn\")
@@ -35,25 +35,25 @@ func addLink(parent, child, i):
 	parent.add_child(pin)
 "
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.0703758, 0.0711441, 0.067727 )
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="CubeMesh" id=3]
 
 [node name="Spatial" type="Spatial"]
 transform = Transform( 1.00982, 0, 0, 0, 1.00982, 0, 0, 0, 1.00982, -1.42299, 0, -0.484654 )
-script = SubResource( 3 )
+script = SubResource( 1 )
 loops = 303
 
 [node name="Anchor" type="StaticBody" parent="."]
 transform = Transform( 0.788129, 0, -0.61551, 0, 1, 0, 0.61551, 0, 0.788129, -1.26801, 1.59037, -1.83458 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Anchor"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Anchor"]
 transform = Transform( 0.0696416, 0, 0, 0, 0.0696416, 0, 0, 0, 0.0696416, 0, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
