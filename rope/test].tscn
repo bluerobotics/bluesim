@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Spatial
+
+const LOOP = preload(\"res://rope/section.tscn\")
+const LINK = preload(\"res://rope/joint.tscn\")
+
+export (int) var loops = 1
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+func _ready():
+	var parent = $Anchor
+	for i in range (loops):
+		var child = addLoop(parent, i)
+		addLink(parent, child, i)
+		parent = child
+		print(parent.global_transform.origin)
+		
+func addLoop(parent, i):
+	var loop = LOOP.instance()
+	loop.transform.origin =  parent.transform.origin + Vector3(0,0,0.25)
+	for child in loop.get_children():
+		child.transform.origin = Vector3(0,0,0)
+	add_child(loop)
+	return loop
+	
+func addLink(parent, child, i):
+	var pin = LINK.instance()
+	pin.global_transform.origin = Vector3(0,0,0.12)
+	pin.set_node_a(parent.get_path())
+	pin.set_node_b(child.get_path())
+	parent.add_child(pin)
+"
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.0703758, 0.0711441, 0.067727 )
+
+[sub_resource type="CubeMesh" id=2]
+
+[node name="Spatial" type="Spatial"]
+transform = Transform( 1.00982, 0, 0, 0, 1.00982, 0, 0, 0, 1.00982, -1.42299, 0, -0.484654 )
+script = SubResource( 3 )
+loops = 303
+
+[node name="Anchor" type="StaticBody" parent="."]
+transform = Transform( 0.788129, 0, -0.61551, 0, 1, 0, 0.61551, 0, 0.788129, -1.26801, 1.59037, -1.83458 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Anchor"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Anchor"]
+transform = Transform( 0.0696416, 0, 0, 0, 0.0696416, 0, 0, 0, 0.0696416, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.62159, -0.00981898, -0.770827, 0.015641, 0.990151, 4.04971e-11, 0.77073, -0.0121749, 0.621668, -2.5455, 0.0611891, 2.74865 )

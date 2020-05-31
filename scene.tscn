@@ -39,7 +39,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	self.get_surface_material(0).set_shader_param(\"color\", Globals.current_ambient.darkened(-0.2))
-	print(clamp(1.0 - Globals.deep_factor, 0.0, 1.0))
 	self.get_surface_material(0).set_shader_param(\"alpha_factor\", Globals.deep_factor)
 "
 
@@ -99,8 +98,8 @@ gradient = SubResource( 16 )
 
 [sub_resource type="ParticlesMaterial" id=18]
 lifetime_randomness = 0.56
-emission_shape = 2
-emission_box_extents = Vector3( 2.5, 2.5, 1 )
+emission_shape = 1
+emission_sphere_radius = 0.78
 direction = Vector3( 0, 0, 0 )
 spread = 68.95
 gravity = Vector3( 0, 0, 0 )
@@ -110,13 +109,13 @@ angle = 90.0
 color_ramp = SubResource( 17 )
 hue_variation_random = 0.28
 
-[sub_resource type="QuadMesh" id=23]
+[sub_resource type="QuadMesh" id=19]
 material = ExtResource( 9 )
 size = Vector2( 0.02, 0.025 )
 
-[sub_resource type="CubeMesh" id=21]
+[sub_resource type="CubeMesh" id=20]
 
-[sub_resource type="SpatialMaterial" id=22]
+[sub_resource type="SpatialMaterial" id=21]
 albedo_texture = ExtResource( 7 )
 emission_enabled = true
 emission = Color( 0, 0, 0, 1 )
@@ -131,7 +130,6 @@ uv1_offset = Vector3( -0.331, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
-visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.680408, 0 )
@@ -206,7 +204,6 @@ twist_span = -1495.0
 
 [node name="Godrays" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.33043, 1.32175, 1.52878e-07 )
-visible = false
 amount = 60
 explosiveness = 0.05
 fract_delta = false
@@ -223,16 +220,16 @@ script = ExtResource( 8 )
 [node name="SuspendedParticles" type="Particles" parent="SuspendedParticleHolder"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1387, -0.742295, 2.14633 )
 cast_shadow = 0
-amount = 1000
+amount = 105
 lifetime = 5.0
 fract_delta = false
 visibility_aabb = AABB( -1.73599, -1.9446, -2.08239, 3.80694, 4.64408, 4.91673 )
 local_coords = false
 process_material = SubResource( 18 )
-draw_pass_1 = SubResource( 23 )
+draw_pass_1 = SubResource( 19 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 41.441, 0, 0, 0, 1, 0, 0, 0, 27.4994, 0, 19.2836, 0 )
 visible = false
-mesh = SubResource( 21 )
-material/0 = SubResource( 22 )
+mesh = SubResource( 20 )
+material/0 = SubResource( 21 )

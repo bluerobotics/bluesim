@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="joint" type="ConeTwistJoint"]
+swing_span = 15.9
+twist_span = 87.1

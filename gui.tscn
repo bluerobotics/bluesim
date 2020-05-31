@@ -116,6 +116,8 @@ __meta__ = {
 
 [node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportContainer"]
 size = Vector2( 200, 200 )
+handle_input_locally = false
+render_target_update_mode = 3
 
 [node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportContainer/Viewport"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1.23694, 5.7916, 2.94429 )

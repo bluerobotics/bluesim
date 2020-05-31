@@ -112,6 +112,10 @@ config/icon="res://icon.png"
 
 Globals="*res://Globals.tscn"
 
+[debug]
+
+settings/stdout/print_fps=true
+
 [display]
 
 window/stretch/mode="viewport"
