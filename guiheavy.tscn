@@ -137,28 +137,25 @@ height = 0.052
 [sub_resource type="ShaderMaterial" id=9]
 shader = ExtResource( 12 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Control"]
 show_behind_parent = true
-
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 1024, 600 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ViewportCamera" type="ViewportContainer" parent="ReferenceRect"]
+[node name="ViewportCamera" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+grow_horizontal = 2
+grow_vertical = 2
 stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportCamera"]
+[node name="Viewport" type="Viewport" parent="ViewportCamera"]
 size = Vector2( 1024, 600 )
 handle_input_locally = false
 hdr = false
@@ -166,16 +163,16 @@ render_target_update_mode = 3
 shadow_atlas_size = 2048
 shadow_atlas_quad_1 = 3
 
-[node name="theter" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="theter" type="Spatial" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 0.997497, -0.070714, 0, 0.070714, 0.997497, 0.0109867, 5.92673, -0.42543 )
 script = SubResource( 1 )
 loops = 300
 
-[node name="cameraPosition" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="cameraPosition" type="Spatial" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.58449, -1.43116 )
 script = ExtResource( 7 )
 
-[node name="joint4" type="HingeJoint" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="joint4" type="HingeJoint" parent="ViewportCamera/Viewport"]
 transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, -0.0241967, 5.53423, 0.62481 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody")
@@ -186,7 +183,7 @@ angular_limit/lower = -35.0
 motor/enable = true
 motor/target_velocity = 0.0
 
-[node name="joint3" type="HingeJoint" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="joint3" type="HingeJoint" parent="ViewportCamera/Viewport"]
 transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, 0.0582645, 5.53423, 0.661335 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody2")
@@ -197,42 +194,42 @@ angular_limit/lower = -10.0
 motor/enable = true
 motor/target_velocity = 0.0
 
-[node name="RigidBody" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="RigidBody" type="RigidBody" parent="ViewportCamera/Viewport"]
 transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.277998, 5.65629, 0.0618688 )
 physics_material_override = SubResource( 2 )
 gravity_scale = 0.0
 
-[node name="g2" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody"]
+[node name="g2" type="MeshInstance" parent="ViewportCamera/Viewport/RigidBody"]
 transform = Transform( -8.71174e-11, -0.000167007, 0.00199301, -9.47229e-11, 0.00199301, 0.000167007, -0.002, -8.71174e-11, -9.47229e-11, 0.0461473, 0.177031, 0.0426397 )
 mesh = SubResource( 3 )
 material/0 = ExtResource( 9 )
 
-[node name="CollisionPolygon" type="CollisionPolygon" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody"]
+[node name="CollisionPolygon" type="CollisionPolygon" parent="ViewportCamera/Viewport/RigidBody"]
 transform = Transform( 1, 0, -8.88178e-16, 0, 1, 0, 1.33227e-14, 5.32907e-14, 1, -0.101581, -0.0256442, 0.00447559 )
 depth = 0.05
 polygon = PoolVector2Array( -0.00219463, 0.650362, 0.00064522, 0.66482, -0.0191476, 0.696807, -0.0151952, 0.732626, -0.0045806, 0.765062, 0.0222607, 0.791313, -0.0118328, 0.787035, -0.0394649, 0.750117, -0.0550356, 0.684003, -0.0453913, 0.634722, -0.0220332, 0.633642 )
 
-[node name="RigidBody2" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="RigidBody2" type="RigidBody" parent="ViewportCamera/Viewport"]
 transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.2621, 5.65629, 0.0505808 )
 physics_material_override = SubResource( 4 )
 gravity_scale = 0.0
 
-[node name="g1" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody2"]
+[node name="g1" type="MeshInstance" parent="ViewportCamera/Viewport/RigidBody2"]
 transform = Transform( -8.71174e-11, -0.000167007, 0.00199301, -9.47229e-11, 0.00199301, 0.000167007, -0.002, -8.71174e-11, -9.47229e-11, 0.0647877, 0.182752, 0.0426397 )
 mesh = SubResource( 5 )
 material/0 = ExtResource( 9 )
 
-[node name="CollisionPolygon" type="CollisionPolygon" parent="ReferenceRect/ViewportCamera/Viewport/RigidBody2"]
+[node name="CollisionPolygon" type="CollisionPolygon" parent="ViewportCamera/Viewport/RigidBody2"]
 transform = Transform( 1, 0, -8.88178e-16, 0, 1, 0, 1.06581e-14, 4.26326e-14, 1, -0.0152902, -0.0260314, -0.00389242 )
 depth = 0.05
 polygon = PoolVector2Array( 0.0100822, 0.659668, 0.0329343, 0.675215, 0.0401089, 0.706015, 0.0298309, 0.748291, 0.00013564, 0.774413, -0.007192, 0.791899, 0.00398254, 0.790527, 0.0379716, 0.77754, 0.0664467, 0.745172, 0.0702656, 0.701849, 0.0763837, 0.656809, 0.0675249, 0.638712, 0.0341034, 0.644531 )
 
-[node name="BlueRov" parent="ReferenceRect/ViewportCamera/Viewport" instance=ExtResource( 1 )]
+[node name="BlueRov" parent="ViewportCamera/Viewport" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109867, 5.92673, 0.175741 )
 angular_damp = 0.996
 script = ExtResource( 3 )
 
-[node name="body" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
+[node name="body" type="MeshInstance" parent="ViewportCamera/Viewport/BlueRov"]
 transform = Transform( -8.04086e-11, -0.000784931, 0.00183953, 0.002, 3.82137e-18, 8.74228e-11, -3.43104e-11, 0.00183953, 0.000784931, 0.241213, -0.313083, 0.111373 )
 mesh = SubResource( 6 )
 material/0 = null
@@ -240,22 +237,22 @@ material/1 = null
 material/2 = null
 script = ExtResource( 11 )
 
-[node name="cameraTarget" type="Spatial" parent="ReferenceRect/ViewportCamera/Viewport/BlueRov"]
+[node name="cameraTarget" type="Spatial" parent="ViewportCamera/Viewport/BlueRov"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372449, 0 )
 
-[node name="tetherAttachment" type="RigidBody" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="tetherAttachment" type="RigidBody" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.254361, 5.91714, -0.246872 )
 mass = 0.01
 
-[node name="CollisionShape" type="CollisionShape" parent="ReferenceRect/ViewportCamera/Viewport/tetherAttachment"]
+[node name="CollisionShape" type="CollisionShape" parent="ViewportCamera/Viewport/tetherAttachment"]
 shape = SubResource( 7 )
 
-[node name="MeshInstance" type="MeshInstance" parent="ReferenceRect/ViewportCamera/Viewport/tetherAttachment"]
+[node name="MeshInstance" type="MeshInstance" parent="ViewportCamera/Viewport/tetherAttachment"]
 visible = false
 mesh = SubResource( 8 )
 material/0 = null
 
-[node name="tetherJoint" type="ConeTwistJoint" parent="ReferenceRect/ViewportCamera/Viewport"]
+[node name="tetherJoint" type="ConeTwistJoint" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.255621, 5.91625, -0.211218 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../tetherAttachment")
@@ -263,14 +260,12 @@ swing_span = 13.7
 twist_span = 61.2
 bias = 1.19
 
-[node name="ViewportGlobal" type="ViewportContainer" parent="ReferenceRect"]
+[node name="ViewportGlobal" type="ViewportContainer" parent="."]
 pause_mode = 2
-anchor_top = 0.003
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 598.0
-margin_top = 0.2
-margin_bottom = -342.0
+margin_left = -362.0
+margin_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -280,14 +275,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="ReferenceRect/ViewportGlobal"]
-size = Vector2( 426, 256 )
+[node name="Viewport" type="Viewport" parent="ViewportGlobal"]
+size = Vector2( 362, 248 )
 handle_input_locally = false
 render_target_update_mode = 3
 shadow_atlas_size = 512
 shadow_atlas_quad_1 = 3
 
-[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/ViewportGlobal/Viewport" groups=[
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ViewportGlobal/Viewport" groups=[
 "cameras",
 ]]
 transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
@@ -298,26 +293,25 @@ speed = 10.0
 enabled = true
 script = ExtResource( 4 )
 
-[node name="Spatial" parent="ReferenceRect/ViewportGlobal/Viewport" instance=ExtResource( 2 )]
+[node name="Spatial" parent="ViewportGlobal/Viewport" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45.9285 )
 
-[node name="OmniLight" type="OmniLight" parent="ReferenceRect/ViewportGlobal/Viewport/Spatial"]
+[node name="OmniLight" type="OmniLight" parent="ViewportGlobal/Viewport/Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.82227, -0.900686, 47.1526 )
 visible = false
 light_energy = 0.8
 light_indirect_energy = 0.7
 omni_range = 5.9
 
-[node name="Ping360Viewport" type="ViewportContainer" parent="ReferenceRect"]
+[node name="Ping360Viewport" type="ViewportContainer" parent="."]
 pause_mode = 2
 material = SubResource( 9 )
-anchor_top = 0.003
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 706.0
-margin_top = 324.2
-margin_right = -2.0
-margin_bottom = -1.0
+margin_left = -296.0
+margin_top = -265.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -328,14 +322,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="ReferenceRect/Ping360Viewport"]
-size = Vector2( 316, 273 )
+[node name="Viewport" type="Viewport" parent="Ping360Viewport"]
+size = Vector2( 296, 265 )
 handle_input_locally = false
 render_target_update_mode = 3
 shadow_atlas_size = 512
 shadow_atlas_quad_1 = 3
 
-[node name="InterpolatedCamera" type="InterpolatedCamera" parent="ReferenceRect/Ping360Viewport/Viewport" groups=[
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="Ping360Viewport/Viewport" groups=[
 "cameras",
 ]]
 transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
@@ -345,6 +339,14 @@ target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
 enabled = true
 script = ExtResource( 4 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 1024, 600 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Spatial" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.451, -18.8953, -37.8616 )
