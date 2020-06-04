@@ -6,10 +6,10 @@
 texture = ExtResource( 2 )
 texture_type = 1
 
-[sub_resource type="VisualShaderNodeInput" id=24]
+[sub_resource type="VisualShaderNodeInput" id=2]
 input_name = "inv_camera"
 
-[sub_resource type="VisualShaderNodeTransformMult" id=25]
+[sub_resource type="VisualShaderNodeTransformMult" id=3]
 
 [resource]
 code = "shader_type spatial;
@@ -42,9 +42,9 @@ void light() {
 "
 graph_offset = Vector2( -912, 55 )
 modes/cull = 2
-nodes/vertex/2/node = SubResource( 24 )
+nodes/vertex/2/node = SubResource( 2 )
 nodes/vertex/2/position = Vector2( -1443, -323 )
-nodes/vertex/3/node = SubResource( 25 )
+nodes/vertex/3/node = SubResource( 3 )
 nodes/vertex/3/position = Vector2( -1167, -287 )
 nodes/fragment/0/position = Vector2( -1088, 48 )
 nodes/fragment/11/node = SubResource( 1 )

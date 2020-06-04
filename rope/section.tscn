@@ -17,7 +17,7 @@ radial_segments = 6
 [node name="section" type="RigidBody"]
 mass = 0.1
 gravity_scale = 0.01
-linear_damp = 0.599
+linear_damp = 0.812
 angular_damp = 0.999
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

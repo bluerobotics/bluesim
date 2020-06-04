@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://vehicles/BlueROV2_HEAVY.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene.tscn" type="PackedScene" id=2]
@@ -17,36 +17,40 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Spatial
 
-const LOOP = preload(\"res://rope/section.tscn\")
+const SECTION = preload(\"res://rope/section.tscn\")
 const LINK = preload(\"res://rope/joint.tscn\")
 
+var offset = Vector3(0,0,-0.4)
 export (int) var loops = 1
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
 var vehicle
+
 func _ready():
-	var parent = get_parent().find_node(\"tetherAttachment\")
+	var parent = get_parent().find_node(\"BlueRov\")
 	for i in range (loops):
-		var child = addLoop(parent, i)
+		var child = addSection(parent, i)
 		addLink(parent, child, i)
 		parent = child
 		
-func addLoop(parent, i):
-	var loop = LOOP.instance()
-	loop.transform.origin =  Vector3(0,0,-0.145) * i
-	for child in loop.get_children():
+func addSection(parent, i):
+	var section = SECTION.instance()
+	section.mass = max(1 - i*2, section.mass)
+	section.transform.origin = -offset +  Vector3(0,0,-0.145) * i
+	for child in section.get_children():
 		child.transform.origin = Vector3(0,0,0)
-	add_child(loop)
-	return loop
+	add_child(section)
+	return section
 	
 func addLink(parent, child, i):
 
 	var pin = LINK.instance()
-	pin.global_transform.origin = -Vector3(0,0,0.145/2)
+	pin.global_transform.origin = -Vector3(0,0,0.145/2)# + offset
 	pin.set_node_a(parent.get_path())
 	pin.set_node_b(child.get_path())
 	parent.add_child(pin)
+	pin.set_solver_priority(i)
+	if i == 0:
+		pin.transform.origin = offset
+
 "
 
 [sub_resource type="PhysicsMaterial" id=2]
@@ -127,14 +131,7 @@ surfaces/2 = {
 "vertex_count": 3805
 }
 
-[sub_resource type="SphereShape" id=7]
-radius = 0.0250406
-
-[sub_resource type="SphereMesh" id=8]
-radius = 0.024
-height = 0.052
-
-[sub_resource type="ShaderMaterial" id=9]
+[sub_resource type="ShaderMaterial" id=7]
 shader = ExtResource( 12 )
 
 [node name="Node2D" type="Control"]
@@ -164,16 +161,16 @@ shadow_atlas_size = 2048
 shadow_atlas_quad_1 = 3
 
 [node name="theter" type="Spatial" parent="ViewportCamera/Viewport"]
-transform = Transform( 1, 0, 0, 0, 0.997497, -0.070714, 0, 0.070714, 0.997497, 0.0109867, 5.92673, -0.42543 )
+transform = Transform( 1, 0, 0, 0, 0.997497, -0.070714, 0, 0.070714, 0.997497, 0.0109867, 5.92673, 4.93135 )
 script = SubResource( 1 )
 loops = 300
 
 [node name="cameraPosition" type="Spatial" parent="ViewportCamera/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.58449, -1.43116 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231704, 6.58449, 4.21928 )
 script = ExtResource( 7 )
 
 [node name="joint4" type="HingeJoint" parent="ViewportCamera/Viewport"]
-transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, -0.0241967, 5.53423, 0.62481 )
+transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, -0.255901, 5.53423, 6.27525 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody")
 params/bias = 0.99
@@ -184,7 +181,7 @@ motor/enable = true
 motor/target_velocity = 0.0
 
 [node name="joint3" type="HingeJoint" parent="ViewportCamera/Viewport"]
-transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, 0.0582645, 5.53423, 0.661335 )
+transform = Transform( 0.721864, -0.238985, 1.04464e-08, 0, -3.60504e-08, -0.824737, 0.238985, 0.721864, -3.15537e-08, -0.173439, 5.53423, 6.31177 )
 nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody2")
 params/bias = 0.99
@@ -195,7 +192,7 @@ motor/enable = true
 motor/target_velocity = 0.0
 
 [node name="RigidBody" type="RigidBody" parent="ViewportCamera/Viewport"]
-transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.277998, 5.65629, 0.0618688 )
+transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.046294, 5.65629, 5.71231 )
 physics_material_override = SubResource( 2 )
 gravity_scale = 0.0
 
@@ -210,7 +207,7 @@ depth = 0.05
 polygon = PoolVector2Array( -0.00219463, 0.650362, 0.00064522, 0.66482, -0.0191476, 0.696807, -0.0151952, 0.732626, -0.0045806, 0.765062, 0.0222607, 0.791313, -0.0118328, 0.787035, -0.0394649, 0.750117, -0.0550356, 0.684003, -0.0453913, 0.634722, -0.0220332, 0.633642 )
 
 [node name="RigidBody2" type="RigidBody" parent="ViewportCamera/Viewport"]
-transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.2621, 5.65629, 0.0505808 )
+transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.030396, 5.65629, 5.70102 )
 physics_material_override = SubResource( 4 )
 gravity_scale = 0.0
 
@@ -225,12 +222,12 @@ depth = 0.05
 polygon = PoolVector2Array( 0.0100822, 0.659668, 0.0329343, 0.675215, 0.0401089, 0.706015, 0.0298309, 0.748291, 0.00013564, 0.774413, -0.007192, 0.791899, 0.00398254, 0.790527, 0.0379716, 0.77754, 0.0664467, 0.745172, 0.0702656, 0.701849, 0.0763837, 0.656809, 0.0675249, 0.638712, 0.0341034, 0.644531 )
 
 [node name="BlueRov" parent="ViewportCamera/Viewport" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109867, 5.92673, 0.175741 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.220717, 5.92673, 5.82618 )
 angular_damp = 0.996
 script = ExtResource( 3 )
 
 [node name="body" type="MeshInstance" parent="ViewportCamera/Viewport/BlueRov"]
-transform = Transform( -8.04086e-11, -0.000784931, 0.00183953, 0.002, 3.82137e-18, 8.74228e-11, -3.43104e-11, 0.00183953, 0.000784931, 0.241213, -0.313083, 0.111373 )
+transform = Transform( -8.04086e-11, -0.000784931, 0.00183953, 0.002, 3.82137e-18, 8.74228e-11, -3.43104e-11, 0.00183953, 0.000784931, 0.256676, -0.313083, 0.0658021 )
 mesh = SubResource( 6 )
 material/0 = null
 material/1 = null
@@ -239,26 +236,6 @@ script = ExtResource( 11 )
 
 [node name="cameraTarget" type="Spatial" parent="ViewportCamera/Viewport/BlueRov"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372449, 0 )
-
-[node name="tetherAttachment" type="RigidBody" parent="ViewportCamera/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.254361, 5.91714, -0.246872 )
-mass = 0.01
-
-[node name="CollisionShape" type="CollisionShape" parent="ViewportCamera/Viewport/tetherAttachment"]
-shape = SubResource( 7 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ViewportCamera/Viewport/tetherAttachment"]
-visible = false
-mesh = SubResource( 8 )
-material/0 = null
-
-[node name="tetherJoint" type="ConeTwistJoint" parent="ViewportCamera/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.255621, 5.91625, -0.211218 )
-nodes/node_a = NodePath("../BlueRov")
-nodes/node_b = NodePath("../tetherAttachment")
-swing_span = 13.7
-twist_span = 61.2
-bias = 1.19
 
 [node name="ViewportGlobal" type="ViewportContainer" parent="."]
 pause_mode = 2
@@ -305,7 +282,7 @@ omni_range = 5.9
 
 [node name="Ping360Viewport" type="ViewportContainer" parent="."]
 pause_mode = 2
-material = SubResource( 9 )
+material = SubResource( 7 )
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0

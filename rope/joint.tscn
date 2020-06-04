@@ -3,3 +3,4 @@
 [node name="joint" type="ConeTwistJoint"]
 swing_span = 15.9
 twist_span = 87.1
+softness = 0.35
