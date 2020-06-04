@@ -175,7 +175,7 @@ nodes/node_a = NodePath("../BlueRov")
 nodes/node_b = NodePath("../RigidBody")
 params/bias = 0.99
 angular_limit/enable = true
-angular_limit/upper = 10.0
+angular_limit/upper = 0.0
 angular_limit/lower = -35.0
 motor/enable = true
 motor/target_velocity = 0.0
@@ -187,37 +187,38 @@ nodes/node_b = NodePath("../RigidBody2")
 params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 35.0
-angular_limit/lower = -10.0
+angular_limit/lower = 0.0
 motor/enable = true
 motor/target_velocity = 0.0
 
 [node name="RigidBody" type="RigidBody" parent="ViewportCamera/Viewport"]
-transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.046294, 5.65629, 5.71231 )
+transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, -0.282316, 5.65629, 6.33748 )
 physics_material_override = SubResource( 2 )
 gravity_scale = 0.0
 
 [node name="g2" type="MeshInstance" parent="ViewportCamera/Viewport/RigidBody"]
-transform = Transform( -8.71174e-11, -0.000167007, 0.00199301, -9.47229e-11, 0.00199301, 0.000167007, -0.002, -8.71174e-11, -9.47229e-11, 0.0461473, 0.177031, 0.0426397 )
+transform = Transform( -8.71174e-11, -0.000167007, 0.00199301, -9.47229e-11, 0.00199301, 0.000167007, -0.002, -8.71174e-11, -9.47229e-11, 0.14884, -0.515, 0.0426397 )
 mesh = SubResource( 3 )
 material/0 = ExtResource( 9 )
 
 [node name="CollisionPolygon" type="CollisionPolygon" parent="ViewportCamera/Viewport/RigidBody"]
-transform = Transform( 1, 0, -8.88178e-16, 0, 1, 0, 1.33227e-14, 5.32907e-14, 1, -0.101581, -0.0256442, 0.00447559 )
+transform = Transform( 1, 0, -8.88178e-16, 0, 1, 0, 1.5099e-14, 6.03961e-14, 1, 0.00111246, -0.717675, 0.00447655 )
 depth = 0.05
 polygon = PoolVector2Array( -0.00219463, 0.650362, 0.00064522, 0.66482, -0.0191476, 0.696807, -0.0151952, 0.732626, -0.0045806, 0.765062, 0.0222607, 0.791313, -0.0118328, 0.787035, -0.0394649, 0.750117, -0.0550356, 0.684003, -0.0453913, 0.634722, -0.0220332, 0.633642 )
 
 [node name="RigidBody2" type="RigidBody" parent="ViewportCamera/Viewport"]
-transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, 0.030396, 5.65629, 5.70102 )
+transform = Transform( 0.949327, -0.314291, 1.37381e-08, 0, -4.37114e-08, -1, 0.314291, 0.949327, -4.14964e-08, -0.190228, 5.65629, 6.36372 )
+mass = 0.5
 physics_material_override = SubResource( 4 )
 gravity_scale = 0.0
 
 [node name="g1" type="MeshInstance" parent="ViewportCamera/Viewport/RigidBody2"]
-transform = Transform( -8.71174e-11, -0.000167007, 0.00199301, -9.47229e-11, 0.00199301, 0.000167007, -0.002, -8.71174e-11, -9.47229e-11, 0.0647877, 0.182752, 0.0426397 )
+transform = Transform( -8.71174e-11, -0.000167007, 0.00199301, -9.47229e-11, 0.00199301, 0.000167007, -0.002, -8.71174e-11, -9.47229e-11, 0.0761745, -0.512425, 0.0426397 )
 mesh = SubResource( 5 )
 material/0 = ExtResource( 9 )
 
 [node name="CollisionPolygon" type="CollisionPolygon" parent="ViewportCamera/Viewport/RigidBody2"]
-transform = Transform( 1, 0, -8.88178e-16, 0, 1, 0, 1.06581e-14, 4.26326e-14, 1, -0.0152902, -0.0260314, -0.00389242 )
+transform = Transform( 1, 0, -8.88178e-16, 0, 1, 0, 1.24345e-14, 4.9738e-14, 1, -0.00390351, -0.721209, -0.00389147 )
 depth = 0.05
 polygon = PoolVector2Array( 0.0100822, 0.659668, 0.0329343, 0.675215, 0.0401089, 0.706015, 0.0298309, 0.748291, 0.00013564, 0.774413, -0.007192, 0.791899, 0.00398254, 0.790527, 0.0379716, 0.77754, 0.0664467, 0.745172, 0.0702656, 0.701849, 0.0763837, 0.656809, 0.0675249, 0.638712, 0.0341034, 0.644531 )
 

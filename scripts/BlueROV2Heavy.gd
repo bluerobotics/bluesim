@@ -118,11 +118,19 @@ func actuate_servo(id, percentage):
 		8:
 			$Camera.rotation_degrees.x = -45 +90*percentage
 		9:
+			percentage -= 0.1
 			$light1.light_energy = percentage * 5
 			$light2.light_energy = percentage * 5
 			$light3.light_energy = percentage * 5
 			$light4.light_energy = percentage * 5
 			$scatterlight.light_energy = percentage * 2.5
+			if percentage < 0.01 and light_glows[0].get_parent() != null:
+				for light in light_glows:
+					self.remove_child(light)
+			elif percentage > 0.01 and light_glows[0].get_parent() == null:
+				for light in light_glows:
+					self.add_child(light)
+			
 		10:
 			print(percentage)
 			if percentage < 0.4:
