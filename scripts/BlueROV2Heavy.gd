@@ -123,7 +123,14 @@ func actuate_servo(id, percentage):
 			$light3.light_energy = percentage * 5
 			$light4.light_energy = percentage * 5
 			$scatterlight.light_energy = percentage * 2.5
-			
+		10:
+			print(percentage)
+			if percentage < 0.4:
+				$gripper.direction = -1
+			elif percentage > 0.6:
+				$gripper.direction = 1
+			else:
+				$gripper.direction = 0
 		
 func _unhandled_input(event):
 	if event is InputEventKey:

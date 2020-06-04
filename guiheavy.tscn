@@ -226,7 +226,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.220717, 5.92673, 5.82618 )
 angular_damp = 0.996
 script = ExtResource( 3 )
 
-[node name="body" type="MeshInstance" parent="ViewportCamera/Viewport/BlueRov"]
+[node name="gripper" type="MeshInstance" parent="ViewportCamera/Viewport/BlueRov"]
 transform = Transform( -8.04086e-11, -0.000784931, 0.00183953, 0.002, 3.82137e-18, 8.74228e-11, -3.43104e-11, 0.00183953, 0.000784931, 0.256676, -0.313083, 0.0658021 )
 mesh = SubResource( 6 )
 material/0 = null
