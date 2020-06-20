@@ -2,8 +2,7 @@ extends RigidBody
 
 const THRUST = 50
 
-var fdm_in = PacketPeerUDP.new() # UDP socket for fdm in (server)
-var fdm_out = PacketPeerUDP.new() # UDP socket for fdm out (client)
+var interface = PacketPeerUDP.new() # UDP socket for fdm in (server)
 var start_time = OS.get_ticks_msec()
 
 var last_velocity = Vector3(0, 0, 0);
@@ -11,25 +10,39 @@ var calculated_acceleration = Vector3(0, 0, 0);
 
 var buoyancy = 1.6 + self.mass * 9.8 # Newtons
 var _initial_position = 0
+var phys_time = 0
 
 onready var light_glows = [$light_glow, $light_glow2, $light_glow3, $light_glow4]
+var physics_step = 1.0/100.0
+var peer = null
 
 func connect_fmd_in():
-	if fdm_in.listen(9002) != OK:
+	if interface.listen(9002) != OK:
 		print("Failed to connect fdm_in")
 
 func get_servos():
-	while fdm_in.get_available_packet_count():
-		var buffer = StreamPeerBuffer.new()
-		buffer.data_array = fdm_in.get_packet()
-		print("-")
-		for i in range(0, buffer.get_size()/4):
-			buffer.seek(i*4)
-			actuate_servo(i, buffer.get_float())
+	if not interface.get_available_packet_count():
+		print("no data")
+		return
+	var buffer = StreamPeerBuffer.new()
+	buffer.data_array = interface.get_packet()
+	if not peer:
+		interface.set_dest_address("127.0.0.1", interface.get_packet_port())
+	var magic = buffer.get_u16()
+	buffer.seek(2)
+	var framerate = buffer.get_u16()
+	buffer.seek(4)
+	var framecount = buffer.get_u16()
+
+	if magic != 18458:
+		print(magic)
+		return
+	for i in range(0, 15):
+		buffer.seek(8 + i*2)
+		actuate_servo(i, (float(buffer.get_u16())-1000)/1000)
 
 func send_fdm():
 
-	fdm_out.set_dest_address("127.0.0.1", 9003)
 	var buffer = StreamPeerBuffer.new()
 	
 	buffer.put_double((OS.get_ticks_msec()-start_time)/1000.0)
@@ -46,33 +59,41 @@ func send_fdm():
 					 ,Vector3(1, 0, 0))
 
 	var _angular_velocity = toFRD.xform(_basis.xform_inv(angular_velocity))
-	buffer.put_double(_angular_velocity.x)
-	buffer.put_double(_angular_velocity.y)
-	buffer.put_double(_angular_velocity.z)
+	var gyro = [_angular_velocity.x, _angular_velocity.y, _angular_velocity.z]
 
 	var _acceleration = toFRD.xform(_basis.xform_inv(calculated_acceleration))
-	buffer.put_double(_acceleration.x)
-	buffer.put_double(_acceleration.y)
-	buffer.put_double(_acceleration.z)
+
+	var accel = [_acceleration.x, _acceleration.y, _acceleration.z]
 
 	var orientation = toFRD.xform(Vector3(-rotation.x, - rotation.y, -rotation.z))
 	var quaternon = Basis(-_basis.z, _basis.x, _basis.y).rotated(Vector3(1,0,0), PI).rotated(Vector3(1,0,0), PI/2).get_rotation_quat()
-	buffer.put_double(quaternon.w)
-	buffer.put_double(quaternon.x)
-	buffer.put_double(quaternon.y)
-	buffer.put_double(quaternon.z)
+
+	var euler = quaternon.get_euler()
+	euler = [euler.y, euler.x, euler.z]
 
 	var _velocity = toNED.xform(self.linear_velocity)
-	buffer.put_double(_velocity.x)
-	buffer.put_double(_velocity.y)
-	buffer.put_double(_velocity.z)
+	var velo = [_velocity.x, _velocity.y, _velocity.z]
 
 	var _position = toNED.xform(self.transform.origin)
-	buffer.put_double(_position.x)
-	buffer.put_double(_position.y)
-	buffer.put_double(_position.z)
-
-	fdm_out.put_packet(buffer.data_array)
+	var pos = [_position.x, _position.y, _position.z]
+	
+	var IMU_fmt = {
+	"gyro" : gyro,
+	"accel_body" : accel
+	}
+	var JSON_fmt = {
+	"timestamp" : phys_time,
+	"imu" : IMU_fmt,
+	"position" : pos,
+	"attitude" : euler,
+	"attitudeQ": [quaternon.w, quaternon.x, quaternon.y, quaternon.z],
+#	"attitudeQ": [1, 0, 0, 0],
+	"velocity" : velo
+	}
+	var JSON_string = "\n" + JSON.print(JSON_fmt) + "\n"
+	buffer.put_utf8_string(JSON_string)
+	#print(JSON_string)
+	interface.put_packet(buffer.data_array)
 
 func _ready():
 	_initial_position = get_global_transform().origin
@@ -81,6 +102,7 @@ func _ready():
 
 
 func _physics_process(delta):
+	phys_time = phys_time + physics_step
 	process_keys()
 	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
 	calculated_acceleration.y += 10
