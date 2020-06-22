@@ -22,8 +22,10 @@ func connect_fmd_in():
 
 func get_servos():
 	if not interface.get_available_packet_count():
-		print("no data")
-		return
+		get_tree().paused = true
+		while not interface.get_available_packet_count():
+			pass
+		get_tree().paused = false
 	var buffer = StreamPeerBuffer.new()
 	buffer.data_array = interface.get_packet()
 	if not peer:
