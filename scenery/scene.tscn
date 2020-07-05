@@ -1,0 +1,223 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://scripts/suspended_particles.gd" type="Script" id=1]
+[ext_resource path="res://scenery/shaders/water_shader.tres" type="Material" id=2]
+[ext_resource path="res://scenery/buoy.gd" type="Script" id=3]
+[ext_resource path="res://scripts/godrays.gd" type="Script" id=4]
+[ext_resource path="res://scripts/teste.gd" type="Script" id=5]
+[ext_resource path="res://scenery/shaders/underwater_shader.tres" type="Material" id=6]
+[ext_resource path="res://scenery/shaders/suspended_particle_shader.tres" type="Material" id=7]
+[ext_resource path="res://scenery/shaders/shader_textures/Sky Background-56.jpg" type="Texture" id=8]
+[ext_resource path="res://scenery/shaders/godrays.shader" type="Shader" id=9]
+[ext_resource path="res://scenery/terrain/boat_level/boat_level.tscn" type="PackedScene" id=10]
+
+[sub_resource type="PlaneMesh" id=3]
+subdivide_width = 256
+subdivide_depth = 256
+
+[sub_resource type="Skin" id=4]
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends MeshInstance
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if Globals.fancy_water:
+		self.get_surface_material(0).set_shader_param(\"color\", Globals.current_ambient.darkened(-0.2))
+		self.get_surface_material(0).set_shader_param(\"alpha_factor\", Globals.deep_factor)
+"
+
+[sub_resource type="SphereShape" id=6]
+radius = 0.239168
+
+[sub_resource type="SphereMesh" id=7]
+
+[sub_resource type="PhysicsMaterial" id=8]
+friction = 3.0
+rough = true
+bounce = 1.0
+absorbent = true
+
+[sub_resource type="CubeMesh" id=9]
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 0.0336481, 0.438682, 0.0318039 )
+
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0, 0.415929, 0.823009 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.946903, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+emission_shape = 2
+emission_box_extents = Vector3( 5, 5, 0 )
+direction = Vector3( 0, 0, 0 )
+gravity = Vector3( 0, 0, 0 )
+color_ramp = SubResource( 12 )
+
+[sub_resource type="ShaderMaterial" id=14]
+render_priority = 1
+shader = ExtResource( 9 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/specular = 0.5
+shader_param/metallic = 0.0
+shader_param/roughness = 1.0
+shader_param/point_size = 1.0
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+
+[sub_resource type="PlaneMesh" id=15]
+material = SubResource( 14 )
+size = Vector2( 1, 10 )
+
+[sub_resource type="Gradient" id=16]
+offsets = PoolRealArray( 0, 0.106952, 0.59893, 0.850267 )
+colors = PoolColorArray( 0.628906, 0.447267, 0.21373, 0, 0.604492, 0.445455, 0.25502, 1, 0.639648, 0.480459, 0.289841, 1, 0.554688, 0.406807, 0.216675, 0 )
+
+[sub_resource type="GradientTexture" id=17]
+gradient = SubResource( 16 )
+
+[sub_resource type="ParticlesMaterial" id=18]
+lifetime_randomness = 0.56
+emission_shape = 1
+emission_sphere_radius = 2.02
+direction = Vector3( 0, 0, 0 )
+spread = 68.95
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.06
+initial_velocity_random = 0.12
+angle = 90.0
+color_ramp = SubResource( 17 )
+hue_variation_random = 0.28
+
+[sub_resource type="QuadMesh" id=19]
+material = ExtResource( 7 )
+size = Vector2( 0.02, 0.025 )
+
+[sub_resource type="CubeMesh" id=20]
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_texture = ExtResource( 8 )
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+emission_texture = ExtResource( 8 )
+uv1_scale = Vector3( 1.957, 1.974, 1 )
+uv1_offset = Vector3( -0.331, 0, 0 )
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 5 )
+
+[node name="water" type="MeshInstance" parent="."]
+transform = Transform( 200, 0, 0, 0, 200, 0, 0, 0, 200, 0, 6.31718, 0 )
+layers = 2
+cast_shadow = 0
+mesh = SubResource( 3 )
+skin = SubResource( 4 )
+material/0 = ExtResource( 2 )
+
+[node name="underwater" type="MeshInstance" parent="."]
+transform = Transform( -200, 3.01992e-05, 0, -3.01992e-05, -200, 0, 0, 0, 200, 0, 6.31718, 0 )
+layers = 4
+cast_shadow = 0
+mesh = SubResource( 3 )
+skin = SubResource( 4 )
+material/0 = ExtResource( 6 )
+script = SubResource( 5 )
+
+[node name="sun" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 33.518, 0 )
+light_energy = 0.19
+shadow_enabled = true
+
+[node name="boia" type="RigidBody" parent="." groups=[
+"buoyant",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.71692, -4.93734 )
+mass = 2.16
+linear_damp = 0.664
+angular_damp = 0.869
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="boia"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="boia"]
+transform = Transform( 0.236609, 0, 0, 0, 0.236609, 0, 0, 0, 0.236609, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="pino" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.90713, -4.93734 )
+mass = 2.0
+physics_material_override = SubResource( 8 )
+linear_damp = 0.993
+angular_damp = 0.994
+
+[node name="MeshInstance" type="MeshInstance" parent="pino"]
+transform = Transform( 0.0384637, 0, 0, 0, 0.514566, 0, 0, 0, 0.0384637, 5.96817e-05, 0.1759, -0.00120203 )
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="pino"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.103801, 0 )
+shape = SubResource( 10 )
+
+[node name="ConeTwistJoint" type="ConeTwistJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.45982, -4.94516 )
+nodes/node_a = NodePath("../boia")
+nodes/node_b = NodePath("../pino")
+swing_span = 9.0
+twist_span = -1495.0
+
+[node name="Godrays" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.33043, 1.32175, 1.52878e-07 )
+amount = 60
+explosiveness = 0.05
+fract_delta = false
+visibility_aabb = AABB( -4, -5.82476, -6.64017, 8, 11.6495, 13.2803 )
+local_coords = false
+process_material = SubResource( 13 )
+draw_pass_1 = SubResource( 15 )
+script = ExtResource( 4 )
+
+[node name="SuspendedParticleHolder" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.144778, 5.0803, -0.538899 )
+script = ExtResource( 1 )
+
+[node name="SuspendedParticles" type="Particles" parent="SuspendedParticleHolder"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1387, -0.153001, 2.14633 )
+cast_shadow = 0
+amount = 154
+lifetime = 5.0
+fract_delta = false
+visibility_aabb = AABB( -1.73599, -1.9446, -2.08239, 3.80694, 4.64408, 4.91673 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 19 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 41.441, 0, 0, 0, 1, 0, 0, 0, 27.4994, 0, 19.2836, 0 )
+visible = false
+mesh = SubResource( 20 )
+material/0 = SubResource( 21 )
+
+[node name="boat_level" parent="." instance=ExtResource( 10 )]
+transform = Transform( -0.967929, 0, 0.251225, 0, 1, 0, -0.251225, 0, -0.967929, 6.93343, 3.1423, 17.2807 )

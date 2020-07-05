@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="joint" type="Generic6DOFJoint"]
+angular_limit_x/enabled = false
+angular_spring_x/enabled = true
+angular_spring_x/stiffness = 0.176
+angular_limit_y/enabled = false
+angular_spring_y/enabled = true
+angular_spring_y/stiffness = 0.173
+angular_limit_z/enabled = false

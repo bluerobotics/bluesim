@@ -1,0 +1,125 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/squareFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://menu/menuEnvironment.tres" type="Environment" id=2]
+[ext_resource path="res://vehicles/bluerovheavy/bluerov cleaned decimated.gltf" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+func _on_shipLevel_pressed():
+	get_tree().change_scene(\"res://levels/guiheavy.tscn\")
+
+
+func _on_CheckBox_toggled(button_pressed):
+	Globals.wait_SITL = button_pressed
+"
+
+[sub_resource type="Animation" id=2]
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -360, 0 ) ]
+}
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 300, 300 )
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06004, 2.38419e-07, 2.77837 )
+environment = ExtResource( 2 )
+
+[node name="SpotLight" type="SpotLight" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.941659, 0.336569, 0, -0.336569, 0.941659, 0.295804, 0.721521, 2.64046 )
+light_energy = 11.99
+
+[node name="SpotLight2" type="SpotLight" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.69466, 0.721521, 2.64046 )
+light_energy = 11.99
+
+[node name="Spatial" type="Spatial" parent="ViewportContainer/Viewport"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ViewportContainer/Viewport/Spatial"]
+autoplay = "rotatingbluerov"
+anims/rotatingbluerov = SubResource( 2 )
+
+[node name="bluerov cleaned decimated" parent="ViewportContainer/Viewport/Spatial" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, -6.55651e-07, 0, 1, 0, 6.55651e-07, 0, 1, 0.348981, 0, -0.233652 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 100.0
+margin_top = 211.0
+margin_right = 485.0
+margin_bottom = 317.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 385.0
+margin_bottom = 106.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="shipLevel" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_right = 385.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 1 )
+text = "Ship level (Heavy)"
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
+margin_top = 55.0
+margin_right = 385.0
+margin_bottom = 79.0
+text = "Sync with SITL (only run frames when new input arrive)"
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/shipLevel" to="." method="_on_shipLevel_pressed"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]

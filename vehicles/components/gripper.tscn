@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://imports/newton/newton.dae" type="PackedScene" id=1]
+[ext_resource path="res://imports/newton/newton_gripper.dae" type="PackedScene" id=4]
+[ext_resource path="res://vehicles/components/gripper.gd" type="Script" id=5]
+
+[node name="Gripper" type="Spatial"]
+script = ExtResource( 5 )
+
+[node name="newton" parent="." instance=ExtResource( 1 )]
+
+[node name="joint2" type="HingeJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107781, 1.32394, 0 )
+visible = false
+nodes/node_a = NodePath("../RigidBody")
+nodes/node_b = NodePath("g2")
+angular_limit/enable = true
+angular_limit/upper = 35.0
+angular_limit/lower = -10.0
+motor/enable = true
+motor/target_velocity = 0.0
+
+[node name="g2" type="RigidBody" parent="joint2"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.0229706, -0.0232152, -0.007 )
+visible = false
+mass = 0.45
+
+[node name="g2" parent="joint2/g2" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
+visible = false
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="joint2/g2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0298324, -0.0111939, -0.00361059 )
+visible = false
+depth = 0.1
+polygon = PoolVector2Array( -0.000500545, 0.044156, -0.00837801, 0.133958, 0.0105278, 0.221398, 0.036121, 0.298934, 0.073326, 0.351413, 0.120339, 0.340048, 0.0848614, 0.294724, 0.0822123, 0.231638, 0.0774859, 0.159166, 0.0924529, 0.0701514, 0.108058, 0.0521864, 0.109737, 0.0225695, 0.00240539, 0.0126688 )
+
+[node name="joint1" type="HingeJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.132179, 1.32394, 0 )
+visible = false
+nodes/node_a = NodePath("../RigidBody")
+nodes/node_b = NodePath("g1")
+angular_limit/enable = true
+angular_limit/upper = 10.0
+angular_limit/lower = -35.0
+motor/enable = true
+motor/target_velocity = 0.0
+
+[node name="g1" type="RigidBody" parent="joint1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0250862, -0.0232152, -0.0229141 )
+visible = false
+mass = 0.45
+
+[node name="g1" parent="joint1/g1" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0.104892, -0.87823, 0 )
+visible = false
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="joint1/g1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0271146, 0, 0 )
+visible = false
+depth = 0.1
+polygon = PoolVector2Array( 0.0932324, 0.0649955, 0.0766938, 0.13115, 0.0884904, 0.267654, 0.119086, 0.296299, 0.102625, 0.311184, 0.112132, 0.343828, 0.0399147, 0.28474, -0.0170266, 0.104505, 0.00962, -0.00759149, 0.0860257, 0.0314499 )
