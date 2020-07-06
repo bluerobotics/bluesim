@@ -4,19 +4,22 @@ BlueROV2 Simulator
 
 # Default keys:
 
-| A     | Strafe Left      |
-|-------|------------------|
-| D     | Strafe Right     |
-| Up    | Forward          |
-| Down  | Backwards        |
-| Left  | Turn Left        |
-| Right | Turn Right       |
-| 1     | Lights Down      |
-| 2     | Lights Up        |
-| 3     | Close Gripper    |
-| 4     | Open Gripper     |
-| 5     | Tilt Camera Down |
-| 6     | Tilt Camera Up   |
+|      Action      |  Key  |
+|:----------------:|:-----:|
+| Downwards        | Shift |
+| Upwards          | Space |
+| Forward          |   Up  |
+| Backwards        |  Down |
+| Rotate right     | Right |
+| Rotate left      |  Left |
+| Strafe right     |   D   |
+| Strafe left      |   A   |
+| Lights down      |   1   |
+| Lights up        |   2   |
+| Close gripper    |   3   |
+| Open gripper     |   4   |
+| Tilt camera down |   5   |
+| Tilt camera up   |   6   |
 
 # SITL integration:
 
