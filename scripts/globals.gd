@@ -8,16 +8,3 @@ export var enable_godray = true
 export var fancy_water = true
 export var ping360_enabled = true
 export var wait_SITL = false
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
