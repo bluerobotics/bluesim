@@ -40,7 +40,6 @@ func get_servos():
 	var framecount = buffer.get_u16()
 
 	if magic != 18458:
-		print(magic)
 		return
 	for i in range(0, 15):
 		buffer.seek(8 + i*2)
@@ -101,7 +100,6 @@ func send_fdm():
 	}
 	var JSON_string = "\n" + JSON.print(JSON_fmt) + "\n"
 	buffer.put_utf8_string(JSON_string)
-	#print(JSON_string)
 	interface.put_packet(buffer.data_array)
 
 func _ready():
@@ -163,7 +161,6 @@ func actuate_servo(id, percentage):
 					self.add_child(light)
 			
 		10:
-			print(percentage)
 			if percentage < 0.4:
 				ljoint.set_param(6, 1)
 				rjoint.set_param(6, -1)
