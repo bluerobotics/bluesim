@@ -14,6 +14,7 @@ const simple_water = preload("res://assets/maujoe.basic_water_material/materials
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_physics_process(true)
+	update_fog()
 
 func calculate_buoyancy():
 	var vehicles = get_tree().get_nodes_in_group("buoyant")
@@ -59,7 +60,8 @@ func update_fog():
 
 func _physics_process(_delta):
 	calculate_buoyancy()
-	update_fog()
+	if not Globals.isHTML5:
+		update_fog()
 
 
 func _on_godrayToggle_toggled(button_pressed):

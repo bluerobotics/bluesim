@@ -12,3 +12,7 @@ export var enable_godray = true
 export var fancy_water = true
 export var ping360_enabled = true
 export var wait_SITL = false
+export var isHTML5 = false
+
+func _ready():
+	isHTML5 = OS.get_name() == "HTML5"
