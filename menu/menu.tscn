@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/squareFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://menu/menuEnvironment.tres" type="Environment" id=2]
@@ -45,6 +45,13 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, -360, 0 ) ]
 }
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends CheckBox
+
+func _ready():
+	visible = not Globals.isHTML5
+"
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -121,5 +128,6 @@ margin_top = 55.0
 margin_right = 385.0
 margin_bottom = 79.0
 text = "Sync with SITL (only run frames when new input arrive)"
+script = SubResource( 3 )
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/shipLevel" to="." method="_on_shipLevel_pressed"]
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]

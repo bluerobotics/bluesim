@@ -105,12 +105,15 @@ func send_fdm():
 func _ready():
 	_initial_position = get_global_transform().origin
 	set_physics_process(true)
-	connect_fmd_in()
+	if not Globals.isHTML5:
+		connect_fmd_in()
 
 
 func _physics_process(delta):
 	phys_time = phys_time + physics_step
 	process_keys()
+	if Globals.isHTML5:
+		return
 	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
 	calculated_acceleration.y += 10
 	last_velocity = self.linear_velocity
