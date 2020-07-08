@@ -226,22 +226,35 @@ func _unhandled_input(event):
 func process_keys():
 	if Input.is_action_pressed("forward"):
 		self.add_force_local(Vector3(0,0,40),Vector3(0,-0.05,0))
-	if Input.is_action_pressed("backwards"):
+	elif Input.is_action_pressed("backwards"):
 		self.add_force_local(Vector3(0,0,-40),Vector3(0,-0.05,0))
+	
 	if Input.is_action_pressed("strafe_right"):
 		self.add_force_local(Vector3(-40,0,0),Vector3(0,-0.05,0))
-	if Input.is_action_pressed("strafe_left"):
+	elif Input.is_action_pressed("strafe_left"):
 		self.add_force_local(Vector3(40,0,0),Vector3(0,-0.05,0))
+	
 	if Input.is_action_pressed("upwards"):
 		self.add_force_local(Vector3(0,70,0),Vector3(0,-0.05,0))
-	if Input.is_action_pressed("downwards"):
+	elif Input.is_action_pressed("downwards"):
 		self.add_force_local(Vector3(0,-70,0),Vector3(0,-0.05,0))
+	
 	if Input.is_action_pressed("rotate_left"):
 		self.add_torque(self.transform.basis.xform(Vector3(0,20,0)))
-	if Input.is_action_pressed("rotate_right"):
+	elif Input.is_action_pressed("rotate_right"):
 		self.add_torque(self.transform.basis.xform(Vector3(0,-20,0)))
+	
 	if Input.is_action_pressed("camera_up"):
 		$Camera.rotation_degrees.x = min($Camera.rotation_degrees.x+0.1, 45)
-	if Input.is_action_pressed("camera_down"):
+	elif Input.is_action_pressed("camera_down"):
 		$Camera.rotation_degrees.x = max($Camera.rotation_degrees.x-0.1, -45)
-	
+
+	if Input.is_action_pressed("gripper_open"):
+		ljoint.set_param(6, 1)
+		rjoint.set_param(6, -1)
+	elif Input.is_action_pressed("gripper_close"):
+		ljoint.set_param(6, -1)
+		rjoint.set_param(6, 1)
+	else:
+		ljoint.set_param(6, 0)
+		rjoint.set_param(6, 0)
