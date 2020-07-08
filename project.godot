@@ -116,7 +116,6 @@ camera_up={
 
 [physics]
 
-common/physics_fps=100
 3d/physics_engine="Bullet"
 
 [rendering]
