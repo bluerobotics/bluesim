@@ -71,6 +71,12 @@ jobs:
         with:
           name: web
           path: build/web
+      - name: Deploy pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GHPAGES_TOKEN }}
+          publish_dir: build/web
 
   export-mac:
     name: Mac Export
