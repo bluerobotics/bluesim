@@ -22,11 +22,17 @@ jobs:
         run: |
           mkdir -v -p build/windows
           godot -v --export "Windows Desktop" build/windows/$EXPORT_NAME.exe
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: windows
-          path: build/windows
+          zip -r ./build/windows/windows.zip . -i build/windows
+      - name: deploy to server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+            ARGS: "-e -c -r"
+            SERVER_PORT: ${{ secrets.SERVER_PORT }}
+            FOLDER: "build/windows"
+            SERVER_IP: ${{ secrets.SERVER_IP }}
+            USERNAME: ${{ secrets.USERNAME }}
+            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}/web/builds/windows/
 
   export-linux:
     name: Linux Export
@@ -44,11 +50,17 @@ jobs:
         run: |
           mkdir -v -p build/linux
           godot -v --export "Linux/X11" build/linux/$EXPORT_NAME.x86_64
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: linux
-          path: build/linux
+          zip -r ./build/linux/linux.zip . -i build/linux
+      - name: deploy to server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+            ARGS: "-e -c -r"
+            SERVER_PORT: ${{ secrets.SERVER_PORT }}
+            FOLDER: "build/linux"
+            SERVER_IP: ${{ secrets.SERVER_IP }}
+            USERNAME: ${{ secrets.USERNAME }}
+            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}/web/builds/linux/
 
   export-web:
     name: Web Export
@@ -66,17 +78,16 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot -v --export "HTML5" build/web/index.html
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: web
-          path: build/web
-      - name: Deploy pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/master'
-        with:
-          github_token: ${{ secrets.GHPAGES_TOKEN }}
-          publish_dir: build/web
+      - name: deploy to server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+            ARGS: "-e -c -r"
+            SERVER_PORT: ${{ secrets.SERVER_PORT }}
+            FOLDER: "build/web"
+            SERVER_IP: ${{ secrets.SERVER_IP }}
+            USERNAME: ${{ secrets.USERNAME }}
+            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
 
   export-mac:
     name: Mac Export
@@ -94,8 +105,13 @@ jobs:
         run: |
           mkdir -v -p build/mac
           godot -v --export "Mac OSX" build/mac/$EXPORT_NAME.zip
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: mac
-          path: build/mac
+      - name: deploy to server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+            ARGS: "-e -c -r"
+            SERVER_PORT: ${{ secrets.SERVER_PORT }}
+            FOLDER: "build/mac"
+            SERVER_IP: ${{ secrets.SERVER_IP }}
+            USERNAME: ${{ secrets.USERNAME }}
+            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}/web/builds/mac/

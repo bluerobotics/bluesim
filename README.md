@@ -1,5 +1,5 @@
-# bluesim
-BlueROV2 Simulator 
+# BlueSim
+BlueROV2 Simulator. [Online demo here](http://sim.galvanicloop.com/) (works better on Firefox).
 
 
 # Default keys:
