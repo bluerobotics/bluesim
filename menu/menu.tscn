@@ -23,7 +23,8 @@ func _ready():
 #	pass
 
 func _on_shipLevel_pressed():
-	get_tree().change_scene(\"res://levels/guiheavy.tscn\")
+	if !get_tree().change_scene(\"res://levels/guiheavy.tscn\"):
+		print(\"error loading level\")
 
 
 func _on_CheckBox_toggled(button_pressed):

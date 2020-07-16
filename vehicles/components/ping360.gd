@@ -27,7 +27,7 @@ func _ready():
 	print(target_offsets)
 
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not Globals.ping360_enabled:
 		return
 	if last_angle == angle:
@@ -49,7 +49,7 @@ func _physics_process(delta):
 			last_points.append([distance, intensity])
 	last_angle = angle
 
-func _process(delta):
+func _process(_delta):
 	if not Globals.ping360_enabled:
 		return
 	emit_signal("updatePing360Display", angle, last_points)
