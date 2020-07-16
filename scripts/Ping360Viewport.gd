@@ -10,9 +10,9 @@ var last_points = []
 var angle = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func on_ping360_update(angle, points):
+func on_ping360_update(pingAngle, points):
 	self.last_points = points
-	self.angle = angle
+	self.angle = pingAngle
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,8 +27,8 @@ func _ready():
 	var array_width = 100
 	var array_heigh = 360
 	var array = []
-	for y in range(360):
-		for x in range(100):
+	for _y in range(360):
+		for _x in range(100):
 			array.append(0)
 	
 	# The following is used to convert the array into a Texture
@@ -40,7 +40,7 @@ func _ready():
 
 
 
-func _process(delta):
+func _process(_delta):
 	img.lock()
 	for x in range(100):
 		img.set_pixel(x, angle, 0)

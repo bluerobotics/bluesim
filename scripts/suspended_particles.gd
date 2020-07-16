@@ -16,6 +16,6 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	global_transform.origin= vehicle.global_transform.origin
 	global_transform.basis = vehicle.global_transform.basis

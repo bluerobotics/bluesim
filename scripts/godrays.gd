@@ -16,7 +16,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var parent_position = vehicle.global_transform.origin
 	var current_y = global_transform.origin.y
 	var new_position = Vector3(parent_position.x, current_y, parent_position.z)

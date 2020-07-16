@@ -73,7 +73,7 @@ func send_fdm():
 
 	var accel = [_acceleration.x, _acceleration.y, _acceleration.z]
 
-	var orientation = toFRD.xform(Vector3(-rotation.x, - rotation.y, -rotation.z))
+	# var orientation = toFRD.xform(Vector3(-rotation.x, - rotation.y, -rotation.z))
 	var quaternon = Basis(-_basis.z, _basis.x, _basis.y).rotated(Vector3(1,0,0), PI).rotated(Vector3(1,0,0), PI/2).get_rotation_quat()
 
 	var euler = quaternon.get_euler()
