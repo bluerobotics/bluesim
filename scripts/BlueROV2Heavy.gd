@@ -94,7 +94,7 @@ func send_fdm():
 	"imu" : IMU_fmt,
 	"position" : pos,
 #	"attitude" : euler,
-	"attitudeQ": [quaternon.w, quaternon.x, quaternon.y, quaternon.z],
+	"quaternion": [quaternon.w, quaternon.x, quaternon.y, quaternon.z],
 #	"attitudeQ": [1, 0, 0, 0],
 	"velocity" : velo
 	}
