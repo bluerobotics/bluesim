@@ -25,19 +25,18 @@ func connect_fmd_in():
 
 func get_servos():
 	if wait_SITL and not interface.get_available_packet_count():
-		get_tree().paused = true
-		while not interface.get_available_packet_count():
-			OS.delay_msec(2)
-		get_tree().paused = false
+		interface.wait()
+
 	var buffer = StreamPeerBuffer.new()
 	buffer.data_array = interface.get_packet()
 	if not peer:
 		interface.set_dest_address("127.0.0.1", interface.get_packet_port())
 	var magic = buffer.get_u16()
 	buffer.seek(2)
-	var framerate = buffer.get_u16()
+	var _framerate = buffer.get_u16()
+	print(_framerate)
 	buffer.seek(4)
-	var framecount = buffer.get_u16()
+	var _framecount = buffer.get_u16()
 
 	if magic != 18458:
 		return
