@@ -13,7 +13,6 @@ var _initial_position = 0
 var phys_time = 0
 
 onready var light_glows = [$light_glow, $light_glow2, $light_glow3, $light_glow4]
-var physics_step = 1.0/100.0
 var peer = null
 onready var ljoint = get_tree().get_root().find_node("ljoint", true, false)
 onready var rjoint =  get_tree().get_root().find_node("rjoint", true, false)
@@ -109,7 +108,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	phys_time = phys_time + physics_step
+	phys_time = phys_time + 1.0/Globals.physics_rate
 	process_keys()
 	if Globals.isHTML5:
 		return

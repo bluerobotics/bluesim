@@ -106,7 +106,7 @@ script = ExtResource( 5 )
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 165.0
-margin_bottom = 179.0
+margin_bottom = 235.0
 
 [node name="godrayToggle" type="CheckButton" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
 margin_right = 158.0
@@ -134,6 +134,25 @@ margin_right = 158.0
 margin_bottom = 172.0
 pressed = true
 text = "Ping360"
+
+[node name="physicsRate" type="Label" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
+margin_left = 7.0
+margin_top = 176.0
+margin_right = 158.0
+margin_bottom = 190.0
+rect_pivot_offset = Vector2( -32, 6 )
+text = "Physics (hz):"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="physicsRateSlider" type="HSlider" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
+margin_top = 194.0
+margin_right = 158.0
+margin_bottom = 210.0
+min_value = 60.0
+max_value = 500.0
+value = 60.0
 
 [node name="ViewportGlobal" type="ViewportContainer" parent="."]
 pause_mode = 2
@@ -231,3 +250,5 @@ __meta__ = {
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/dirtparticlesToggle" to="ViewportGlobal/Viewport/Scene" method="_on_dirtparticlesToggle_toggled"]
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/fancyWaterToggle" to="ViewportGlobal/Viewport/Scene" method="_on_fancyWaterToggle_toggled"]
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/Ping360Toggle" to="Ping360Viewport" method="_on_Ping360Toggle_toggled"]
+[connection signal="ready" from="ViewportCamera/SettingsPanel/VBoxContainer/physicsRateSlider" to="ViewportCamera/SettingsPanel" method="_on_HSlider_ready"]
+[connection signal="value_changed" from="ViewportCamera/SettingsPanel/VBoxContainer/physicsRateSlider" to="ViewportCamera/SettingsPanel" method="_on_HSlider_value_changed"]
