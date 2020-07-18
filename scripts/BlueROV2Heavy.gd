@@ -102,6 +102,7 @@ func send_fdm():
 
 func _ready():
 	_initial_position = get_global_transform().origin
+	Globals.active_vehicle = self
 	set_physics_process(true)
 	if not Globals.isHTML5:
 		connect_fmd_in()

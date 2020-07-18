@@ -13,4 +13,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	self.look_at($"/root/Node2D/ViewportCamera/Viewport/BlueRovHeavy/BlueRov".transform.origin, Vector3(0,1,0))
+	if Globals.active_vehicle:
+		self.look_at(Globals.active_vehicle.transform.origin, Vector3(0,1,0))
