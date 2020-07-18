@@ -13,6 +13,7 @@ export var fancy_water = true
 export var ping360_enabled = true
 export var wait_SITL = false
 export var isHTML5 = false
+export var physics_rate = 60
 
 func _ready():
 	isHTML5 = OS.get_name() == "HTML5"
