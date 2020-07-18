@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://vehicles/bluerovheavy/BlueRovHeavy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenery/scene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=4]
+[ext_resource path="res://scenery/default_env.tres" type="Environment" id=1]
+[ext_resource path="res://scripts/targetPos.gd" type="Script" id=2]
+[ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Ping360Viewport.gd" type="Script" id=4]
 [ext_resource path="res://scripts/settings.gd" type="Script" id=5]
-[ext_resource path="res://scenery/default_env.tres" type="Environment" id=6]
-[ext_resource path="res://scripts/targetPos.gd" type="Script" id=7]
-[ext_resource path="res://vehicles/components/ping360.shader" type="Shader" id=12]
-[ext_resource path="res://scripts/Ping360Viewport.gd" type="Script" id=13]
+[ext_resource path="res://vehicles/components/ping360.shader" type="Shader" id=6]
+[ext_resource path="res://scenery/scene.tscn" type="PackedScene" id=7]
+[ext_resource path="res://vehicles/bluerovheavy/BlueRovHeavy.tscn" type="PackedScene" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Spatial
@@ -56,7 +56,7 @@ func addLink(parent, child, i):
 "
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 12 )
+shader = ExtResource( 6 )
 
 [node name="Node2D" type="Control"]
 pause_mode = 2
@@ -92,9 +92,9 @@ loops = 100
 
 [node name="cameraPosition" type="Spatial" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231704, 6.58449, 4.21928 )
-script = ExtResource( 7 )
+script = ExtResource( 2 )
 
-[node name="BlueRovHeavy" parent="ViewportCamera/Viewport" instance=ExtResource( 1 )]
+[node name="BlueRovHeavy" parent="ViewportCamera/Viewport" instance=ExtResource( 8 )]
 
 [node name="SettingsPanel" type="PanelContainer" parent="ViewportCamera"]
 visible = false
@@ -181,13 +181,13 @@ shadow_atlas_quad_1 = 3
 ]]
 transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
 cull_mask = 1048573
-environment = ExtResource( 6 )
+environment = ExtResource( 1 )
 target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
 enabled = true
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
-[node name="Scene" parent="ViewportGlobal/Viewport" instance=ExtResource( 2 )]
+[node name="Scene" parent="ViewportGlobal/Viewport" instance=ExtResource( 7 )]
 transform = Transform( -0.361771, 0, -0.932267, 0, 1, 0, 0.932267, 0, -0.361771, 4.38011, 0, 19.3591 )
 
 [node name="OmniLight" type="OmniLight" parent="ViewportGlobal/Viewport/Scene"]
@@ -211,7 +211,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
-script = ExtResource( 13 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -228,11 +228,11 @@ shadow_atlas_quad_1 = 3
 ]]
 transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
 cull_mask = 3
-environment = ExtResource( 6 )
+environment = ExtResource( 1 )
 target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
 enabled = true
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 visible = false
