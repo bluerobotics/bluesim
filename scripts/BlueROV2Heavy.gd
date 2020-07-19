@@ -23,17 +23,22 @@ func connect_fmd_in():
 		print("Failed to connect fdm_in")
 
 func get_servos():
-	if wait_SITL and not interface.get_available_packet_count():
-		interface.wait()
+	if not peer:
+		interface.set_dest_address("127.0.0.1", interface.get_packet_port())
+		
+	if not interface.get_available_packet_count():
+		if wait_SITL:
+			interface.wait()
+		else:
+			return
 
 	var buffer = StreamPeerBuffer.new()
 	buffer.data_array = interface.get_packet()
-	if not peer:
-		interface.set_dest_address("127.0.0.1", interface.get_packet_port())
+
 	var magic = buffer.get_u16()
 	buffer.seek(2)
 	var _framerate = buffer.get_u16()
-	print(_framerate)
+	#print(_framerate)
 	buffer.seek(4)
 	var _framecount = buffer.get_u16()
 
