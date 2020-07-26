@@ -3,6 +3,7 @@ extends RigidBody
 const THRUST = 50
 
 var interface = PacketPeerUDP.new() # UDP socket for fdm in (server)
+var peer = null
 var start_time = OS.get_ticks_msec()
 
 var last_velocity = Vector3(0, 0, 0);
@@ -13,7 +14,7 @@ var _initial_position = 0
 var phys_time = 0
 
 onready var light_glows = [$light_glow, $light_glow2, $light_glow3, $light_glow4]
-var peer = null
+
 onready var ljoint = get_tree().get_root().find_node("ljoint", true, false)
 onready var rjoint =  get_tree().get_root().find_node("rjoint", true, false)
 onready var wait_SITL = Globals.wait_SITL
@@ -96,9 +97,7 @@ func send_fdm():
 	"timestamp" : phys_time,
 	"imu" : IMU_fmt,
 	"position" : pos,
-#	"attitude" : euler,
 	"quaternion": [quaternon.w, quaternon.x, quaternon.y, quaternon.z],
-#	"attitudeQ": [1, 0, 0, 0],
 	"velocity" : velo
 	}
 	var JSON_string = "\n" + JSON.print(JSON_fmt) + "\n"
@@ -106,9 +105,14 @@ func send_fdm():
 	interface.put_packet(buffer.data_array)
 
 func _ready():
+	if Globals.active_vehicle == "bluerovheavy":
+		$Camera.set_current(true)
 	_initial_position = get_global_transform().origin
-	Globals.active_vehicle = self
 	set_physics_process(true)
+	if typeof(Globals.active_vehicle) == TYPE_STRING and Globals.active_vehicle == "bluerovheavy":
+		Globals.active_vehicle = self
+	else:
+		return
 	if not Globals.isHTML5:
 		connect_fmd_in()
 
@@ -208,6 +212,13 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_O:
 			self.look_at(Vector3(100,0,0),Vector3(0,0,-100)) #expects +Y
 			mode = RigidBody.MODE_STATIC
+		
+		if event.pressed and event.is_action("camera_switch"):
+			if $Camera.is_current():
+				$Camera.clear_current(true)
+			else:
+				$Camera.set_current(true)
+
 	if event.is_action("lights_up"):
 			var percentage = min(max(0,$light1.light_energy + 0.1), 5)
 			if percentage > 0:
@@ -265,3 +276,4 @@ func process_keys():
 	else:
 		ljoint.set_param(6, 0)
 		rjoint.set_param(6, 0)
+

@@ -71,7 +71,6 @@ void fragment() {
     COLOR.g = max(((one.r + two.r + three.r) / 3.0), pow(1.-polar.y,6));
 	COLOR.a = 1.0 - smoothstep(0.9, 1.0 ,polar.y);
 }"
-custom_defines = ""
 
 [resource]
 render_priority = 2

@@ -23,12 +23,18 @@ func _ready():
 #	pass
 
 func _on_shipLevel_pressed():
+	Globals.active_vehicle = \"bluerovheavy\"
 	if !get_tree().change_scene(\"res://levels/caveandmountain.tscn\"):
 		print(\"error loading level\")
-
-
+	
 func _on_CheckBox_toggled(button_pressed):
 	Globals.wait_SITL = button_pressed
+
+func _on_shipLevel2_pressed():
+	Globals.active_vehicle = \"boat\"
+	Globals.ping360_enabled = false
+	if !get_tree().change_scene(\"res://levels/caveandmountain.tscn\"):
+		print(\"error loading level\")
 "
 
 [sub_resource type="Animation" id=2]
@@ -112,23 +118,32 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_right = 385.0
-margin_bottom = 106.0
+margin_left = 5.0
+margin_right = 380.0
+margin_bottom = 134.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="shipLevel" type="Button" parent="HBoxContainer/VBoxContainer"]
-margin_right = 385.0
+margin_right = 375.0
 margin_bottom = 51.0
 custom_fonts/font = ExtResource( 1 )
-text = "Ship level (Heavy)"
+text = "BlueROV Heavy"
+
+[node name="shipLevel2" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_top = 55.0
+margin_right = 375.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 1 )
+text = "Boat"
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
-margin_top = 55.0
-margin_right = 385.0
-margin_bottom = 79.0
+margin_top = 110.0
+margin_right = 375.0
+margin_bottom = 134.0
 text = "Sync with SITL (only run frames when new input arrive)"
 script = SubResource( 3 )
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/shipLevel" to="." method="_on_shipLevel_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/shipLevel2" to="." method="_on_shipLevel2_pressed"]
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]

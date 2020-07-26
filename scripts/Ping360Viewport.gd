@@ -41,6 +41,7 @@ func _ready():
 
 
 func _process(_delta):
+	visible = Globals.ping360_enabled
 	img.lock()
 	for x in range(100):
 		img.set_pixel(x, angle, 0)
@@ -61,5 +62,4 @@ func _process(_delta):
 
 
 func _on_Ping360Toggle_toggled(button_pressed):
-	visible = button_pressed
 	Globals.ping360_enabled = button_pressed

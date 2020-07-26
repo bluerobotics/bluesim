@@ -14,6 +14,8 @@ export var ping360_enabled = true
 export var wait_SITL = false
 export var isHTML5 = false
 export var physics_rate = 60
+export var wind_dir = 0
+export var wind_speed = 5
 var active_vehicle = null
 
 func _ready():

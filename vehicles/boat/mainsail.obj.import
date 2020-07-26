@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/mainsail.obj-6773e1b1b5241d6f40fef7153c1eaedd.mesh"
+
+[deps]
+
+files=[ "res://.import/mainsail.obj-6773e1b1b5241d6f40fef7153c1eaedd.mesh" ]
+
+source_file="res://vehicles/boat/mainsail.obj"
+dest_files=[ "res://.import/mainsail.obj-6773e1b1b5241d6f40fef7153c1eaedd.mesh", "res://.import/mainsail.obj-6773e1b1b5241d6f40fef7153c1eaedd.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
