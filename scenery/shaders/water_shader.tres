@@ -194,19 +194,19 @@ void fragment()
 [resource]
 shader = SubResource( 1 )
 shader_param/wave_speed = 0.035
-shader_param/wave_a = Plane( 2.373, 0.374, 1.428, 0.012 )
-shader_param/wave_b = Plane( 0, 0.1, 0.032, 0.854 )
-shader_param/wave_c = Plane( 0.706, 0.441, 0.056, 0.1 )
-shader_param/sampler_scale = Vector2( 13.498, 9.676 )
+shader_param/wave_a = Plane( 2.178, 0.364, -0.614, 0.021 )
+shader_param/wave_b = Plane( 0.044, 0.1, 0.019, 0.854 )
+shader_param/wave_c = Plane( 0.719, 0.434, -0.021, 0.1 )
+shader_param/sampler_scale = Vector2( 13.498, 9.747 )
 shader_param/sampler_direction = Vector2( 0.003, 0.04 )
-shader_param/uv_sampler_scale = Vector2( 0.39, 0.25 )
+shader_param/uv_sampler_scale = Vector2( 0.733, 1.419 )
 shader_param/uv_sampler_strength = -0.167
 shader_param/foam_level = 0.5
-shader_param/refraction = 0.425
+shader_param/refraction = 0.075
 shader_param/color_deep = Color( 0, 0.196078, 0.494118, 1 )
 shader_param/color_shallow = Color( 0.223529, 0.329412, 0.333333, 1 )
-shader_param/beers_law = 0.0
-shader_param/depth_offset = 10.0
+shader_param/beers_law = 0.056
+shader_param/depth_offset = -4.693
 shader_param/projector = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 shader_param/uv_sampler = ExtResource( 1 )
 shader_param/normalmap_a_sampler = ExtResource( 4 )
