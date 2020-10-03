@@ -13,10 +13,34 @@ script/source = "extends Control
 # var b = \"text\"
 
 
+func download_file(url : String, file_name : String):
+	var http = HTTPRequest.new()
+	add_child(http)
+	http.set_download_file(file_name)
+	http.request(url)
+	http.connect(\"request_completed\", self, \"_start_sitl\")
+	
+	
+func _start_sitl():
+	var binary = File.new()
+	binary.open(\"user://ardusub\", File.READ)
+	print(binary.get_path_absolute())
+	var output = []
+	print(OS.execute(\"chmod\", [\"+x\", binary.get_path_absolute()], true, output))
+	print(output)
+	print(OS.execute(binary.get_path_absolute(), [\"-S\",\"--model\",\"JSON\",\"--speedup\",\"1\",\"-I0\",\"--home\",\"33.810313,-118.39386700000001,0.0,270.0\"], false))
+	#print(OS.execute(binary.get_path_absolute(), [\"--version\"], true, output))
+	print(output)
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	if OS.get_name() == \"Windows\":
+		pass
+	else:
+		if not File.new().file_exists(\"user://ardusub\"):
+			download_file(\"https://firmware.ardupilot.org/Sub/latest/SITL_x86_64_linux_gnu/ardusub\", \"user://ardusub\")
+		else:
+			_start_sitl()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
