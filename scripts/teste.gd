@@ -79,6 +79,11 @@ func _physics_process(_delta):
 	if not Globals.isHTML5:
 		update_fog()
 
+func _notification(what):
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		OS.kill(Globals.sitl_pid)
+		get_tree().quit()
+
 
 func _on_godrayToggle_toggled(button_pressed):
 	$Godrays.emitting = button_pressed
