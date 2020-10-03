@@ -173,8 +173,8 @@ polygon = PoolVector2Array( 0.0100822, 0.659668, 0.0329343, 0.675215, 0.0401089,
 ]]
 mass = 11.0
 can_sleep = false
-linear_damp = 0.884
-angular_damp = 7.203
+linear_damp = 2.333
+angular_damp = 8.72
 script = ExtResource( 1 )
 
 [node name="newton" parent="BlueRov" instance=ExtResource( 2 )]
