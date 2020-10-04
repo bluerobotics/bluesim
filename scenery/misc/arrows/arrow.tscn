@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenery/materials/arrowmaterial.tres" type="Material" id=1]
+[ext_resource path="res://scenery/misc/arrows/arrow.glb" type="PackedScene" id=2]
+
+
+[node name="arrow" instance=ExtResource( 2 )]
+
+[node name="Cube" parent="." index="0"]
+material/0 = ExtResource( 1 )
