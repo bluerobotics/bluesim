@@ -307,26 +307,6 @@ func addLink(parent, child, i):
 
 "
 
-[sub_resource type="GDScript" id=3]
-script/source = "extends PanelContainer
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func _input(event):
-	if event.is_action_pressed(\"help\"):
-		if not self.is_visible():
-			self.show()
-		else:
-			self.hide()
-"
-
 [sub_resource type="SpatialMaterial" id=4]
 params_cull_mode = 2
 
@@ -354,6 +334,26 @@ surfaces/0 = {
 [sub_resource type="SpatialMaterial" id=9]
 params_cull_mode = 2
 
+[sub_resource type="GDScript" id=3]
+script/source = "extends PanelContainer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+func _input(event):
+	if event.is_action_pressed(\"help\"):
+		if not self.is_visible():
+			self.show()
+		else:
+			self.hide()
+"
+
 [sub_resource type="GDScript" id=10]
 script/source = "extends Camera
 
@@ -370,7 +370,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	self.look_at($\"/root/Node2D/ViewportCamera/Boat/SailBoat\".transform.origin, Vector3(0,1,0))
+	self.look_at($\"/root/Node2D/ViewportCamera/Viewport/Boat/SailBoat\".transform.origin, Vector3(0,1,0))
 
 "
 
@@ -424,6 +424,117 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.21178, 10.2615, 4.21928 )
 script = ExtResource( 2 )
 
 [node name="BlueRovHeavy" parent="ViewportCamera/Viewport" instance=ExtResource( 8 )]
+
+[node name="Boat" type="Spatial" parent="ViewportCamera/Viewport"]
+
+[node name="Sail" type="RigidBody" parent="ViewportCamera/Viewport/Boat"]
+transform = Transform( -4.37113e-08, 0, -0.999999, 0, 1, 0, 0.999999, 0, -4.37113e-08, 0.77771, 8.53457, 0.180951 )
+mass = 0.66
+angular_damp = 0.123
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="ViewportCamera/Viewport/Boat/Sail"]
+transform = Transform( -1.28737e-07, 0, -0.999999, 0, 2.94852, 0, 2.94517, 0, -4.37113e-08, -0.119228, -2.24378, 0.646704 )
+depth = 0.1
+polygon = PoolVector2Array( 0.0319848, 0.476557, -0.675951, 0.509073, -0.487463, 1.00774, -0.180367, 1.49848, 0.093767, 1.83165, 0.10057, 0.662151 )
+
+[node name="sail" type="MeshInstance" parent="ViewportCamera/Viewport/Boat/Sail"]
+transform = Transform( 0.3, 0, 2.66454e-15, 0, 0.245816, 0, 8.88178e-16, 0, 0.272721, -0.0650316, -1.38766, 0.802245 )
+mesh = ExtResource( 14 )
+material/0 = null
+
+[node name="mainsail" type="MeshInstance" parent="ViewportCamera/Viewport/Boat/Sail/sail"]
+transform = Transform( 3.32816, 0.113863, 6.90008e-11, -0.102091, 3.71191, 4.48099e-09, 6.81837e-11, -4.9771e-09, 3.34349, -0.247528, -0.0455399, 0.137019 )
+visible = false
+mesh = ExtResource( 11 )
+material/0 = SubResource( 4 )
+
+[node name="softsail" type="SoftBody" parent="ViewportCamera/Viewport/Boat/Sail/sail"]
+transform = Transform( 1, 0, 2.4869e-14, 0, 1, 0, -2.4869e-14, 0, 1, -0.351521, -0.696405, -7.46387 )
+mesh = ExtResource( 16 )
+material/0 = SubResource( 5 )
+ray_pickable = false
+pinned_points = [ 43, 44, 2 ]
+attachments/0/point_index = 43
+attachments/0/spatial_attachment_path = NodePath("..")
+attachments/0/offset = Vector3( -0.201019, 16.8639, 0.514453 )
+attachments/1/point_index = 44
+attachments/1/spatial_attachment_path = NodePath("..")
+attachments/1/offset = Vector3( -0.260425, 2.38512, 0.514453 )
+attachments/2/point_index = 2
+attachments/2/spatial_attachment_path = NodePath("..")
+attachments/2/offset = Vector3( -0.260425, 2.38512, -8.1742 )
+
+[node name="SailBoat" type="RigidBody" parent="ViewportCamera/Viewport/Boat" groups=[
+"buoyant",
+]]
+transform = Transform( -4.37113e-08, 0, -0.999999, 0, 1, 0, 0.999999, 0, -4.37113e-08, 0, 6.767, 0 )
+mass = 100.0
+linear_damp = 0.475
+angular_damp = 6.936
+script = ExtResource( 10 )
+CDy = 2006.87
+sail_Cl = 15.0
+ballast_kg = 10.0
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( -1.56647e-08, 0, -0.672192, 0, 0.0209852, 0, 0.187917, 0, -8.8987e-08, 0.0131064, 0.294814, -1.81238 )
+shape = SubResource( 6 )
+
+[node name="buoys" type="Spatial" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33763, 0 )
+
+[node name="buoy" type="Position3D" parent="ViewportCamera/Viewport/Boat/SailBoat/buoys"]
+transform = Transform( 1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -0.536315, -0.4487, 0 )
+
+[node name="buoy4" type="Position3D" parent="ViewportCamera/Viewport/Boat/SailBoat/buoys"]
+transform = Transform( 1, 0, 1.77636e-14, 0, 1, 0, -1.77636e-14, 0, 1, 0.545881, -0.4487, 0 )
+
+[node name="buoy2" type="Position3D" parent="ViewportCamera/Viewport/Boat/SailBoat/buoys"]
+transform = Transform( 1, 0, 2.84217e-14, 0, 1, 0, -2.84217e-14, 0, 1, 7.45058e-08, -0.715101, 2.31914 )
+
+[node name="buoy3" type="Position3D" parent="ViewportCamera/Viewport/Boat/SailBoat/buoys"]
+transform = Transform( 1, 0, 1.42109e-14, 0, 1, 0, -1.42109e-14, 0, 1, -8.9407e-08, -0.4487, -2.14523 )
+
+[node name="hull" type="MeshInstance" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( 0.447999, 0, -4.94226e-08, 0, 0.328292, 0, 5.87654e-08, 0, 0.376774, 0.136124, 0.218962, 0.0319627 )
+mesh = ExtResource( 13 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="cameraTarget" type="Spatial" parent="ViewportCamera/Viewport/Boat/SailBoat/hull"]
+transform = Transform( -1.82238e-07, 0, -1.11857, 0, 0.0639223, 0, 0.498753, 0, -8.12572e-08, -0.17997, 2.58913, -4.77984 )
+
+[node name="ballasts" type="Spatial" parent="ViewportCamera/Viewport/Boat/SailBoat/hull"]
+transform = Transform( -1.82238e-07, 0, -1.11857, 0, 0.0639223, 0, 0.498753, 0, -8.12572e-08, -0.24523, 0.231049, -0.488213 )
+
+[node name="ballast" type="Position3D" parent="ViewportCamera/Viewport/Boat/SailBoat/hull/ballasts"]
+transform = Transform( 0.999996, 0, -7.97915e-08, 0, 0.999998, 0, 7.97917e-08, 0, 1, 0, -20.543, 0 )
+
+[node name="Boat" type="MeshInstance" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( -3.05659e-08, 0, -0.672192, 0, 0.0209852, 0, 0.187917, 0, -1.18789e-07, 0.0270214, 0.294814, -1.81238 )
+visible = false
+mesh = SubResource( 7 )
+material/0 = ExtResource( 9 )
+
+[node name="rudder" type="MeshInstance" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( -7.72406e-09, 0, -0.0570762, 0, 0.358427, 0, 0.176706, 0, -2.49488e-09, 0.00507164, -0.268759, -2.25465 )
+mesh = SubResource( 8 )
+material/0 = ExtResource( 9 )
+
+[node name="frontsail" type="MeshInstance" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( 0.292396, -0.00899483, 4.96225e-12, 0.00899404, 0.292372, 0.00383426, -0.000117896, -0.00383246, 0.29251, 0.145983, 0.288255, 0.104113 )
+mesh = ExtResource( 15 )
+material/0 = SubResource( 9 )
+
+[node name="SailJoint" type="HingeJoint" parent="ViewportCamera/Viewport/Boat/SailBoat"]
+transform = Transform( 0.999999, 1.06581e-14, -8.47033e-22, 0, -4.37114e-08, -0.999999, -1.42109e-14, 1, -4.37114e-08, 0, 0.938251, 0.247821 )
+nodes/node_a = NodePath("..")
+nodes/node_b = NodePath("../../Sail")
+angular_limit/enable = true
+angular_limit/relaxation = 0.67
+motor/target_velocity = 0.0
 
 [node name="arrow" parent="ViewportCamera/Viewport" instance=ExtResource( 12 )]
 transform = Transform( -1.72694e-08, 0, 0.395079, 0, 0.395079, 0, -0.395079, 0, -1.72694e-08, -2.1354, 10.7164, 8.54792 )
@@ -724,117 +835,6 @@ left/right: Yaw left/right
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Boat" type="Spatial" parent="ViewportCamera"]
-
-[node name="Sail" type="RigidBody" parent="ViewportCamera/Boat"]
-transform = Transform( -4.37113e-08, 0, -0.999999, 0, 1, 0, 0.999999, 0, -4.37113e-08, 0.77771, 8.53457, 0.180951 )
-mass = 0.66
-angular_damp = 0.123
-
-[node name="CollisionPolygon" type="CollisionPolygon" parent="ViewportCamera/Boat/Sail"]
-transform = Transform( -1.28737e-07, 0, -0.999999, 0, 2.94852, 0, 2.94517, 0, -4.37113e-08, -0.119228, -2.24378, 0.646704 )
-depth = 0.1
-polygon = PoolVector2Array( 0.0319848, 0.476557, -0.675951, 0.509073, -0.487463, 1.00774, -0.180367, 1.49848, 0.093767, 1.83165, 0.10057, 0.662151 )
-
-[node name="sail" type="MeshInstance" parent="ViewportCamera/Boat/Sail"]
-transform = Transform( 0.3, 0, 2.66454e-15, 0, 0.245816, 0, 8.88178e-16, 0, 0.272721, -0.0650316, -1.38766, 0.802245 )
-mesh = ExtResource( 14 )
-material/0 = null
-
-[node name="mainsail" type="MeshInstance" parent="ViewportCamera/Boat/Sail/sail"]
-transform = Transform( 3.32816, 0.113863, 6.90008e-11, -0.102091, 3.71191, 4.48099e-09, 6.81837e-11, -4.9771e-09, 3.34349, -0.247528, -0.0455399, 0.137019 )
-visible = false
-mesh = ExtResource( 11 )
-material/0 = SubResource( 4 )
-
-[node name="softsail" type="SoftBody" parent="ViewportCamera/Boat/Sail/sail"]
-transform = Transform( 1, 0, 2.4869e-14, 0, 1, 0, -2.4869e-14, 0, 1, -0.351521, -0.696405, -7.46387 )
-mesh = ExtResource( 16 )
-material/0 = SubResource( 5 )
-ray_pickable = false
-pinned_points = [ 43, 44, 2 ]
-attachments/0/point_index = 43
-attachments/0/spatial_attachment_path = NodePath("..")
-attachments/0/offset = Vector3( -0.201019, 16.8639, 0.514453 )
-attachments/1/point_index = 44
-attachments/1/spatial_attachment_path = NodePath("..")
-attachments/1/offset = Vector3( -0.260425, 2.38512, 0.514453 )
-attachments/2/point_index = 2
-attachments/2/spatial_attachment_path = NodePath("..")
-attachments/2/offset = Vector3( -0.260425, 2.38512, -8.1742 )
-
-[node name="SailBoat" type="RigidBody" parent="ViewportCamera/Boat" groups=[
-"buoyant",
-]]
-transform = Transform( -4.37113e-08, 0, -0.999999, 0, 1, 0, 0.999999, 0, -4.37113e-08, 0, 6.767, 0 )
-mass = 100.0
-linear_damp = 0.475
-angular_damp = 6.936
-script = ExtResource( 10 )
-CDy = 2006.87
-sail_Cl = 15.0
-ballast_kg = 10.0
-
-[node name="CollisionShape" type="CollisionShape" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( -1.56647e-08, 0, -0.672192, 0, 0.0209852, 0, 0.187917, 0, -8.8987e-08, 0.0131064, 0.294814, -1.81238 )
-shape = SubResource( 6 )
-
-[node name="buoys" type="Spatial" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33763, 0 )
-
-[node name="buoy" type="Position3D" parent="ViewportCamera/Boat/SailBoat/buoys"]
-transform = Transform( 1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -0.536315, -0.4487, 0 )
-
-[node name="buoy4" type="Position3D" parent="ViewportCamera/Boat/SailBoat/buoys"]
-transform = Transform( 1, 0, 1.77636e-14, 0, 1, 0, -1.77636e-14, 0, 1, 0.545881, -0.4487, 0 )
-
-[node name="buoy2" type="Position3D" parent="ViewportCamera/Boat/SailBoat/buoys"]
-transform = Transform( 1, 0, 2.84217e-14, 0, 1, 0, -2.84217e-14, 0, 1, 7.45058e-08, -0.715101, 2.31914 )
-
-[node name="buoy3" type="Position3D" parent="ViewportCamera/Boat/SailBoat/buoys"]
-transform = Transform( 1, 0, 1.42109e-14, 0, 1, 0, -1.42109e-14, 0, 1, -8.9407e-08, -0.4487, -2.14523 )
-
-[node name="hull" type="MeshInstance" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( 0.447999, 0, -4.94226e-08, 0, 0.328292, 0, 5.87654e-08, 0, 0.376774, 0.136124, 0.218962, 0.0319627 )
-mesh = ExtResource( 13 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-
-[node name="cameraTarget" type="Spatial" parent="ViewportCamera/Boat/SailBoat/hull"]
-transform = Transform( -1.82238e-07, 0, -1.11857, 0, 0.0639223, 0, 0.498753, 0, -8.12572e-08, -0.17997, 2.58913, -4.77984 )
-
-[node name="ballasts" type="Spatial" parent="ViewportCamera/Boat/SailBoat/hull"]
-transform = Transform( -1.82238e-07, 0, -1.11857, 0, 0.0639223, 0, 0.498753, 0, -8.12572e-08, -0.24523, 0.231049, -0.488213 )
-
-[node name="ballast" type="Position3D" parent="ViewportCamera/Boat/SailBoat/hull/ballasts"]
-transform = Transform( 0.999996, 0, -7.97915e-08, 0, 0.999998, 0, 7.97917e-08, 0, 1, 0, -20.543, 0 )
-
-[node name="Boat" type="MeshInstance" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( -3.05659e-08, 0, -0.672192, 0, 0.0209852, 0, 0.187917, 0, -1.18789e-07, 0.0270214, 0.294814, -1.81238 )
-visible = false
-mesh = SubResource( 7 )
-material/0 = ExtResource( 9 )
-
-[node name="rudder" type="MeshInstance" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( -7.72406e-09, 0, -0.0570762, 0, 0.358427, 0, 0.176706, 0, -2.49488e-09, 0.00507164, -0.268759, -2.25465 )
-mesh = SubResource( 8 )
-material/0 = ExtResource( 9 )
-
-[node name="frontsail" type="MeshInstance" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( 0.292396, -0.00899483, 4.96225e-12, 0.00899404, 0.292372, 0.00383426, -0.000117896, -0.00383246, 0.29251, 0.145983, 0.288255, 0.104113 )
-mesh = ExtResource( 15 )
-material/0 = SubResource( 9 )
-
-[node name="SailJoint" type="HingeJoint" parent="ViewportCamera/Boat/SailBoat"]
-transform = Transform( 0.999999, 1.06581e-14, -8.47033e-22, 0, -4.37114e-08, -0.999999, -1.42109e-14, 1, -4.37114e-08, 0, 0.938251, 0.247821 )
-nodes/node_a = NodePath("..")
-nodes/node_b = NodePath("../../Sail")
-angular_limit/enable = true
-angular_limit/relaxation = 0.67
-motor/target_velocity = 0.0
 
 [node name="ViewportGlobal" type="ViewportContainer" parent="."]
 pause_mode = 2
