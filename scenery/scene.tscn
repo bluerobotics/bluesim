@@ -1,8 +1,8 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/suspended_particles.gd" type="Script" id=1]
 [ext_resource path="res://scenery/shaders/water_shader.tres" type="Material" id=2]
-[ext_resource path="res://scenery/buoy.gd" type="Script" id=3]
+[ext_resource path="res://scripts/buoy.gd" type="Script" id=3]
 [ext_resource path="res://scripts/godrays.gd" type="Script" id=4]
 [ext_resource path="res://scripts/environment.gd" type="Script" id=5]
 [ext_resource path="res://scenery/shaders/underwater_shader.tres" type="Material" id=6]
@@ -51,24 +51,27 @@ absorbent = true
 
 [sub_resource type="CubeMesh" id=7]
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 1, 0.00784314, 0.00784314, 1 )
+
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.0336481, 0.438682, 0.0318039 )
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0, 0.415929, 0.823009 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.946903, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
 
-[sub_resource type="ParticlesMaterial" id=11]
+[sub_resource type="ParticlesMaterial" id=12]
 emission_shape = 2
 emission_box_extents = Vector3( 5, 5, 0 )
 direction = Vector3( 0, 0, 0 )
 gravity = Vector3( 0, 0, 0 )
-color_ramp = SubResource( 10 )
+color_ramp = SubResource( 11 )
 
-[sub_resource type="ShaderMaterial" id=12]
+[sub_resource type="ShaderMaterial" id=13]
 render_priority = 1
 shader = ExtResource( 9 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
@@ -81,18 +84,18 @@ shader_param/uv1_offset = Vector3( 0, 0, 0 )
 shader_param/uv2_scale = Vector3( 1, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
 
-[sub_resource type="PlaneMesh" id=13]
-material = SubResource( 12 )
+[sub_resource type="PlaneMesh" id=14]
+material = SubResource( 13 )
 size = Vector2( 1, 10 )
 
-[sub_resource type="Gradient" id=14]
+[sub_resource type="Gradient" id=15]
 offsets = PoolRealArray( 0, 0.106952, 0.59893, 0.850267 )
 colors = PoolColorArray( 0.628906, 0.447267, 0.21373, 0, 0.604492, 0.445455, 0.25502, 1, 0.639648, 0.480459, 0.289841, 1, 0.554688, 0.406807, 0.216675, 0 )
 
-[sub_resource type="GradientTexture" id=15]
-gradient = SubResource( 14 )
+[sub_resource type="GradientTexture" id=16]
+gradient = SubResource( 15 )
 
-[sub_resource type="ParticlesMaterial" id=16]
+[sub_resource type="ParticlesMaterial" id=17]
 lifetime_randomness = 0.56
 emission_shape = 1
 emission_sphere_radius = 2.02
@@ -102,14 +105,14 @@ gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.06
 initial_velocity_random = 0.12
 angle = 90.0
-color_ramp = SubResource( 15 )
+color_ramp = SubResource( 16 )
 hue_variation_random = 0.28
 
-[sub_resource type="QuadMesh" id=17]
+[sub_resource type="QuadMesh" id=18]
 material = ExtResource( 7 )
 size = Vector2( 0.02, 0.025 )
 
-[sub_resource type="PlaneMesh" id=18]
+[sub_resource type="PlaneMesh" id=19]
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 5 )
@@ -163,11 +166,11 @@ angular_damp = 0.994
 [node name="MeshInstance" type="MeshInstance" parent="pino"]
 transform = Transform( 0.0384637, 0, 0, 0, 0.514566, 0, 0, 0, 0.0384637, 5.96817e-05, 0.1759, -0.00120203 )
 mesh = SubResource( 7 )
-material/0 = null
+material/0 = SubResource( 8 )
 
 [node name="CollisionShape" type="CollisionShape" parent="pino"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.103801, 0 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="ConeTwistJoint" type="ConeTwistJoint" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.45982, -4.94516 )
@@ -183,8 +186,8 @@ explosiveness = 0.05
 fract_delta = false
 visibility_aabb = AABB( -4, -5.82476, -6.64017, 8, 11.6495, 13.2803 )
 local_coords = false
-process_material = SubResource( 11 )
-draw_pass_1 = SubResource( 13 )
+process_material = SubResource( 12 )
+draw_pass_1 = SubResource( 14 )
 script = ExtResource( 4 )
 
 [node name="SuspendedParticleHolder" type="Spatial" parent="."]
@@ -199,23 +202,23 @@ lifetime = 5.0
 fract_delta = false
 visibility_aabb = AABB( -1.73599, -1.9446, -2.08239, 3.80694, 4.64408, 4.91673 )
 local_coords = false
-process_material = SubResource( 16 )
-draw_pass_1 = SubResource( 17 )
+process_material = SubResource( 17 )
+draw_pass_1 = SubResource( 18 )
 
 [node name="boat_level" parent="." instance=ExtResource( 10 )]
 transform = Transform( -0.967929, 0, 0.251225, 0, 1, 0, -0.251225, 0, -0.967929, 6.93343, 3.1423, 3.2024 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 393.642, 0, 0, 0, 0.648678, 41.3108, 0, -0.761063, 35.2105, 8.73487, -29.8845, 162.768 )
-mesh = SubResource( 18 )
+mesh = SubResource( 19 )
 material/0 = ExtResource( 8 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
 transform = Transform( -12.5117, 0.797167, -32.6162, 2.73475, 0.602483, 43.3173, 212.192, 0.0392392, -2.48145, -191.652, -28.671, 26.9089 )
-mesh = SubResource( 18 )
+mesh = SubResource( 19 )
 material/0 = ExtResource( 8 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="."]
 transform = Transform( -0.553424, -0.602175, 43.3353, 1.3469, 0.798337, 32.6865, -212.574, 0.0066261, 0.0942851, 158.58, -23.5163, 47.5289 )
-mesh = SubResource( 18 )
+mesh = SubResource( 19 )
 material/0 = ExtResource( 8 )
