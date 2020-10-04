@@ -13,7 +13,7 @@
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx;
+render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx,skip_vertex_transform;
 uniform sampler2D sand_bc : hint_albedo;
 uniform sampler2D sand_n;
 uniform sampler2D sand_r;
@@ -33,7 +33,7 @@ uniform float tiling_rock;
 uniform sampler2D caustics;
 uniform float light_mixer_angle;
 uniform vec4 ambient_color : hint_color = vec4(0.0, 0.0, 0.3, 1.0);
-
+varying float world_normal;
 
 float SchlickFresnel(float u) {
 	float m = 1.0 - u;
@@ -45,8 +45,10 @@ float SchlickFresnel(float u) {
 	//Diffuse
 
 void vertex() {
-// Output:0
-
+    VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+    NORMAL = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
+	vec4 up = (MODELVIEW_MATRIX * vec4(0.0, 1.0, 0.0, 0.0));
+	world_normal = dot(NORMAL/length(NORMAL), (up/length(up)).xyz);
 }
 
 void fragment() {
@@ -63,13 +65,17 @@ void fragment() {
 	vec3 grass_r_t = texture(grass_r, UV*tiling_grass).rgb;
 	
 	vec3 rock_bc_t = texture(rock_bc, UV*tiling_rock).rgb;
+
 	vec3 rock_n_t = texture(rock_n, UV*tiling_rock).rgb;
 	vec3 rock_r_t = texture(rock_r, UV*tiling_rock).rgb;
 	
 	vec3 level_terrain_bc = mix(grass_bc_t, sand_bc_t, grass_or_sand);
+	
 	vec3 level_terrain_n = mix(grass_n_t, sand_n_t, grass_or_sand);
 	vec3 level_terrain_r = mix(grass_r_t, sand_r_t, grass_or_sand);
-	float terrain_type = clamp(dot(NORMAL, vec3(0.0, 1.0, 0.0)), 0.0, 1.0);
+
+	float terrain_type = clamp(world_normal-0.3, 0.0, 1.0);
+
 	ALBEDO = mix(rock_bc_t, level_terrain_bc, terrain_type);
 	NORMALMAP = mix(rock_n_t, level_terrain_n, terrain_type);
 	ROUGHNESS = mix(rock_r_t, level_terrain_r, terrain_type).r;
