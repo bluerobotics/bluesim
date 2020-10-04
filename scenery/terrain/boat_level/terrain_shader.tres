@@ -34,6 +34,7 @@ uniform sampler2D caustics;
 uniform float light_mixer_angle;
 uniform vec4 ambient_color : hint_color = vec4(0.0, 0.0, 0.3, 1.0);
 varying float world_normal;
+varying float upwards;
 
 float SchlickFresnel(float u) {
 	float m = 1.0 - u;
@@ -41,13 +42,12 @@ float SchlickFresnel(float u) {
 	return m2 * m2 * m; // pow(m,5)
 }
 
-// GlobalExpression:0
-	//Diffuse
-
 void vertex() {
-    VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
-    NORMAL = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
+	upwards = VERTEX.y;
+	VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	NORMAL = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
 	vec4 up = (MODELVIEW_MATRIX * vec4(0.0, 1.0, 0.0, 0.0));
+	
 	world_normal = dot(NORMAL/length(NORMAL), (up/length(up)).xyz);
 }
 
@@ -158,7 +158,9 @@ void light() {
 		
 			vec3 world_light = (vec4(LIGHT, 1.0) * INV_CAMERA_MATRIX).xyz;
 			//bool use_caustics = length(world_light.xz) <= n_out3p0;
-			bool use_caustics = dot(normalize(world_light), vec3(0.,1.,0.)) >= n_out3p0;
+			bool out_of_water = upwards < 0.301;
+			bool use_caustics = out_of_water && dot(normalize(world_light), vec3(0.,1.,0.)) >= n_out3p0;
+			
 		
 		// VectorScalarMix:44
 			vec3 n_out44p0 = mix(caustic, regular_light, use_caustics ? 0.0 : 1.0);
