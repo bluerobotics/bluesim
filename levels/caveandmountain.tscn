@@ -404,12 +404,12 @@ render_target_update_mode = 3
 shadow_atlas_size = 2048
 shadow_atlas_quad_1 = 3
 
-[node name="player" type="Spatial" parent="ViewportCamera/Viewport"]
+[node name="playerCamera" type="Spatial" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.7902, 0 )
 script = SubResource( 1 )
 mouse_mode = 0
 
-[node name="Camera" type="Camera" parent="ViewportCamera/Viewport/player" groups=[
+[node name="Camera" type="Camera" parent="ViewportCamera/Viewport/playerCamera" groups=[
 "cameras",
 ]]
 far = 275.0
