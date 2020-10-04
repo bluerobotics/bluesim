@@ -866,6 +866,7 @@ shadow_atlas_quad_1 = 3
 transform = Transform( -0.995028, 0, 0.0995974, 0, 1, 0, -0.0995974, 0, -0.995028, -1.54154, 7.13712, -2.96935 )
 cull_mask = 1048573
 environment = ExtResource( 1 )
+far = 497.4
 target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
 enabled = true
