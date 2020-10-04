@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/suspended_particles.gd" type="Script" id=1]
 [ext_resource path="res://scenery/shaders/water_shader.tres" type="Material" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scripts/environment.gd" type="Script" id=5]
 [ext_resource path="res://scenery/shaders/underwater_shader.tres" type="Material" id=6]
 [ext_resource path="res://scenery/shaders/suspended_particle_shader.tres" type="Material" id=7]
+[ext_resource path="res://scenery/terrain/boat_level/terrain_shader.tres" type="Material" id=8]
 [ext_resource path="res://scenery/shaders/godrays.shader" type="Shader" id=9]
 [ext_resource path="res://scenery/terrain/boat_level/boat_level.tscn" type="PackedScene" id=10]
 
@@ -108,6 +109,8 @@ hue_variation_random = 0.28
 material = ExtResource( 7 )
 size = Vector2( 0.02, 0.025 )
 
+[sub_resource type="PlaneMesh" id=18]
+
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 5 )
 
@@ -201,3 +204,18 @@ draw_pass_1 = SubResource( 17 )
 
 [node name="boat_level" parent="." instance=ExtResource( 10 )]
 transform = Transform( -0.967929, 0, 0.251225, 0, 1, 0, -0.251225, 0, -0.967929, 6.93343, 3.1423, 3.2024 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 393.642, 0, 0, 0, 0.648678, 41.3108, 0, -0.761063, 35.2105, 8.73487, -29.8845, 162.768 )
+mesh = SubResource( 18 )
+material/0 = ExtResource( 8 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( -12.5117, 0.797167, -32.6162, 2.73475, 0.602483, 43.3173, 212.192, 0.0392392, -2.48145, -191.652, -28.671, 26.9089 )
+mesh = SubResource( 18 )
+material/0 = ExtResource( 8 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( -0.553424, -0.602175, 43.3353, 1.3469, 0.798337, 32.6865, -212.574, 0.0066261, 0.0942851, 158.58, -23.5163, 47.5289 )
+mesh = SubResource( 18 )
+material/0 = ExtResource( 8 )
