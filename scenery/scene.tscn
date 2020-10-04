@@ -4,12 +4,13 @@
 [ext_resource path="res://scenery/shaders/water_shader.tres" type="Material" id=2]
 [ext_resource path="res://scenery/buoy.gd" type="Script" id=3]
 [ext_resource path="res://scripts/godrays.gd" type="Script" id=4]
-[ext_resource path="res://scripts/teste.gd" type="Script" id=5]
+[ext_resource path="res://scripts/environment.gd" type="Script" id=5]
 [ext_resource path="res://scenery/shaders/underwater_shader.tres" type="Material" id=6]
 [ext_resource path="res://scenery/shaders/suspended_particle_shader.tres" type="Material" id=7]
 [ext_resource path="res://scenery/shaders/shader_textures/Sky Background-56.jpg" type="Texture" id=8]
 [ext_resource path="res://scenery/shaders/godrays.shader" type="Shader" id=9]
 [ext_resource path="res://scenery/terrain/boat_level/boat_level.tscn" type="PackedScene" id=10]
+
 
 [sub_resource type="PlaneMesh" id=1]
 subdivide_width = 256
