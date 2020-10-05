@@ -2,8 +2,10 @@ extends Spatial
 
 export var direction = 0
 
+
 func _ready():
 	set_physics_process(true)
+
 
 func _physics_process(delta):
 	if Input.is_action_pressed("gripper_open"):
@@ -13,4 +15,3 @@ func _physics_process(delta):
 
 	$"../../joint3".set_param(6, direction)
 	$"../../joint4".set_param(6, -direction)
-	

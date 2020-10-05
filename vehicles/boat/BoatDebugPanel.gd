@@ -1,10 +1,10 @@
 extends PanelContainer
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 onready var boat = get_tree().get_root().find_node("SailBoat", true, false)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,13 +17,15 @@ func _ready():
 	$VBoxContainer/sailBaseDragSlider.value = boat.sail_base_drag
 	$VBoxContainer/sailClSlider.value = boat.sail_Cl
 	$VBoxContainer/ballastSlider.value = boat.ballast_kg
-	
+
+
 func _input(event):
 	if event.is_action_pressed("F1"):
 		if not self.is_visible():
 			self.show()
 		else:
 			self.hide()
+
 
 func _on_windDirectionSlider_value_changed(value):
 	Globals.wind_dir = $VBoxContainer/windDirectionSlider.value
@@ -47,8 +49,8 @@ func _on_hullClSlider_value_changed(value):
 
 func _on_sailcdSlider_value_changed(value):
 	boat.sail_CD = $VBoxContainer/sailcdSlider.value
-	
-	
+
+
 func _on_sailBaseDragSlider_value_changed(value):
 	boat.sail_base_drag = $VBoxContainer/sailBaseDragSlider.value
 

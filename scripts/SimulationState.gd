@@ -18,18 +18,22 @@ var fps_label
 var labels = {}
 var container
 
+
 func _init(shortcut):
 	self.shortcut = shortcut
 
+
 func set_pos(pos):
 	self.pos = pos
-	
+
+
 func update_label(name, value):
 	if not name in self.labels:
 		self.labels[name] = Label.new()
 		self.container.add_child(self.labels[name])
 
 	self.labels[name].set_text(name + ": " + str(value))
+
 
 func _ready():
 	set_process_input(true)
@@ -62,6 +66,7 @@ func _ready():
 		container.connect("mouse_entered", self, "_panel_entered")
 		container.connect("mouse_exited", self, "_panel_exited")
 
+
 func _input(event):
 	if event.is_action_pressed(self.shortcut):
 		if not self.panel.is_visible():
@@ -76,15 +81,19 @@ func _input(event):
 		elif event is InputEventMouseMotion and mouse_over and mouse_pressed:
 			panel.set_begin(panel.get_begin() + event.relative)
 
+
 func _process(delta):
 	_update_fps()
+
 
 func _update_fps():
 	if fps_label:
 		fps_label.set_text("FPS: " + str(Performance.get_monitor(Performance.TIME_FPS)))
 
+
 func _panel_entered():
 	mouse_over = true
+
 
 func _panel_exited():
 	mouse_over = false

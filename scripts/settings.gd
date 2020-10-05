@@ -1,6 +1,5 @@
 extends PanelContainer
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -16,9 +15,11 @@ func _ready():
 	$VBoxContainer/physicsRate.text = 'Physics: ' + String(Globals.physics_rate) + ' Hz'
 	$VBoxContainer/physicsRateSlider.value = Globals.physics_rate
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
