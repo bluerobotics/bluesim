@@ -7,9 +7,9 @@ extends Camera
 # User settings:
 # General settings
 export var enabled = true setget set_enabled
-export(int, "Visible", "Hidden", "Caputered, Confined") var mouse_mode = 2
+export (int, "Visible", "Hidden", "Caputered, Confined") var mouse_mode = 2
 
-enum Freelook_Modes {MOUSE, INPUT_ACTION, MOUSE_AND_INPUT_ACTION}
+enum Freelook_Modes { MOUSE, INPUT_ACTION, MOUSE_AND_INPUT_ACTION }
 
 # Freelook settings
 export var freelook = true
@@ -20,7 +20,7 @@ export (int, 0, 360) var yaw_limit = 360
 export (int, 0, 360) var pitch_limit = 360
 
 # Pivot Settings
-export(NodePath) var privot setget set_privot
+export (NodePath) var privot setget set_privot
 export var distance = 5.0 setget set_distance
 export var rotate_privot = false
 export var collisions = true setget set_collisions
@@ -61,24 +61,27 @@ var _direction = Vector3(0.0, 0.0, 0.0)
 var _speed = Vector3(0.0, 0.0, 0.0)
 var _gui
 
-var _triggered=false
+var _triggered = false
 
 const ROTATION_MULTIPLIER = 500
 
+
 func _ready():
-	_check_actions([
-		forward_action,
-		backward_action,
-		left_action,
-		right_action,
-		gui_action,
-		up_action,
-		down_action,
-		rotate_left_action,
-		rotate_right_action,
-		rotate_up_action,
-		rotate_down_action
-	])
+	_check_actions(
+		[
+			forward_action,
+			backward_action,
+			left_action,
+			right_action,
+			gui_action,
+			up_action,
+			down_action,
+			rotate_left_action,
+			rotate_right_action,
+			rotate_up_action,
+			rotate_down_action
+		]
+	)
 
 	if privot:
 		privot = get_node(privot)
@@ -92,29 +95,42 @@ func _ready():
 		_gui = _gui.new(self, gui_action)
 		add_child(_gui)
 
+
 func _input(event):
-		if len(trigger_action)!=0:
-			if event.is_action_pressed(trigger_action):
-				_triggered=true
-			elif event.is_action_released(trigger_action):
-				_triggered=false
-		else:
-			_triggered=true
-		if freelook and _triggered:
-			if event is InputEventMouseMotion:
-				_mouse_offset = event.relative
-				
-			_rotation_offset.x = Input.get_action_strength(rotate_right_action) - Input.get_action_strength(rotate_left_action)
-			_rotation_offset.y = Input.get_action_strength(rotate_down_action) - Input.get_action_strength(rotate_up_action)
-	
-		if movement and _triggered:
-			_direction.x = Input.get_action_strength(right_action) - Input.get_action_strength(left_action)
-			_direction.y = Input.get_action_strength(up_action) - Input.get_action_strength(down_action)
-			_direction.z = Input.get_action_strength(backward_action) - Input.get_action_strength(forward_action)
+	if len(trigger_action) != 0:
+		if event.is_action_pressed(trigger_action):
+			_triggered = true
+		elif event.is_action_released(trigger_action):
+			_triggered = false
+	else:
+		_triggered = true
+	if freelook and _triggered:
+		if event is InputEventMouseMotion:
+			_mouse_offset = event.relative
+		_rotation_offset.x = (
+			Input.get_action_strength(rotate_right_action)
+			- Input.get_action_strength(rotate_left_action)
+		)
+		_rotation_offset.y = (
+			Input.get_action_strength(rotate_down_action)
+			- Input.get_action_strength(rotate_up_action)
+		)
+	if movement and _triggered:
+		_direction.x = (
+			Input.get_action_strength(right_action)
+			- Input.get_action_strength(left_action)
+		)
+		_direction.y = Input.get_action_strength(up_action) - Input.get_action_strength(down_action)
+		_direction.z = (
+			Input.get_action_strength(backward_action)
+			- Input.get_action_strength(forward_action)
+		)
+
 
 func _process(delta):
 	if _triggered:
 		_update_views(delta)
+
 
 func _update_views(delta):
 	if privot:
@@ -124,9 +140,11 @@ func _update_views(delta):
 	if movement:
 		_update_movement(delta)
 
+
 func _physics_process(delta):
 	if _triggered:
 		_update_views_physics(delta)
+
 
 func _update_views_physics(delta):
 	# Called when collision are enabled
@@ -135,9 +153,10 @@ func _update_views_physics(delta):
 		_update_rotation(delta)
 
 	var space_state = get_world().get_direct_space_state()
-	var obstacle = space_state.intersect_ray(privot.get_translation(),  get_translation())
+	var obstacle = space_state.intersect_ray(privot.get_translation(), get_translation())
 	if not obstacle.empty():
 		set_translation(obstacle.position)
+
 
 func _update_movement(delta):
 	var offset = max_speed * acceleration * _direction
@@ -161,14 +180,15 @@ func _update_movement(delta):
 
 	print(self.to_global(Vector3(0, 0, 0)))
 
+
 func _update_rotation(delta):
-	var offset = Vector2();
-	
+	var offset = Vector2()
+
 	if not freelook_mode == Freelook_Modes.INPUT_ACTION:
 		offset += _mouse_offset * sensitivity
-	if not freelook_mode == Freelook_Modes.MOUSE: 
+	if not freelook_mode == Freelook_Modes.MOUSE:
 		offset += _rotation_offset * sensitivity * ROTATION_MULTIPLIER * delta
-	
+
 	_mouse_offset = Vector2()
 
 	_yaw = _yaw * smoothness + offset.x * (1.0 - smoothness)
@@ -188,19 +208,21 @@ func _update_rotation(delta):
 
 		set_translation(target)
 		rotate_y(deg2rad(-_yaw))
-		rotate_object_local(Vector3(1,0,0), deg2rad(-_pitch))
+		rotate_object_local(Vector3(1, 0, 0), deg2rad(-_pitch))
 		translate(Vector3(0.0, 0.0, dist))
 
 		if rotate_privot:
 			privot.rotate_y(deg2rad(-_yaw))
 	else:
 		rotate_y(deg2rad(-_yaw))
-		rotate_object_local(Vector3(1,0,0), deg2rad(-_pitch))
+		rotate_object_local(Vector3(1, 0, 0), deg2rad(-_pitch))
+
 
 func _update_distance():
 	var t = privot.get_translation()
 	t.z -= distance
 	set_translation(t)
+
 
 func _update_process_func():
 	# Use physics process if collision are enabled
@@ -211,21 +233,25 @@ func _update_process_func():
 		set_physics_process(false)
 		set_process(true)
 
-func _check_actions(actions=[]):
+
+func _check_actions(actions = []):
 	if OS.is_debug_build():
 		for action in actions:
 			if not InputMap.has_action(action):
 				print('WARNING: No action "' + action + '"')
 
+
 func set_privot(value):
 	privot = value
 	_update_process_func()
-	if len(trigger_action)!=0:
+	if len(trigger_action) != 0:
 		_update_views(0)
+
 
 func set_collisions(value):
 	collisions = value
 	_update_process_func()
+
 
 func set_enabled(value):
 	enabled = value
@@ -238,8 +264,10 @@ func set_enabled(value):
 		set_process_input(false)
 		set_physics_process(false)
 
+
 func set_smoothness(value):
 	smoothness = clamp(value, 0.001, 0.999)
+
 
 func set_distance(value):
 	distance = max(0, value)

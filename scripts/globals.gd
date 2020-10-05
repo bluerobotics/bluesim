@@ -19,5 +19,6 @@ export var wind_speed = 5
 var active_vehicle = null
 var sitl_pid = 0
 
+
 func _ready():
 	isHTML5 = OS.get_name() == "HTML5"

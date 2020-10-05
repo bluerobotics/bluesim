@@ -1,6 +1,5 @@
 extends ViewportContainer
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -9,10 +8,12 @@ var img = Image.new()
 var last_points = []
 var angle = 0
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func on_ping360_update(pingAngle, points):
 	self.last_points = points
 	self.angle = pingAngle
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +23,7 @@ func _ready():
 		return
 	self.sonar = sonars[0]
 	self.sonar.connect("updatePing360Display", self, "on_ping360_update")
-		
+
 	# You'll have to get thoose the way you want
 	var array_width = 100
 	var array_heigh = 360
@@ -30,14 +31,13 @@ func _ready():
 	for _y in range(360):
 		for _x in range(100):
 			array.append(0)
-	
+
 	# The following is used to convert the array into a Texture
 	var byte_array = PoolByteArray(array)
 
 	# I don't want any mipmaps generated : use_mipmaps = false
 	# I'm only interested with 1 component per pixel (the corresponding array value) : Format = Image.FORMAT_R8
 	img.create_from_data(array_width, array_heigh, false, Image.FORMAT_R8, byte_array)
-
 
 
 func _process(_delta):
@@ -58,7 +58,6 @@ func _process(_delta):
 	texture.create_from_image(img, 0)
 	# Upload the texture to my shader
 	self.get_material().set_shader_param("my_array", texture)
-
 
 
 func _on_Ping360Toggle_toggled(button_pressed):
