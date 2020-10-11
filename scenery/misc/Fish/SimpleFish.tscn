@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/simple_fish/fish.png" type="Texture" id=1]
+[ext_resource path="res://assets/simple_fish/fish.obj" type="ArrayMesh" id=2]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type spatial;
+render_mode cull_disabled;
+
+uniform sampler2D albedo_texture;
+
+// Based in: https://docs.godotengine.org/pt_BR/stable/tutorials/3d/vertex_animation/animating_thousands_of_fish.html
+void vertex() {
+    float time_scale = 3.0;
+    
+    float side_to_side_speed = 0.04;
+    float side_to_side_amplitude = 0.0;
+    
+    float pivot = 1.0;
+    float twist = -2.2;
+    
+    float time = TIME * time_scale;
+    VERTEX.x += cos(time * side_to_side_speed) * side_to_side_amplitude;
+    
+    float body = VERTEX.z/0.55; //for a fish centered at (0, 0) with a length of 2
+    //wave is a uniform float
+    float wave = 0.1;
+    VERTEX.x += cos(time + body) * wave;
+    
+    float pivot_angle = cos(time) * 0.1 * pivot;
+    mat2 rotation_matrix = mat2(vec2(cos(pivot_angle), -sin(pivot_angle)), vec2(sin(pivot_angle), cos(pivot_angle)));
+    VERTEX.xy = rotation_matrix * VERTEX.xy;
+    
+    //twist is a uniform float
+    float twist_angle = cos(time + body) * 0.03 * twist;
+    mat2 twist_matrix = mat2(vec2(cos(twist_angle), -sin(twist_angle)), vec2(sin(twist_angle), cos(twist_angle)));
+    VERTEX.xz = twist_matrix * VERTEX.xz;
+}
+
+void fragment() {
+    ALBEDO = texture(albedo_texture, UV).xyz;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/albedo_texture = ExtResource( 1 )
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.761981
+height = 0.002
+
+[node name="SimpleFish" type="RigidBody"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+mesh = ExtResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.2, 0, 0, 0, -1.74846e-08, 0.15, 0, -0.4, -6.55671e-09, 0, 0.00576326, -0.0660781 )
+shape = SubResource( 1 )
