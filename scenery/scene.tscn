@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://scripts/suspended_particles.gd" type="Script" id=1]
 [ext_resource path="res://scenery/shaders/water_shader.tres" type="Material" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://scenery/terrain/boat_level/terrain_shader.tres" type="Material" id=8]
 [ext_resource path="res://scenery/shaders/godrays.shader" type="Shader" id=9]
 [ext_resource path="res://scenery/terrain/boat_level/boat_level.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenery/misc/Fish/SimpleFish.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenery/misc/Fish/SimpleFish.gd" type="Script" id=12]
 
 [sub_resource type="PlaneMesh" id=1]
 subdivide_width = 256
@@ -206,7 +208,7 @@ process_material = SubResource( 17 )
 draw_pass_1 = SubResource( 18 )
 
 [node name="boat_level" parent="." instance=ExtResource( 10 )]
-transform = Transform( -0.967929, 0, 0.251225, 0, 1, 0, -0.251225, 0, -0.967929, 6.93343, 3.1423, 3.2024 )
+transform = Transform( -0.967929, 0, 0.251225, 0, 1, 0, -0.251225, 0, -0.967929, 6.93343, 5.1423, 3.2024 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 393.642, 0, 0, 0, 0.648678, 41.3108, 0, -0.761063, 35.2105, 8.73487, -29.8845, 162.768 )
@@ -222,3 +224,24 @@ material/0 = ExtResource( 8 )
 transform = Transform( -0.553424, -0.602175, 43.3353, 1.3469, 0.798337, 32.6865, -212.574, 0.0066261, 0.0942851, 158.58, -23.5163, 47.5289 )
 mesh = SubResource( 19 )
 material/0 = ExtResource( 8 )
+
+[node name="SimpleFish" parent="." instance=ExtResource( 11 )]
+transform = Transform( -0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, -13, -10.9404, -2.31119 )
+gravity_scale = 0.0
+linear_damp = 0.8
+angular_damp = 0.8
+script = ExtResource( 12 )
+
+[node name="SimpleFish2" parent="." instance=ExtResource( 11 )]
+transform = Transform( -0.885848, 0, -0.463977, 0.0412771, 0.996035, -0.0788084, 0.462137, -0.0889638, -0.882335, -12, -9.19199, -3 )
+gravity_scale = 0.0
+linear_damp = 0.8
+angular_damp = 0.8
+script = ExtResource( 12 )
+
+[node name="SimpleFish3" parent="." instance=ExtResource( 11 )]
+transform = Transform( -0.98316, 0.0545437, 0.174416, 0.0659014, 0.996021, 0.0599998, -0.170449, 0.0704837, -0.982842, -14.8579, -4.9199, -3 )
+gravity_scale = 0.0
+linear_damp = 0.8
+angular_damp = 0.8
+script = ExtResource( 12 )
