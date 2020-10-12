@@ -9,9 +9,7 @@ onready var surface_altitude = $water.global_transform.origin.y
 
 var fancy_water
 var fancy_underwater
-const simple_water = preload(
-	"res://assets/maujoe.basic_water_material/materials/basic_water_material.material"
-)
+const simple_water = preload("res://assets/maujoe.basic_water_material/materials/basic_water_material.material")
 
 
 # Called when the node enters the scene tree for the first time.
