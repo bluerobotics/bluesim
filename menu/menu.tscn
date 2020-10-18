@@ -89,8 +89,7 @@ func _ready():
 
 func _on_shipLevel_pressed():
 	Globals.active_vehicle = \"bluerovheavy\"
-	if !get_tree().change_scene(\"res://levels/caveandmountain.tscn\"):
-		print(\"error loading level\")
+	SceneLoader.goto_scene(\"res://levels/caveandmountain.tscn\")
 	
 func _on_CheckBox_toggled(button_pressed):
 	Globals.wait_SITL = button_pressed
@@ -98,8 +97,7 @@ func _on_CheckBox_toggled(button_pressed):
 func _on_shipLevel2_pressed():
 	Globals.active_vehicle = \"boat\"
 	Globals.ping360_enabled = false
-	if !get_tree().change_scene(\"res://levels/caveandmountain.tscn\"):
-		print(\"error loading level\")
+	SceneLoader.goto_scene(\"res://levels/caveandmountain.tscn\")
 "
 
 [sub_resource type="Animation" id=2]
