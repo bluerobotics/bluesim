@@ -392,6 +392,7 @@ script = ExtResource( 2 )
 
 [node name="SettingsPanel" type="PanelContainer" parent="ViewportCamera"]
 visible = false
+margin_left = 251.0
 margin_right = 14.0
 margin_bottom = 14.0
 script = ExtResource( 5 )
@@ -449,22 +450,21 @@ value = 60.0
 
 [node name="HelpPanel" type="PanelContainer" parent="ViewportCamera"]
 modulate = Color( 1, 1, 1, 0.619608 )
-margin_right = 300.0
-margin_bottom = 400.0
+margin_right = 250.0
+margin_bottom = 334.0
 script = SubResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ViewportCamera/HelpPanel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 293.0
-margin_bottom = 429.0
+margin_right = 243.0
+margin_bottom = 327.0
 
 [node name="help" type="Label" parent="ViewportCamera/HelpPanel/VBoxContainer"]
-margin_right = 286.0
-margin_bottom = 422.0
+margin_right = 236.0
+margin_bottom = 320.0
 rect_pivot_offset = Vector2( -32, 6 )
 text = "H - Toggle Help (this)
-F1 - Boat settings
 ESC - Graphics settings
 
 C - switch camera//vehicle
@@ -472,11 +472,6 @@ R - reset position
 
 Free camera:
 Hold left button + a/w/s/d + q/e
-
-Sailboat:
-Keypad 4-6 - main sail
-Left, Right: Apply torque to hull
-Up, Down: Apply forward force to hull
 
 ROV:
 1/2: Increase/decrease lights
