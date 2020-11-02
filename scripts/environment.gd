@@ -91,8 +91,6 @@ func update_fog():
 
 func _physics_process(_delta):
 	calculate_buoyancy_and_ballast()
-	if not Globals.isHTML5:
-		update_fog()
 
 
 func _notification(what):
