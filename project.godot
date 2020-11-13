@@ -197,4 +197,4 @@ common/physics_fps=100
 
 [rendering]
 
-environment/default_environment="res://scenery/default_env.tres"
+environment/default_environment="res://scenery/defaultEnvironment.tres"
