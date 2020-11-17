@@ -82,6 +82,10 @@ func _ready():
 			download_file(\"https://firmware.ardupilot.org/Sub/latest/SITL_x86_64_linux_gnu/ardusub\", \"user://ardusub\")
 		else:
 			_start_sitl()
+	else:
+		$HBoxContainer/Buttons.visible = true
+		$HBoxContainer/Buttons/CheckBox.visible = false
+		add_status(\"SITL not available for plataform: %s\" % OS.get_name())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
