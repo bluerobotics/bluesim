@@ -22,6 +22,7 @@ jobs:
         run: |
           mkdir -v -p build/windows
           godot -v --export "Windows Desktop" build/windows/$EXPORT_NAME.exe
+          cp eeprom.bin build/windows/
           zip -r bluesim.zip build/windows/
           mv bluesim.zip build/windows
       - name: deploy to server
@@ -51,6 +52,7 @@ jobs:
         run: |
           mkdir -v -p build/linux
           godot -v --export "Linux/X11" build/linux/$EXPORT_NAME.x86_64
+          cp eeprom.bin build/linux/
           zip -r bluesim.zip build/linux/
           mv bluesim.zip build/linux
       - name: deploy to server
