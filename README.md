@@ -7,7 +7,19 @@ BlueROV2 Simulator. [Online demo here](http://sim.galvanicloop.com/) (works bett
  - [Mac](http://sim.galvanicloop.com/builds/mac/mac/bluesim.zip)
  - [Linux](http://sim.galvanicloop.com/builds/linux/linux/bluesim.zip)
 
+# Usage
+
+  1. Open [QGroundControl](http://qgroundcontrol.com/)
+  2. Set up a new communication link at TCP 127.0.0.1, port 5760.
+  3. Launch BlueSim
+  4. Chooset BlueRov2 Heavy
+  5. Connect the new link in QGC
+  6. Drive around using the gamepad as if controlling a real BlueRov2.
+
+
 # Default keys:
+
+If there is not SITL instance attached, these keys can be used to control the ROV:
 
 |      Action      |  Key  |
 |:----------------:|:-----:|
@@ -28,4 +40,6 @@ BlueROV2 Simulator. [Online demo here](http://sim.galvanicloop.com/) (works bett
 
 # SITL integration:
 
- `sim_vehicle.py -j6 -L RATBeach --frame gazebo-bluerov2  --out=udpout:0.0.0.0:14550`
+    Before opening Bluesim (it launches its own SITL instance), run:
+
+ `sim_vehicle.py -j6 -L RATBeach --frame JSON --out=udpout:0.0.0.0:14550`
