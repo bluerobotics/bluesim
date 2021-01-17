@@ -32,6 +32,10 @@ settings/stdout/print_fps=true
 
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "thruster_nodes" )
+
 [input]
 
 downwards={
