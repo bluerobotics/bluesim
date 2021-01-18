@@ -1,15 +1,14 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenery/defaultEnvironment.tres" type="Environment" id=1]
-[ext_resource path="res://scripts/targetPos.gd" type="Script" id=2]
-[ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=3]
-[ext_resource path="res://scripts/Ping360Viewport.gd" type="Script" id=4]
-[ext_resource path="res://scripts/settings.gd" type="Script" id=5]
+[ext_resource path="res://scripts/settings.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Ping360Viewport.gd" type="Script" id=3]
+[ext_resource path="res://scripts/InterpolatedCamera.gd" type="Script" id=4]
+[ext_resource path="res://scripts/targetPos.gd" type="Script" id=5]
 [ext_resource path="res://vehicles/components/ping360.shader" type="Shader" id=6]
-[ext_resource path="res://scenery/scene.tscn" type="PackedScene" id=7]
-[ext_resource path="res://vehicles/bluerovheavy/BlueRovHeavy.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenery/misc/pool/pool.tscn" type="PackedScene" id=9]
-
+[ext_resource path="res://levels/baselevel.gd" type="Script" id=7]
+[ext_resource path="res://scenery/scene.tscn" type="PackedScene" id=8]
+[ext_resource path="res://vehicles/bluerovheavy/BlueRovHeavy.tscn" type="PackedScene" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "# Licensed under the MIT License.
@@ -348,6 +347,7 @@ pause_mode = 2
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -387,16 +387,16 @@ loops = 100
 
 [node name="cameraPosition" type="Spatial" parent="ViewportCamera/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.21178, 10.2615, 4.21928 )
-script = ExtResource( 2 )
+script = ExtResource( 5 )
 
-[node name="BlueRovHeavy" parent="ViewportCamera/Viewport" instance=ExtResource( 8 )]
+[node name="BlueRovHeavy" parent="ViewportCamera/Viewport" instance=ExtResource( 9 )]
 
 [node name="SettingsPanel" type="PanelContainer" parent="ViewportCamera"]
 visible = false
 margin_left = 251.0
 margin_right = 14.0
 margin_bottom = 14.0
-script = ExtResource( 5 )
+script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ViewportCamera/SettingsPanel"]
 margin_left = 7.0
@@ -520,9 +520,9 @@ far = 497.4
 target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
 enabled = true
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
-[node name="Scene" parent="ViewportGlobal/Viewport" instance=ExtResource( 7 )]
+[node name="Scene" parent="ViewportGlobal/Viewport" instance=ExtResource( 8 )]
 transform = Transform( -0.361771, 0, -0.932267, 0, 1, 0, 0.932267, 0, -0.361771, 0.491683, 0.56816, 17.7391 )
 
 [node name="OmniLight" type="OmniLight" parent="ViewportGlobal/Viewport/Scene"]
@@ -574,7 +574,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -595,7 +595,7 @@ environment = ExtResource( 1 )
 target = NodePath("../../../ViewportCamera/Viewport/cameraPosition")
 speed = 10.0
 enabled = true
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 visible = false
@@ -609,9 +609,6 @@ rect_min_size = Vector2( 1024, 600 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="pool" parent="." instance=ExtResource( 9 )]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.9408, 10.0919, 31.1666 )
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/godrayToggle" to="ViewportGlobal/Viewport/Scene" method="_on_godrayToggle_toggled"]
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/dirtparticlesToggle" to="ViewportGlobal/Viewport/Scene" method="_on_dirtparticlesToggle_toggled"]
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/fancyWaterToggle" to="ViewportGlobal/Viewport/Scene" method="_on_fancyWaterToggle_toggled"]

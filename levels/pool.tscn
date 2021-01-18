@@ -8,16 +8,22 @@ data = PoolVector3Array( -1, 0, 1, -0.7778, 0, 0.7778, -0.7778, 0, 1, -1, 0, 1, 
 [node name="pool" instance=ExtResource( 1 )]
 
 [node name="StaticBody" type="StaticBody" parent="." index="0"]
-transform = Transform( 139.193, 0, 0, 0, 139.193, 0, 0, 0, 139.193, 0, 0, 0 )
+transform = Transform( 139.193, 0, 0, 0, 139.193, 0, 0, 0, 139.193, 0, 15.8045, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 shape = SubResource( 1 )
 
 [node name="Light" parent="." index="1"]
+transform = Transform( -0.290865, 0.566393, 0.771101, -0.0551891, 0.794672, -0.604525, -0.955171, -0.218391, -0.199883, 4.07625, 21.7084, -1.00545 )
 visible = false
 
 [node name="Camera" parent="." index="2"]
+transform = Transform( 0.685921, 0.651558, 0.324014, 0, 0.445271, -0.895396, -0.727676, 0.61417, 0.305421, 7.35889, 20.7628, 6.92579 )
 visible = false
 
+[node name="Grid" parent="." index="3"]
+transform = Transform( 139.193, 0, 0, 0, 139.193, 0, 0, 0, 139.193, 0, 15.8045, 0 )
+
 [node name="Sun" parent="." index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.8045, 0 )
 visible = false
