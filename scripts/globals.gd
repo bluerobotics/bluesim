@@ -17,6 +17,7 @@ export var physics_rate = 60
 export var wind_dir = 0
 export var wind_speed = 5
 var active_vehicle = null
+var active_level = ""
 var sitl_pid = 0
 
 

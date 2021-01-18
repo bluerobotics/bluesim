@@ -63,10 +63,18 @@ func _notification(what):
 		OS.kill(Globals.sitl_pid)
 		get_tree().quit()
 
+func find_external_levels():
+	ProjectSettings.load_resource_pack(\"res://level.pck\")
+	# Now one can use the assets as if they had them in the project from the start
+	var imported_scene = load(\"res://custom_level.tscn\")
+	if imported_scene != null:
+		$HBoxContainer/Buttons/customLevel.visible = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().set_auto_accept_quit(false)
-		
+	
+	find_external_levels()
 	$HBoxContainer/Buttons.visible = false
 	if OS.get_name() == \"Windows\":
 		if not File.new().file_exists(\"user://ardusub.exe\"):
@@ -93,10 +101,18 @@ func _ready():
 
 func _on_shipLevel_pressed():
 	Globals.active_vehicle = \"bluerovheavy\"
-	SceneLoader.goto_scene(\"res://levels/caveandmountain.tscn\")
-	
+	Globals.active_level = \"res://levels/pool.tscn\"
+	SceneLoader.goto_scene(\"res://levels/baselevel.tscn\")
+
 func _on_CheckBox_toggled(button_pressed):
 	Globals.wait_SITL = button_pressed
+
+func _on_customLevel_pressed():
+	Globals.active_vehicle = \"bluerovheavy\"
+	Globals.active_level = \"res://custom_level.tscn\"
+	SceneLoader.goto_scene(\"res://levels/baselevel.tscn\")
+	
+	
 "
 
 [sub_resource type="Animation" id=2]
@@ -191,7 +207,15 @@ __meta__ = {
 margin_right = 375.0
 margin_bottom = 51.0
 custom_fonts/font = ExtResource( 1 )
-text = "BlueROV Heavy"
+text = "Pool"
+
+[node name="customLevel" type="Button" parent="HBoxContainer/Buttons"]
+visible = false
+margin_top = 55.0
+margin_right = 375.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 1 )
+text = "Ship Level"
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer/Buttons"]
 margin_top = 55.0
@@ -201,14 +225,15 @@ text = "Sync with SITL (only run frames when new input arrive)"
 script = SubResource( 3 )
 
 [node name="statusLabel" type="Label" parent="."]
-margin_left = 105.757
-margin_top = 288.928
-margin_right = 477.757
-margin_bottom = 371.928
+margin_left = 106.757
+margin_top = 336.928
+margin_right = 478.757
+margin_bottom = 419.928
 text = "Starting...
 "
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="HBoxContainer/Buttons/shipLevel" to="." method="_on_shipLevel_pressed"]
+[connection signal="pressed" from="HBoxContainer/Buttons/customLevel" to="." method="_on_customLevel_pressed"]
 [connection signal="toggled" from="HBoxContainer/Buttons/CheckBox" to="." method="_on_CheckBox_toggled"]
