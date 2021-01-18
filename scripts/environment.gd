@@ -11,11 +11,13 @@ var fancy_water
 var fancy_underwater
 const simple_water = preload("res://assets/maujoe.basic_water_material/materials/basic_water_material.material")
 
-
+onready var depth = 0
+onready var last_depth = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_physics_process(true)
 	update_fog()
+	underwater_env.fog_enabled = "custom" in Globals.active_level
 
 
 func calculate_buoyancy_and_ballast():
@@ -60,7 +62,9 @@ func update_fog():
 			push_warning("Component %s does not inherit RigidBody." % vehicle.name)
 			continue
 		var rov_camera = get_node(str(vehicle.get_path()) + "/Camera")
-		var depth = rov_camera.global_transform.origin.y - surface_altitude
+		depth = rov_camera.global_transform.origin.y - surface_altitude
+		last_depth = depth
+
 		var fog_distance = max(50 + 1 * depth, 20)
 		underwater_env.fog_depth_end = fog_distance
 		var deep_factor = min(max(-depth / 50, 0), 1.0)
@@ -87,6 +91,11 @@ func update_fog():
 				camera.cull_mask = 3
 			else:
 				camera.cull_mask = 5
+
+
+func _process(_delta):
+	if "custom" in Globals.active_level:
+		update_fog()
 
 
 func _physics_process(_delta):
