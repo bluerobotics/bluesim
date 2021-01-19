@@ -1,3 +1,4 @@
+tool
 extends RigidBody
 
 const THRUST = 50
@@ -98,7 +99,46 @@ func send_fdm():
 	interface.put_packet(buffer.data_array)
 
 
+func get_motors_table_entry(thruster):
+	
+	var thruster_vector = (thruster.transform.basis*Vector3(1,0,0)).normalized()
+	var roll = Vector3(0,0,-1).cross(thruster.translation).normalized().dot(thruster_vector)
+	var pitch = Vector3(1,0,0).cross(thruster.translation).normalized().dot(thruster_vector)
+	var yaw = Vector3(0,1,0).cross(thruster.translation).normalized().dot(thruster_vector)
+	var forward = Vector3(0,0,-1).dot(thruster_vector)
+	var lateral = Vector3(1,0,0).dot(thruster_vector)
+	var vertical = Vector3(0,-1,0).dot(thruster_vector)
+	if abs(roll) < 0.15 or not thruster.roll_factor:
+		roll = 0
+	if abs(pitch) < 0.15 or not thruster.pitch_factor:
+		pitch = 0
+	if abs(yaw) < 0.15 or not thruster.yaw_factor:
+		yaw = 0
+	if abs(vertical) < 0.15 or not thruster.vertical_factor :
+		vertical = 0
+	if abs(forward) < 0.15 or not thruster.forward_factor:
+		forward = 0
+	if abs(lateral) < 0.15 or not thruster.lateral_factor:
+		lateral = 0
+	return [roll, pitch, yaw, vertical, forward, lateral]
+
+func calculate_motors_matrix():
+	print("Calculated Motors Matrix:")
+	var thrusters = []
+	var i = 1
+	for child in get_children():
+		if child.get_class() ==  "Thruster":
+			thrusters.append(child)
+	for thruster in thrusters:
+		var entry = get_motors_table_entry(thruster)
+		entry.insert(0, i)
+		i = i + 1
+		print("add_motor_raw_6dof(AP_MOTORS_MOT_%s,\t%s,\t%s,\t%s,\t%s,\t%s,\t%s);" % entry)
+
 func _ready():
+	if Engine.is_editor_hint():
+		calculate_motors_matrix()
+		return
 	if Globals.active_vehicle == "bluerovheavy":
 		$Camera.set_current(true)
 	_initial_position = get_global_transform().origin
@@ -112,6 +152,8 @@ func _ready():
 
 
 func _physics_process(delta):
+	if Engine.is_editor_hint():
+		return
 	phys_time = phys_time + 1.0 / Globals.physics_rate
 	process_keys()
 	if Globals.isHTML5:
@@ -133,24 +175,24 @@ func actuate_servo(id, percentage):
 	if percentage == 0:
 		return
 
-	var force = (percentage - 0.5) * 2 * THRUST
+	var force = (percentage - 0.5) * 2 * -THRUST
 	match id:
 		0:
-			self.add_force_local(Vector3(-force, 0, -force), $t1.translation)
+			self.add_force_local($t1.transform.basis*Vector3(force,0,0), $t1.translation)
 		1:
-			self.add_force_local(Vector3(force, 0, -force), $t2.translation)
+			self.add_force_local($t2.transform.basis*Vector3(force,0,0), $t2.translation)
 		2:
-			self.add_force_local(Vector3(-force, 0, force), $t3.translation)
+			self.add_force_local($t3.transform.basis*Vector3(force,0,0), $t3.translation)
 		3:
-			self.add_force_local(Vector3(force, 0, force), $t4.translation)
+			self.add_force_local($t4.transform.basis*Vector3(force,0,0), $t4.translation)
 		4:
-			self.add_force_local(Vector3(0, -force, 0), $t5.translation)
+			self.add_force_local($t5.transform.basis*Vector3(force,0,0), $t5.translation)
 		5:
-			self.add_force_local(Vector3(0, -force, 0), $t6.translation)
+			self.add_force_local($t6.transform.basis*Vector3(force,0,0), $t6.translation)
 		6:
-			self.add_force_local(Vector3(0, -force, 0), $t7.translation)
+			self.add_force_local($t7.transform.basis*Vector3(force,0,0), $t7.translation)
 		7:
-			self.add_force_local(Vector3(0, -force, 0), $t8.translation)
+			self.add_force_local($t8.transform.basis*Vector3(force,0,0), $t8.translation)
 		8:
 			$Camera.rotation_degrees.x = -45 + 90 * percentage
 		9:
