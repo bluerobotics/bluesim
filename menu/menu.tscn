@@ -100,7 +100,7 @@ func create_level_buttons(levels):
 	for filename in levels.keys():
 		var button = Button.new()
 		button.text = levels[filename]
-		button.add_font_override(\"font\", $HBoxContainer/Menu/Buttons/shipLevel.get_font(\"font\"))
+		button.add_font_override(\"font\", $HBoxContainer/Menu/Buttons/poolLevel.get_font(\"font\"))
 		button.connect(\"pressed\", self, \"_on_customLevel_pressed\", [filename])
 		$HBoxContainer/Menu/Buttons.add_child(button)
 
@@ -135,7 +135,7 @@ func _ready():
 		$HBoxContainer/Buttons/CheckBox.visible = false
 		add_status(\"SITL not available for plataform: %s\" % OS.get_name())
 
-func _on_shipLevel_pressed():
+func _on_poolLevel_pressed():
 	Globals.active_vehicle = \"bluerovheavy\"
 	Globals.active_level = \"res://levels/pool.tscn\"
 	SceneLoader.goto_scene(\"res://levels/baselevel.tscn\")
@@ -246,7 +246,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="shipLevel" type="Button" parent="HBoxContainer/Menu/Buttons"]
+[node name="poolLevel" type="Button" parent="HBoxContainer/Menu/Buttons"]
 margin_right = 375.0
 margin_bottom = 51.0
 custom_fonts/font = ExtResource( 1 )
@@ -276,6 +276,6 @@ text = "Starting...
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="HBoxContainer/Menu/Buttons/shipLevel" to="." method="_on_shipLevel_pressed"]
+[connection signal="pressed" from="HBoxContainer/Menu/Buttons/poolLevel" to="." method="_on_poolLevel_pressed"]
 [connection signal="pressed" from="HBoxContainer/Menu/Buttons/customLevel" to="." method="_on_customLevel_pressed"]
 [connection signal="toggled" from="HBoxContainer/Menu/CheckBox" to="." method="_on_CheckBox_toggled"]
