@@ -9,8 +9,47 @@ script/source = "extends Control
 
 var downloaded_files = []
 
+class LevelLoader:
+	var bin_path = OS.get_executable_path().get_base_dir()
+
+	func ensure_levels_folder_exists():
+		var directory = Directory.new();
+		directory.open(bin_path)
+		directory.make_dir(\"levels\")
+
+	func list_available_external_levels():
+		var dir = Directory.new()
+		dir.open(bin_path + \"/levels\")
+		print(\"Looking for additional levels at %s\" % bin_path + \"/levels\")
+		dir.list_dir_begin()
+		var found = []
+	
+		# list .pck files
+		while true:
+			var file = dir.get_next()
+			if file.empty():
+				break
+			elif not file.begins_with(\".\") and file.ends_with(\".pck\"):
+				found.append(file)
+		dir.list_dir_end()
+		
+		# validate .pck files
+		# They must have a custom_level.tscn file
+		var valid = {}
+		for file in found:
+			if not ProjectSettings.load_resource_pack(\"res://levels/\" + file):
+				print(\"Failed to load file: \" + file)
+			# Now one can use the assets as if they had them in the project from the start
+			var imported_scene = load(\"res://custom_level.tscn\")
+			if imported_scene == null:
+				print(\"Unable to find 'custom_level.tscn' in file \" + file)
+				continue
+			var level_name = file
+			valid[file] = level_name
+		return valid
+
 func add_status(text: String):
-	$statusLabel.text += text + \"\\n\"
+	$HBoxContainer/Menu/statusLabel.text += text + \"\\n\"
 	
 func download_file(url : String, file_name : String):
 	add_status(\"downloading \" + file_name)
@@ -32,7 +71,6 @@ func _on_download_finished(result, response_code, headers, body, file_name):
 	if _all_files_downloaded():
 		_start_sitl()
 
-
 func _start_sitl():
 	
 	if OS.get_name() == \"Windows\":
@@ -42,7 +80,7 @@ func _start_sitl():
 		Globals.sitl_pid = OS.execute(binary.get_path_absolute(), [\"-S\",\"--model\",\"JSON\",\"--speedup\",\"1\",\"-I0\",\"--home\",\"33.810313,-118.39386700000001,0.0,270.0\"], false)
 		print(Globals.sitl_pid)
 		add_status(\"SITL is running\")
-		$HBoxContainer/Buttons.visible = true
+		$HBoxContainer/Menu/Buttons.visible = true
 		
 	elif OS.get_name() == \"X11\":
 		var binary = File.new()
@@ -51,27 +89,33 @@ func _start_sitl():
 		print(OS.execute(\"chmod\", [\"+x\", binary.get_path_absolute()], true))
 		Globals.sitl_pid = OS.execute(binary.get_path_absolute(), [\"-S\",\"--model\",\"JSON\",\"--speedup\",\"1\",\"-I0\",\"--home\",\"33.810313,-118.39386700000001,0.0,270.0\"], false)
 		add_status(\"SITL is running\")
-		$HBoxContainer/Buttons.visible = true
-	
+		$HBoxContainer/Menu/Buttons.visible = true
 
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
 		OS.kill(Globals.sitl_pid)
 		get_tree().quit()
 
+func create_level_buttons(levels):
+	for filename in levels.keys():
+		var button = Button.new()
+		button.text = levels[filename]
+		button.add_font_override(\"font\", $HBoxContainer/Menu/Buttons/shipLevel.get_font(\"font\"))
+		button.connect(\"pressed\", self, \"_on_customLevel_pressed\", [filename])
+		$HBoxContainer/Menu/Buttons.add_child(button)
+
 func find_external_levels():
-	ProjectSettings.load_resource_pack(\"res://level.pck\")
-	# Now one can use the assets as if they had them in the project from the start
-	var imported_scene = load(\"res://custom_level.tscn\")
-	if imported_scene != null:
-		$HBoxContainer/Buttons/customLevel.visible = true
+	var loader = LevelLoader.new()
+	loader.ensure_levels_folder_exists()
+	var levels = loader.list_available_external_levels()
+	self.create_level_buttons(levels)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().set_auto_accept_quit(false)
-	
 	find_external_levels()
-	$HBoxContainer/Buttons.visible = false
+	$HBoxContainer/Menu/Buttons.visible = false
+
 	if OS.get_name() == \"Windows\":
 		if not File.new().file_exists(\"user://ardusub.exe\"):
 			add_status(\"SITL binary not found, downloading...\")
@@ -99,12 +143,12 @@ func _on_shipLevel_pressed():
 func _on_CheckBox_toggled(button_pressed):
 	Globals.wait_SITL = button_pressed
 
-func _on_customLevel_pressed():
+func _on_customLevel_pressed(filename):
 	Globals.active_vehicle = \"bluerovheavy\"
 	Globals.active_level = \"res://custom_level.tscn\"
+	ProjectSettings.load_resource_pack(\"res://levels/\" + filename)
 	SceneLoader.goto_scene(\"res://levels/baselevel.tscn\")
-	
-	
+
 "
 
 [sub_resource type="Animation" id=2]
@@ -187,21 +231,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Buttons" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 5.0
-margin_right = 380.0
-margin_bottom = 106.0
+[node name="Menu" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 189.0
+margin_right = 564.0
+margin_bottom = 114.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="shipLevel" type="Button" parent="HBoxContainer/Buttons"]
+[node name="Buttons" type="VBoxContainer" parent="HBoxContainer/Menu"]
+margin_right = 375.0
+margin_bottom = 51.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="shipLevel" type="Button" parent="HBoxContainer/Menu/Buttons"]
 margin_right = 375.0
 margin_bottom = 51.0
 custom_fonts/font = ExtResource( 1 )
 text = "Pool"
 
-[node name="customLevel" type="Button" parent="HBoxContainer/Buttons"]
+[node name="customLevel" type="Button" parent="HBoxContainer/Menu/Buttons"]
 visible = false
 margin_top = 55.0
 margin_right = 375.0
@@ -209,23 +260,22 @@ margin_bottom = 106.0
 custom_fonts/font = ExtResource( 1 )
 text = "Ship Level"
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer/Buttons"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/Menu"]
 margin_top = 55.0
 margin_right = 375.0
 margin_bottom = 79.0
 text = "Sync with SITL (only run frames when new input arrive)"
 script = SubResource( 3 )
 
-[node name="statusLabel" type="Label" parent="."]
-margin_left = 106.757
-margin_top = 336.928
-margin_right = 478.757
-margin_bottom = 419.928
+[node name="statusLabel" type="Label" parent="HBoxContainer/Menu"]
+margin_top = 83.0
+margin_right = 375.0
+margin_bottom = 114.0
 text = "Starting...
 "
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="HBoxContainer/Buttons/shipLevel" to="." method="_on_shipLevel_pressed"]
-[connection signal="pressed" from="HBoxContainer/Buttons/customLevel" to="." method="_on_customLevel_pressed"]
-[connection signal="toggled" from="HBoxContainer/Buttons/CheckBox" to="." method="_on_CheckBox_toggled"]
+[connection signal="pressed" from="HBoxContainer/Menu/Buttons/shipLevel" to="." method="_on_shipLevel_pressed"]
+[connection signal="pressed" from="HBoxContainer/Menu/Buttons/customLevel" to="." method="_on_customLevel_pressed"]
+[connection signal="toggled" from="HBoxContainer/Menu/CheckBox" to="." method="_on_CheckBox_toggled"]
