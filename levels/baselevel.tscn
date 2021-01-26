@@ -293,8 +293,6 @@ func addLink(parent, child, i):
 	pin.set_node_b(child.get_path())
 	parent.add_child(pin)
 	pin.set_solver_priority(i)
-	if i == 0:
-		pin.transform.origin = offset
 
 "
 
