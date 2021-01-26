@@ -272,7 +272,6 @@ func _ready():
 		
 func addSection(_parent, i):
 	var section = SECTION.instance()
-	section.mass = max(1 - i*2, section.mass)
 	section.transform.origin = -offset +  Vector3(0,0,-0.145) * i
 	for child in section.get_children():
 		child.transform.origin = Vector3(0,0,0)
