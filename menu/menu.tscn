@@ -50,7 +50,11 @@ class LevelLoader:
 
 func add_status(text: String):
 	$HBoxContainer/Menu/statusLabel.text += text + \"\\n\"
-	
+
+func set_version():
+	var engine_version = Engine.get_version_info()
+	$ViewportContainer/versionLabel.text = \"Engine version: {major}.{minor}.{patch}-{hash} ({year}-{status})\".format(engine_version)
+
 func download_file(url : String, file_name : String):
 	add_status(\"downloading \" + file_name)
 	var http = HTTPRequest.new()
@@ -112,6 +116,7 @@ func find_external_levels():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_version()
 	get_tree().set_auto_accept_quit(false)
 	find_external_levels()
 	$HBoxContainer/Menu/Buttons.visible = false
@@ -219,6 +224,18 @@ anims/rotatingbluerov = SubResource( 2 )
 [node name="bluerov cleaned decimated" parent="ViewportContainer/Viewport/Spatial" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, -6.55651e-07, 0, 1, 0, 6.55651e-07, 0, 1, 0.348981, 0, -0.233652 )
 
+[node name="versionLabel" type="Label" parent="ViewportContainer"]
+anchor_left = 0.5
+anchor_top = 0.97
+anchor_right = 0.5
+anchor_bottom = 0.97
+margin_right = 40.0
+margin_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+align = 1
+valign = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 100.0
 margin_top = 211.0
@@ -232,8 +249,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 189.0
-margin_right = 564.0
+margin_left = 5.0
+margin_right = 380.0
 margin_bottom = 114.0
 __meta__ = {
 "_edit_use_anchors_": false
