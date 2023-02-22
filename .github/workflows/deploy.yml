@@ -28,16 +28,11 @@ jobs:
           cp eeprom.bin build/windows/
           zip -r bluesim.zip build/windows/
           mv bluesim.zip build/windows
-      - name: deploy to server
-        uses: AEnterprise/rsync-deploy@v1.0
-        env:
-            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-            ARGS: "-e -c -r"
-            SERVER_PORT: ${{ secrets.SERVER_PORT }}
-            FOLDER: "build/windows"
-            SERVER_IP: ${{ secrets.SERVER_IP }}
-            USERNAME: ${{ secrets.USERNAME }}
-            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}/web/builds/windows/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bluesim-windows
+          path: build/windows/bluesim.zip
 
   export-linux:
     name: Linux Export
@@ -58,16 +53,11 @@ jobs:
           cp eeprom.bin build/linux/
           zip -r bluesim.zip build/linux/
           mv bluesim.zip build/linux
-      - name: deploy to server
-        uses: AEnterprise/rsync-deploy@v1.0
-        env:
-            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-            ARGS: "-e -c -r"
-            SERVER_PORT: ${{ secrets.SERVER_PORT }}
-            FOLDER: "build/linux"
-            SERVER_IP: ${{ secrets.SERVER_IP }}
-            USERNAME: ${{ secrets.USERNAME }}
-            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}/web/builds/linux/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bluesim-linux
+          path: build/linux/bluesim.zip
 
   export-web:
     name: Web Export
@@ -85,16 +75,11 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot -v --export "HTML5" build/web/index.html
-      - name: deploy to server
-        uses: AEnterprise/rsync-deploy@v1.0
-        env:
-            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-            ARGS: "-e -c -r"
-            SERVER_PORT: ${{ secrets.SERVER_PORT }}
-            FOLDER: "build/web"
-            SERVER_IP: ${{ secrets.SERVER_IP }}
-            USERNAME: ${{ secrets.USERNAME }}
-            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bluesim-web
+          path: build/web
 
   export-mac:
     name: Mac Export
@@ -112,13 +97,8 @@ jobs:
         run: |
           mkdir -v -p build/mac
           godot -v --export "Mac OSX" build/mac/$EXPORT_NAME.zip
-      - name: deploy to server
-        uses: AEnterprise/rsync-deploy@v1.0
-        env:
-            DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-            ARGS: "-e -c -r"
-            SERVER_PORT: ${{ secrets.SERVER_PORT }}
-            FOLDER: "build/mac"
-            SERVER_IP: ${{ secrets.SERVER_IP }}
-            USERNAME: ${{ secrets.USERNAME }}
-            SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}/web/builds/mac/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bluesim-mac
+          path: build/mac/bluesim.zip
