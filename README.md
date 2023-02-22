@@ -1,11 +1,12 @@
 # BlueSim
-BlueROV2 Simulator. [Online demo here](http://sim.galvanicloop.com/) (works better on Firefox).
+BlueROV2 Simulator.
 
 # Download
 
- - [Windows](http://sim.galvanicloop.com/builds/windows/windows/bluesim.zip)
- - [Mac](http://sim.galvanicloop.com/builds/mac/mac/bluesim.zip)
- - [Linux](http://sim.galvanicloop.com/builds/linux/linux/bluesim.zip)
+ - [Windows](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-windows.zip)
+ - [Mac](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-mac.zip)
+ - [Linux](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-linux.zip)
+ - [Web](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-web.zip) (Works better on firefox)
 
 # Usage
 
