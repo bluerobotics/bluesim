@@ -43,7 +43,7 @@ If there is not SITL instance attached, these keys can be used to control the RO
 
     Before opening Bluesim (it launches its own SITL instance), run:
 
- `sim_vehicle.py -j6 -L RATBeach --frame JSON --out=udpout:0.0.0.0:14550`
+ `sim_vehicle.py -j6 -L RATBeach -v ArduSub -f vectored_6dof JSON --out=udpout:0.0.0.0:14550`
 
 # External Levels
 
