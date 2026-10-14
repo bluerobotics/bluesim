@@ -1,6 +1,8 @@
 # BlueSim
 BlueROV2 Simulator.
 
+A hosted version (in a pool, with 'fish') is available for short-duration testing at https://blueos.cloud/bluesim/, as part of a simulated vehicle running [BlueOS](https://github.com/bluerobotics/BlueOS), and interfaced with the [Cockpit](https://github.com/bluerobotics/cockpit) control station software. Click "Cockpit" from the BlueOS left sidebar to open the vehicle control interface.
+
 # Download
 
  - [Windows](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-windows.zip)
