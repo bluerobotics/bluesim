@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6d51u624fg3m"
 path.s3tc="res://.godot/imported/Water_N_B.png-378ec2735f8a67b094e0b70c17f4323f.s3tc.ctex"
+path.etc2="res://.godot/imported/Water_N_B.png-378ec2735f8a67b094e0b70c17f4323f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenery/shaders/shader_textures/Water_N_B.png"
-dest_files=["res://.godot/imported/Water_N_B.png-378ec2735f8a67b094e0b70c17f4323f.s3tc.ctex"]
+dest_files=["res://.godot/imported/Water_N_B.png-378ec2735f8a67b094e0b70c17f4323f.s3tc.ctex", "res://.godot/imported/Water_N_B.png-378ec2735f8a67b094e0b70c17f4323f.etc2.ctex"]
 
 [params]
 

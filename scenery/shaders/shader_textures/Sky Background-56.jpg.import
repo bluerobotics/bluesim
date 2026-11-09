@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d38r56ilayj0x"
 path.s3tc="res://.godot/imported/Sky Background-56.jpg-ccfff83ec30d9df9db6ea48c115ddba5.s3tc.ctex"
+path.etc2="res://.godot/imported/Sky Background-56.jpg-ccfff83ec30d9df9db6ea48c115ddba5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenery/shaders/shader_textures/Sky Background-56.jpg"
-dest_files=["res://.godot/imported/Sky Background-56.jpg-ccfff83ec30d9df9db6ea48c115ddba5.s3tc.ctex"]
+dest_files=["res://.godot/imported/Sky Background-56.jpg-ccfff83ec30d9df9db6ea48c115ddba5.s3tc.ctex", "res://.godot/imported/Sky Background-56.jpg-ccfff83ec30d9df9db6ea48c115ddba5.etc2.ctex"]
 
 [params]
 

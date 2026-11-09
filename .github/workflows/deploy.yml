@@ -1,104 +1,46 @@
-name: "godot-ci export"
-on:
-  push:
-    branches:
-      - master
+name: Godot exports
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
 
 env:
-  GODOT_VERSION: 3.2.3
-  EXPORT_NAME: bluesim
+  GODOT_VERSION: 4.7.2
 
 jobs:
-  export-windows:
-    name: Windows Export
+  export:
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.2.3
+    timeout-minutes: 25
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup
+      - uses: actions/checkout@v7
+      - name: Install Godot and export templates
+        shell: bash
         run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Windows Build
+          release="${GODOT_VERSION}-stable"
+          base="https://github.com/godotengine/godot-builds/releases/download/${release}"
+          tools="${RUNNER_TEMP}/bluesim-tools"
+          templates="${HOME}/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p "$tools" "$templates"
+          curl -fsSL --retry 3 "$base/Godot_v${release}_linux.x86_64.zip" -o "$tools/godot.zip"
+          curl -fsSL --retry 3 "$base/Godot_v${release}_export_templates.tpz" -o "$tools/templates.tpz"
+          unzip -q "$tools/godot.zip" -d "$tools"
+          mv "$tools/Godot_v${release}_linux.x86_64" "$tools/godot"
+          unzip -jq "$tools/templates.tpz" 'templates/version.txt' 'templates/windows_release_x86_64*' 'templates/linux_release.x86_64' 'templates/macos.zip' 'templates/web_nothreads_release.zip' -d "$templates"
+          echo "$tools" >> "$GITHUB_PATH"
+      - name: Import project
+        shell: bash
         run: |
-          mkdir -v -p build/windows
-          godot -v --export "Windows Desktop" build/windows/$EXPORT_NAME.exe
-          cp eeprom.bin build/windows/
-          zip -r bluesim.zip build/windows/
-          mv bluesim.zip build/windows
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+          godot --headless --editor --import 2>&1 | tee "$RUNNER_TEMP/bluesim-import.log"
+          if grep -E '(^|[[:space:]])(SCRIPT ERROR|SHADER ERROR|ERROR):' "$RUNNER_TEMP/bluesim-import.log"; then
+            exit 1
+          fi
+      - name: Test SITL transport
+        run: godot --headless --script res://tests/sitl_smoke.gd
+      - name: Export release artifacts
+        run: bash .github/export.sh godot "$RUNNER_TEMP/bluesim-exports"
+      - uses: actions/upload-artifact@v7
         with:
-          name: bluesim-windows
-          path: build/windows/bluesim.zip
-
-  export-linux:
-    name: Linux Export
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.2.3
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Linux Build
-        run: |
-          mkdir -v -p build/linux
-          godot -v --export "Linux/X11" build/linux/$EXPORT_NAME.x86_64
-          cp eeprom.bin build/linux/
-          zip -r bluesim.zip build/linux/
-          mv bluesim.zip build/linux
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: bluesim-linux
-          path: build/linux/bluesim.zip
-
-  export-web:
-    name: Web Export
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.2.3
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Web Build
-        run: |
-          mkdir -v -p build/web
-          godot -v --export "HTML5" build/web/index.html
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: bluesim-web
-          path: build/web
-
-  export-mac:
-    name: Mac Export
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.2.3
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Mac Build
-        run: |
-          mkdir -v -p build/mac
-          godot -v --export "Mac OSX" build/mac/$EXPORT_NAME.zip
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: bluesim-mac
-          path: build/mac/bluesim.zip
+          name: bluesim-exports
+          path: ${{ runner.temp }}/bluesim-exports/bluesim-*.zip
+          if-no-files-found: error

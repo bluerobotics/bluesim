@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvc3215dwp2wa"
 path.s3tc="res://.godot/imported/Foam.png-f8a7768bec9ccc8f5a6bb3e068c28305.s3tc.ctex"
+path.etc2="res://.godot/imported/Foam.png-f8a7768bec9ccc8f5a6bb3e068c28305.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenery/shaders/shader_textures/Foam.png"
-dest_files=["res://.godot/imported/Foam.png-f8a7768bec9ccc8f5a6bb3e068c28305.s3tc.ctex"]
+dest_files=["res://.godot/imported/Foam.png-f8a7768bec9ccc8f5a6bb3e068c28305.s3tc.ctex", "res://.godot/imported/Foam.png-f8a7768bec9ccc8f5a6bb3e068c28305.etc2.ctex"]
 
 [params]
 
