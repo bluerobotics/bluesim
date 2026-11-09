@@ -29,7 +29,9 @@ func start():
 			executable = "ardusub.exe"
 			files = {
 				executable: WINDOWS_BASE + "ArduSub.elf",
-				"cyggcc_s-1.dll": WINDOWS_BASE + "cyggcc_s-1.dll",
+				"cyggcc_s-seh-1.dll": WINDOWS_BASE + "cyggcc_s-seh-1.dll",
+				"cygiconv-2.dll": WINDOWS_BASE + "cygiconv-2.dll",
+				"cygintl-8.dll": WINDOWS_BASE + "cygintl-8.dll",
 				"cygstdc++-6.dll": WINDOWS_BASE + "cygstdc++-6.dll",
 				"cygwin1.dll": WINDOWS_BASE + "cygwin1.dll",
 			}
