@@ -58,7 +58,6 @@ func _ready():
 
 
 func _on_poolLevel_pressed():
-	Globals.active_vehicle = "bluerovheavy"
 	Globals.active_level = "res://levels/pool.tscn"
 	SceneLoader.goto_scene("res://levels/baselevel.tscn")
 
@@ -75,6 +74,5 @@ func _on_custom_level_pressed(pack_path: String):
 	if not ResourceLoader.exists("res://custom_level.tscn", "PackedScene"):
 		add_status(filename + " has no Godot 4 custom_level.tscn")
 		return
-	Globals.active_vehicle = "bluerovheavy"
 	Globals.active_level = "res://custom_level.tscn"
 	SceneLoader.goto_scene("res://levels/baselevel.tscn")

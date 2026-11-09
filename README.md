@@ -38,7 +38,7 @@ On Windows and x86-64 Linux, BlueSim downloads and starts ArduSub when the menu 
 Tools/autotest/sim_vehicle.py -L RATBeach -v ArduSub -f vectored_6dof --model JSON:127.0.0.1
 ```
 
-Select **Pool** and connect [QGroundControl](https://qgroundcontrol.com/) to SITL over TCP at `127.0.0.1:5760`. For an external simulator running on a different host, set the JSON backend address to the BlueSim host and point QGroundControl at the SITL host. BlueSim listens for servo packets on UDP port 9002 and replies to the sender. Enable **Reply to SITL on incoming frames** before selecting the pool to send state only in response to incoming servo packets. Keyboard movement is available before a peer connects and resumes when the peer times out. The Web build supports keyboard play.
+Select **Pool** and connect [QGroundControl](https://qgroundcontrol.com/) to SITL over TCP at `127.0.0.1:5760`. For an external simulator running on a different host, set the JSON backend address to the BlueSim host and point QGroundControl at the SITL host. BlueSim listens for servo packets on UDP port 9002 by default and replies to the sender. For an external SITL instance using a different port, set the vehicle’s `sitl_json_port` in the scene and use the matching destination port in SITL. Enable **Reply to SITL on incoming frames** before selecting the pool to send state only in response to incoming servo packets. Keyboard movement is available before a peer connects and resumes when the peer times out. The Web build supports keyboard play.
 
 ## External levels
 

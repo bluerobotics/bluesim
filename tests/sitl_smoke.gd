@@ -34,20 +34,21 @@ func servo_packet(channel_count: int, frame: int) -> PackedByteArray:
 
 func run():
 	var globals := root.get_node("Globals")
-	globals.active_vehicle = "bluerovheavy"
 	globals.active_level = "res://levels/pool.tscn"
 	globals.wait_SITL = true
 	if not check(change_scene_to_file("res://levels/baselevel.tscn") == OK, "Pool failed to load"):
 		return
 	await scene_changed
 	var vehicle: RigidBody3D = globals.active_vehicle
+	if not check(vehicle != null, "The pool did not register a BaseVehicle"):
+		return
 	if not check(vehicle.interface.is_bound(), "BlueSim did not bind UDP port 9002"):
 		return
 
 	var client := PacketPeerUDP.new()
 	if not check(client.bind(0, "127.0.0.1") == OK, "Could not bind test UDP client"):
 		return
-	client.set_dest_address("127.0.0.1", 9002)
+	client.set_dest_address("127.0.0.1", vehicle.sitl_json_port)
 	client.put_packet(PackedByteArray([0, 1, 2]))
 	var bad_magic := servo_packet(16, 2)
 	bad_magic.encode_u16(0, 0)
@@ -78,7 +79,10 @@ func run():
 		return
 	vehicle.interface.close()
 	var blocker := PacketPeerUDP.new()
-	if not check(blocker.bind(9002) == OK, "Could not occupy the port for the fallback test"):
+	if not check(
+		blocker.bind(vehicle.sitl_json_port) == OK,
+		"Could not occupy the port for the fallback test"
+	):
 		return
 	vehicle.bind_sitl()
 	if not check(not vehicle.interface.is_bound(), "BlueSim bound an occupied UDP port"):
@@ -93,7 +97,17 @@ func run():
 		"Keyboard fallback did not move the vehicle"
 	):
 		return
+	# The default port stays occupied while the vehicle binds a nondefault one.
+	vehicle.sitl_json_port = client.get_local_port()
+	client.close()
+	vehicle.bind_sitl()
+	if not check(
+		vehicle.interface.get_local_port() == vehicle.sitl_json_port,
+		"BlueSim did not bind the configured UDP port"
+	):
+		return
+
 	print(
-		"SITL transport passed: malformed packets, both layouts, framing, timeout, reconnect and occupied port"
+		"SITL transport passed: malformed packets, both layouts, framing, timeout, reconnect, occupied port and custom port"
 	)
 	quit()
