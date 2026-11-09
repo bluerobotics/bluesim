@@ -1,64 +1,25 @@
-extends ViewportContainer
+extends SubViewportContainer
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var sonar = null
-var img = Image.new()
-var last_points = []
-var angle = 0
+const SAMPLE_COUNT = 100
+const ANGLE_COUNT = 360
 
+var image := Image.create_empty(SAMPLE_COUNT, ANGLE_COUNT, false, Image.FORMAT_R8)
+var texture := ImageTexture.create_from_image(image)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func on_ping360_update(pingAngle, points):
-	self.last_points = points
-	self.angle = pingAngle
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	var sonars = get_tree().get_nodes_in_group("ping360")
-	if len(sonars) == 0:
-		print("unable to find ping360")
-		return
-	self.sonar = sonars[0]
-	self.sonar.connect("updatePing360Display", self, "on_ping360_update")
+	material.set_shader_parameter("my_array", texture)
+	var sonar := get_tree().get_first_node_in_group("ping360")
+	if sonar:
+		sonar.updatePing360Display.connect(on_ping360_update)
 
-	# You'll have to get thoose the way you want
-	var array_width = 100
-	var array_heigh = 360
-	var array = []
-	for _y in range(360):
-		for _x in range(100):
-			array.append(0)
-
-	# The following is used to convert the array into a Texture
-	var byte_array = PoolByteArray(array)
-
-	# I don't want any mipmaps generated : use_mipmaps = false
-	# I'm only interested with 1 component per pixel (the corresponding array value) : Format = Image.FORMAT_R8
-	img.create_from_data(array_width, array_heigh, false, Image.FORMAT_R8, byte_array)
-
-
-func _process(_delta):
-	visible = Globals.ping360_enabled
-	img.lock()
-	for x in range(100):
-		img.set_pixel(x, angle, 0)
-	for point in last_points:
-		var distance = point[0]
-		var intensity = point[1]
-		img.set_pixel(int(distance), angle, Color(intensity, intensity, intensity))
-
-	img.unlock()
-	#var image = texture.get_data()
-	#img.set_pixel(angle, angle, 6)
-	# Override the default flag with 0 since I don't want texture repeat/filtering/mipmaps/etc
-	var texture = ImageTexture.new()
-	texture.create_from_image(img, 0)
-	# Upload the texture to my shader
-	self.get_material().set_shader_param("my_array", texture)
-
+func on_ping360_update(angle, points):
+	image.fill_rect(Rect2i(0, angle, SAMPLE_COUNT, 1), Color.BLACK)
+	for point in points:
+		var distance := clampi(int(point[0]), 0, SAMPLE_COUNT - 1)
+		var intensity: float = point[1]
+		image.set_pixel(distance, angle, Color(intensity, intensity, intensity))
+	texture.update(image)
 
 func _on_Ping360Toggle_toggled(button_pressed):
 	Globals.ping360_enabled = button_pressed
+	visible = button_pressed

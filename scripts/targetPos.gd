@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 func _ready():
@@ -7,7 +7,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	var vehicle = Globals.active_vehicle.find_node("cameraTarget", true, false)
+	var vehicle = Globals.active_vehicle.find_child("cameraTarget", true, false)
 	var distance = self.global_transform.origin - vehicle.global_transform.origin
 	var length = distance.length()
 	if length > 5:

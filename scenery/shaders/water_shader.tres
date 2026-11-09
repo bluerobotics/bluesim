@@ -1,9 +1,9 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=2]
 
-[ext_resource path="res://scenery/shaders/shader_textures/Water_UV.png" type="Texture" id=1]
-[ext_resource path="res://scenery/shaders/shader_textures/Water_N_B.png" type="Texture" id=2]
-[ext_resource path="res://scenery/shaders/shader_textures/Foam.png" type="Texture" id=3]
-[ext_resource path="res://scenery/shaders/shader_textures/Water_N_A.png" type="Texture" id=4]
+[ext_resource path="res://scenery/shaders/shader_textures/Water_UV.png" type="Texture2D" id=1]
+[ext_resource path="res://scenery/shaders/shader_textures/Water_N_B.png" type="Texture2D" id=2]
+[ext_resource path="res://scenery/shaders/shader_textures/Foam.png" type="Texture2D" id=3]
+[ext_resource path="res://scenery/shaders/shader_textures/Water_N_A.png" type="Texture2D" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "/*
@@ -34,7 +34,9 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 // For this shader min. GODOT 3.1.1 is required, because 3.1 has a depth buffer bug!
-shader_type 	spatial;
+shader_type spatial;
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D depth_texture : hint_depth_texture, filter_nearest;
 render_mode 	cull_back,diffuse_burley,specular_schlick_ggx, blend_mix;
 
 
@@ -48,27 +50,27 @@ uniform	vec4	wave_c			 = vec4(1.0, 1.3, 0.25, 0.9); 	// xy = Direction, z = Stee
 uniform vec2 	sampler_scale 	 = vec2(0.25, 0.25); 			// Scale for the sampler
 uniform vec2	sampler_direction= vec2(0.05, 0.04); 			// Direction and speed for the sampler offset
 
-uniform sampler2D uv_sampler : hint_aniso; 						// UV motion sampler for shifting the normalmap
+uniform sampler2D uv_sampler : hint_anisotropy; 						// UV motion sampler for shifting the normalmap
 uniform vec2 	uv_sampler_scale = vec2(0.25, 0.25); 			// UV sampler scale
 uniform float 	uv_sampler_strength = 0.04; 					// UV shifting strength
 
 uniform sampler2D normalmap_a_sampler : hint_normal;			// Normalmap sampler A
 uniform sampler2D normalmap_b_sampler : hint_normal;			// Normalmap sampler B
 
-uniform sampler2D foam_sampler : hint_black;					// Foam sampler
+uniform sampler2D foam_sampler : hint_default_black;					// Foam sampler
 uniform float 	foam_level 		 = 0.5;							// Foam level -> distance from the object (0.0 - 0.5)
 
 // Volume settings:
 uniform float 	refraction 		 = 0.075;						// Refraction of the water
 
-uniform vec4 	color_deep : hint_color;						// Color for deep places in the water, medium to dark blue
-uniform vec4 	color_shallow : hint_color;						// Color for lower places in the water, bright blue - green
+uniform vec4 	color_deep : source_color;						// Color for deep places in the water, medium to dark blue
+uniform vec4 	color_shallow : source_color;						// Color for lower places in the water, bright blue - green
 uniform float 	beers_law		 = 2.0;							// Beers law value, regulates the blending size to the deep water level
 uniform float 	depth_offset	 = -0.75;						// Offset for the blending
 
 // Projector for the water caustics:
 uniform mat4	projector;										// Projector matrix, mostly the matric of the sun / directlight
-uniform sampler2DArray caustic_sampler : hint_black;			// Caustic sampler, (Texture array with 16 Textures for the animation)
+uniform sampler2DArray caustic_sampler : hint_default_black;			// Caustic sampler, (Texture2D array with 16 Textures for the animation)
 
 
 // Vertex -> Fragment:
@@ -105,7 +107,7 @@ void vertex()
 	float	time			 = TIME * wave_speed;
 	
 	vec4	vertex			 = vec4(VERTEX, 1.0);
-	vec3	vertex_position  = (WORLD_MATRIX * vertex).xyz;
+	vec3	vertex_position  = (MODEL_MATRIX * vertex).xyz;
 	
 			vertex_tangent 	 = vec3(0.0, 0.0, 0.0);
 		 	vertex_binormal  = vec3(0.0, 0.0, 0.0);
@@ -150,7 +152,7 @@ void fragment()
 	vec2 	ref_uv						 = SCREEN_UV + (ref_normalmap.xy * refraction) / vertex_height;
 	
 	// Ground depth:
-	float 	depth_raw					 = texture(DEPTH_TEXTURE, ref_uv).r * 2.0 - 1.0;
+	float 	depth_raw					 = texture(depth_texture, ref_uv).r * 2.0 - 1.0;
 	float	depth						 = PROJECTION_MATRIX[3][2] / (depth_raw + PROJECTION_MATRIX[2][2]);
 			
 	float 	depth_blend 				 = exp((depth+VERTEX.z + depth_offset) * -beers_law);
@@ -158,7 +160,7 @@ void fragment()
 	float	depth_blend_pow				 = clamp(pow(depth_blend, 2.5), 0.0, 1.0);
 
 	// Ground color:
-	vec3 	screen_color 				 = textureLod(SCREEN_TEXTURE, ref_uv, depth_blend_pow * 2.5).rgb;
+	vec3 	screen_color 				 = textureLod(screen_texture, ref_uv, depth_blend_pow * 2.5).rgb;
 	
 	vec3 	dye_color 					 = mix(color_shallow.rgb, color_deep.rgb, depth_blend_pow);
 	vec3	color 						 = mix(screen_color*dye_color, dye_color*0.25, depth_blend_pow*0.5);
@@ -186,29 +188,29 @@ void fragment()
 	METALLIC = 0.1;
 	ROUGHNESS = 0.2;
 	SPECULAR = 0.2 + depth_blend_pow * 0.4;
-	NORMALMAP = normalmap;
-	NORMALMAP_DEPTH = 1.25;
+	NORMAL_MAP = normalmap;
+	NORMAL_MAP_DEPTH = 1.25;
 }
 "
 
 [resource]
 shader = SubResource( 1 )
-shader_param/wave_speed = 0.035
-shader_param/wave_a = Plane( 2.178, 0.364, -0.614, 0.021 )
-shader_param/wave_b = Plane( 0.044, 0.1, 0.019, 0.854 )
-shader_param/wave_c = Plane( 0.719, 0.434, -0.021, 0.1 )
-shader_param/sampler_scale = Vector2( 13.498, 9.747 )
-shader_param/sampler_direction = Vector2( 0.003, 0.04 )
-shader_param/uv_sampler_scale = Vector2( 0.733, 1.419 )
-shader_param/uv_sampler_strength = -0.167
-shader_param/foam_level = 0.5
-shader_param/refraction = 0.075
-shader_param/color_deep = Color( 0, 0.196078, 0.494118, 1 )
-shader_param/color_shallow = Color( 0.223529, 0.329412, 0.333333, 1 )
-shader_param/beers_law = 0.056
-shader_param/depth_offset = -4.693
-shader_param/projector = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-shader_param/uv_sampler = ExtResource( 1 )
-shader_param/normalmap_a_sampler = ExtResource( 4 )
-shader_param/normalmap_b_sampler = ExtResource( 2 )
-shader_param/foam_sampler = ExtResource( 3 )
+shader_parameter/wave_speed = 0.035
+shader_parameter/wave_a = Plane( 2.178, 0.364, -0.614, 0.021 )
+shader_parameter/wave_b = Plane( 0.044, 0.1, 0.019, 0.854 )
+shader_parameter/wave_c = Plane( 0.719, 0.434, -0.021, 0.1 )
+shader_parameter/sampler_scale = Vector2( 13.498, 9.747 )
+shader_parameter/sampler_direction = Vector2( 0.003, 0.04 )
+shader_parameter/uv_sampler_scale = Vector2( 0.733, 1.419 )
+shader_parameter/uv_sampler_strength = -0.167
+shader_parameter/foam_level = 0.5
+shader_parameter/refraction = 0.075
+shader_parameter/color_deep = Color( 0, 0.196078, 0.494118, 1 )
+shader_parameter/color_shallow = Color( 0.223529, 0.329412, 0.333333, 1 )
+shader_parameter/beers_law = 0.056
+shader_parameter/depth_offset = -4.693
+shader_parameter/projector = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shader_parameter/uv_sampler = ExtResource( 1 )
+shader_parameter/normalmap_a_sampler = ExtResource( 4 )
+shader_parameter/normalmap_b_sampler = ExtResource( 2 )
+shader_parameter/foam_sampler = ExtResource( 3 )

@@ -1,4 +1,4 @@
-extends RigidBody
+extends RigidBody3D
 
 # Declare member variables here. Examples:
 # var a = 2

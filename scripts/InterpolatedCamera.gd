@@ -1,4 +1,4 @@
-extends InterpolatedCamera
+extends Camera3D
 
 # Declare member variables here. Examples:
 # var a = 2

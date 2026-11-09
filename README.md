@@ -3,6 +3,14 @@ BlueROV2 Simulator.
 
 A hosted version (in a pool, with 'fish') is available for short-duration testing at https://blueos.cloud/bluesim/, as part of a simulated vehicle running [BlueOS](https://github.com/bluerobotics/BlueOS), and interfaced with the [Cockpit](https://github.com/bluerobotics/cockpit) control station software. Click "Cockpit" from the BlueOS left sidebar to open the vehicle control interface.
 
+## Run from source on macOS
+
+Open `project.godot` in Godot 4.7.2, wait for the asset import, then press F5. Select **Pool** to drive the BlueROV2 Heavy with the keyboard. ArduSub SITL runs separately on macOS.
+
+```sh
+~/Applications/Godot.app/Contents/MacOS/Godot --path "$PWD" --editor
+```
+
 # Download
 
  - [Windows](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-windows.zip)
@@ -49,7 +57,7 @@ If there is not SITL instance attached, these keys can be used to control the RO
 
 # External Levels
 
-External levels can be loaded by placing a .pck file in the "levels" folder at the same level as the simulator executable (the folder is created at first run if it does not exist).
+External levels can be loaded by placing a .pck file in the "levels" folder at the same level as the simulator executable (on macOS and in editor runs, use Godot’s `user://levels` folder).
 
 The pck file must have a `custom_level.tscn` scene, which will be loaded in runtime and added as a child to `baselevel.tscn`, which contains the ROV, water, sky, and other basic functionality.
 The root node at "custom_level.tscn" should preferably be a spatial node with all your custom 3D scene within it.
