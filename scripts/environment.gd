@@ -17,6 +17,7 @@ const simple_water = preload("res://assets/maujoe.basic_water_material/materials
 func _ready():
 	set_physics_process(true)
 	update_fog()
+	update_water_views()
 	underwater_env.fog_enabled = "custom" in Globals.active_level
 
 
@@ -82,15 +83,21 @@ func update_fog():
 		# underwater_env.ambient_light_color = new_color;
 		underwater_env.ambient_light_color = new_color  #surface_ambient.lerp(deep_ambient, max(1 - depth/50, 0))
 		$sun.light_energy = max(0.3 - 0.5 * deep_factor, 0)
-		underwater_env.background_energy_multiplier = max(5.0 - 5 * deep_factor, 0.0)
+		underwater_env.background_energy_multiplier = lerpf(1.0, 0.2, deep_factor)
 
-		for camera in cameras:
-			var above_water: bool = camera.global_position.y > surface_altitude
-			camera.environment = surface_env if above_water else underwater_env
-			camera.cull_mask = 3 if above_water else 5
+
+func update_water_views():
+	for camera in cameras:
+		var above_water: bool = camera.global_position.y > surface_altitude
+		var camera_environment = surface_env if above_water else underwater_env
+		if camera.environment != camera_environment:
+			camera.environment = camera_environment
+		camera.set_cull_mask_value(2, above_water)
+		camera.set_cull_mask_value(3, not above_water)
 
 
 func _process(_delta):
+	update_water_views()
 	if "custom" in Globals.active_level:
 		update_fog()
 
