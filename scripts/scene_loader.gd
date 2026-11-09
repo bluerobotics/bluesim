@@ -4,6 +4,7 @@ const LOADING_SCREEN = preload("res://scenery/misc/loading/loading.tscn")
 
 var scene_path := ""
 
+
 func goto_scene(path: String):
 	if not scene_path.is_empty():
 		return
@@ -12,6 +13,7 @@ func goto_scene(path: String):
 		return
 	scene_path = path
 	get_tree().change_scene_to_packed(LOADING_SCREEN)
+
 
 func _process(_delta):
 	if scene_path.is_empty():

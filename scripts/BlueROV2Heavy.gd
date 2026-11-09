@@ -30,7 +30,9 @@ var phys_time = 0
 
 func bind_sitl():
 	if interface.bind(SERVO_PORT) != OK:
-		push_warning("ArduSub UDP port %d is unavailable. Keyboard controls remain active." % SERVO_PORT)
+		push_warning(
+			"ArduSub UDP port %d is unavailable. Keyboard controls remain active." % SERVO_PORT
+		)
 
 
 func receive_servos() -> bool:
@@ -47,7 +49,12 @@ func receive_servos() -> bool:
 		if interface.set_dest_address(sender_ip, sender_port) != OK:
 			continue
 		var frame := packet.decode_u32(4)
-		if frame != last_servo_frame or not has_sitl_peer() or sender_ip != peer_ip or sender_port != peer_port:
+		if (
+			frame != last_servo_frame
+			or not has_sitl_peer()
+			or sender_ip != peer_ip
+			or sender_port != peer_port
+		):
 			servos.resize(16)
 			for i in range(servos.size()):
 				servos[i] = packet.decode_u16(8 + i * 2)
@@ -81,7 +88,12 @@ func send_fdm():
 	var accel = [_acceleration.x, _acceleration.y, _acceleration.z]
 
 	# var orientation = toFRD.xform(Vector3(-rotation.x, - rotation.y, -rotation.z))
-	var quaternon = Basis(-_basis.z, _basis.x, _basis.y).rotated(Vector3(1, 0, 0), PI).rotated(Vector3(1, 0, 0), PI / 2).get_rotation_quaternion()
+	var quaternon = (
+		Basis(-_basis.z, _basis.x, _basis.y)
+		. rotated(Vector3(1, 0, 0), PI)
+		. rotated(Vector3(1, 0, 0), PI / 2)
+		. get_rotation_quaternion()
+	)
 
 	var euler = quaternon.get_euler()
 	euler = [euler.y, euler.x, euler.z]
@@ -105,21 +117,20 @@ func send_fdm():
 
 
 func get_motors_table_entry(thruster):
-	
-	var thruster_vector = (thruster.transform.basis*Vector3(1,0,0)).normalized()
-	var roll = Vector3(0,0,-1).cross(thruster.position).normalized().dot(thruster_vector)
-	var pitch = Vector3(1,0,0).cross(thruster.position).normalized().dot(thruster_vector)
-	var yaw = Vector3(0,1,0).cross(thruster.position).normalized().dot(thruster_vector)
-	var forward = Vector3(0,0,-1).dot(thruster_vector)
-	var lateral = Vector3(1,0,0).dot(thruster_vector)
-	var vertical = Vector3(0,-1,0).dot(thruster_vector)
+	var thruster_vector = (thruster.transform.basis * Vector3(1, 0, 0)).normalized()
+	var roll = Vector3(0, 0, -1).cross(thruster.position).normalized().dot(thruster_vector)
+	var pitch = Vector3(1, 0, 0).cross(thruster.position).normalized().dot(thruster_vector)
+	var yaw = Vector3(0, 1, 0).cross(thruster.position).normalized().dot(thruster_vector)
+	var forward = Vector3(0, 0, -1).dot(thruster_vector)
+	var lateral = Vector3(1, 0, 0).dot(thruster_vector)
+	var vertical = Vector3(0, -1, 0).dot(thruster_vector)
 	if abs(roll) < 0.15 or not thruster.roll_factor:
 		roll = 0
 	if abs(pitch) < 0.15 or not thruster.pitch_factor:
 		pitch = 0
 	if abs(yaw) < 0.15 or not thruster.yaw_factor:
 		yaw = 0
-	if abs(vertical) < 0.15 or not thruster.vertical_factor :
+	if abs(vertical) < 0.15 or not thruster.vertical_factor:
 		vertical = 0
 	if abs(forward) < 0.15 or not thruster.forward_factor:
 		forward = 0
@@ -127,18 +138,20 @@ func get_motors_table_entry(thruster):
 		lateral = 0
 	return [roll, pitch, yaw, vertical, forward, lateral]
 
+
 func calculate_motors_matrix():
 	print("Calculated Motors Matrix:")
 	var thrusters = []
 	var i = 1
 	for child in get_children():
-		if child.get_class() ==  "Thruster":
+		if child.get_class() == "Thruster":
 			thrusters.append(child)
 	for thruster in thrusters:
 		var entry = get_motors_table_entry(thruster)
 		entry.insert(0, i)
 		i = i + 1
 		print("add_motor_raw_6dof(AP_MOTORS_MOT_%s,\t%s,\t%s,\t%s,\t%s,\t%s,\t%s);" % entry)
+
 
 func _ready():
 	if Engine.is_editor_hint():
@@ -189,21 +202,21 @@ func actuate_servo(id, percentage):
 	var force = (percentage - 0.5) * 2 * -THRUST
 	match id:
 		0:
-			self.add_force_local($t1.transform.basis*Vector3(force,0,0), $t1.position)
+			self.add_force_local($t1.transform.basis * Vector3(force, 0, 0), $t1.position)
 		1:
-			self.add_force_local($t2.transform.basis*Vector3(force,0,0), $t2.position)
+			self.add_force_local($t2.transform.basis * Vector3(force, 0, 0), $t2.position)
 		2:
-			self.add_force_local($t3.transform.basis*Vector3(force,0,0), $t3.position)
+			self.add_force_local($t3.transform.basis * Vector3(force, 0, 0), $t3.position)
 		3:
-			self.add_force_local($t4.transform.basis*Vector3(force,0,0), $t4.position)
+			self.add_force_local($t4.transform.basis * Vector3(force, 0, 0), $t4.position)
 		4:
-			self.add_force_local($t5.transform.basis*Vector3(force,0,0), $t5.position)
+			self.add_force_local($t5.transform.basis * Vector3(force, 0, 0), $t5.position)
 		5:
-			self.add_force_local($t6.transform.basis*Vector3(force,0,0), $t6.position)
+			self.add_force_local($t6.transform.basis * Vector3(force, 0, 0), $t6.position)
 		6:
-			self.add_force_local($t7.transform.basis*Vector3(force,0,0), $t7.position)
+			self.add_force_local($t7.transform.basis * Vector3(force, 0, 0), $t7.position)
 		7:
-			self.add_force_local($t8.transform.basis*Vector3(force,0,0), $t8.position)
+			self.add_force_local($t8.transform.basis * Vector3(force, 0, 0), $t8.position)
 		8:
 			$Camera3D.rotation_degrees.x = -45 + 90 * percentage
 		9:

@@ -62,7 +62,10 @@ func run():
 		if not check(reply.begins_with("\n{") and reply.ends_with("}\n"), "Invalid JSON framing"):
 			return
 		var state: Variant = JSON.parse_string(reply.strip_edges())
-		if not check(state is Dictionary and state.has("imu") and state.has("quaternion"), "Invalid FDM state"):
+		if not check(
+			state is Dictionary and state.has("imu") and state.has("quaternion"),
+			"Invalid FDM state"
+		):
 			return
 		if not check(vehicle.last_servo_frame == frame, "The servo frame counter was truncated"):
 			return
@@ -85,7 +88,12 @@ func run():
 	await create_timer(0.5).timeout
 	Input.action_release("forward")
 	var movement: Vector3 = vehicle.global_position - before
-	if not check(Vector2(movement.x, movement.z).length() > 0.05, "Keyboard fallback did not move the vehicle"):
+	if not check(
+		Vector2(movement.x, movement.z).length() > 0.05,
+		"Keyboard fallback did not move the vehicle"
+	):
 		return
-	print("SITL transport passed: malformed packets, both layouts, framing, timeout, reconnect and occupied port")
+	print(
+		"SITL transport passed: malformed packets, both layouts, framing, timeout, reconnect and occupied port"
+	)
 	quit()

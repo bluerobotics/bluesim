@@ -42,10 +42,11 @@ func _physics_process(_delta):
 		target_list.append(
 			(
 				global_transform.origin
-				+ self.global_transform.basis * (
-					Vector3(0, max_distance * offset, max_distance).rotated(
+				+ (
+					self.global_transform.basis
+					* (Vector3(0, max_distance * offset, max_distance).rotated(
 						Vector3(0, 1, 0), deg_to_rad(angle)
-					)
+					))
 				)
 			)
 		)
@@ -57,10 +58,10 @@ func _physics_process(_delta):
 		query.to = cur_target
 		var result = space_state.intersect_ray(query)
 		#$target.global_transform.origin = cur_target
-		if 'position' in result:
-			var distance_vector = global_transform.origin - result['position']
+		if "position" in result:
+			var distance_vector = global_transform.origin - result["position"]
 			var distance = distance_vector.length() * 100 / max_distance
-			var intensity = abs(result['normal'].dot(distance_vector.normalized()))
+			var intensity = abs(result["normal"].dot(distance_vector.normalized()))
 			last_points.append([distance, intensity])
 	last_angle = angle
 

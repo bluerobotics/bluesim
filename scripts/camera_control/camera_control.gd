@@ -6,30 +6,34 @@ extends Camera3D
 
 # User settings:
 # General settings
-@export var enabled = true: set = set_enabled
-@export var mouse_mode = 2 # (int, "Visible", "Hidden", "Caputered, Confined")
+@export var enabled = true:
+	set = set_enabled
+@export var mouse_mode = 2  # (int, "Visible", "Hidden", "Caputered, Confined")
 
 enum Freelook_Modes { MOUSE, INPUT_ACTION, MOUSE_AND_INPUT_ACTION }
 
 # Freelook settings
 @export var freelook = true
 @export var freelook_mode: Freelook_Modes = 2
-@export var sensitivity = 0.5 # (float, 0.0, 1.0)
-@export var smoothness = 0.5: set = set_smoothness
-@export var yaw_limit = 360 # (int, 0, 360)
-@export var pitch_limit = 360 # (int, 0, 360)
+@export var sensitivity = 0.5  # (float, 0.0, 1.0)
+@export var smoothness = 0.5:
+	set = set_smoothness
+@export var yaw_limit = 360  # (int, 0, 360)
+@export var pitch_limit = 360  # (int, 0, 360)
 
 # Pivot Settings
 @export var pivot_path: NodePath
 var privot: Node3D
-@export var distance = 5.0: set = set_distance
+@export var distance = 5.0:
+	set = set_distance
 @export var rotate_privot = false
-@export var collisions = true: set = set_collisions
+@export var collisions = true:
+	set = set_collisions
 
 # Movement settings
 @export var movement = true
-@export var acceleration = 1.0 # (float, 0.0, 1.0)
-@export var deceleration = 0.1 # (float, 0.0, 0.0, 1.0)
+@export var acceleration = 1.0  # (float, 0.0, 1.0)
+@export var deceleration = 0.1  # (float, 0.0, 0.0, 1.0)
 @export var max_speed = Vector3(1.0, 1.0, 1.0)
 @export var local = true
 
@@ -115,13 +119,11 @@ func _input(event):
 		)
 	if movement and _triggered:
 		_direction.x = (
-			Input.get_action_strength(right_action)
-			- Input.get_action_strength(left_action)
+			Input.get_action_strength(right_action) - Input.get_action_strength(left_action)
 		)
 		_direction.y = Input.get_action_strength(up_action) - Input.get_action_strength(down_action)
 		_direction.z = (
-			Input.get_action_strength(backward_action)
-			- Input.get_action_strength(forward_action)
+			Input.get_action_strength(backward_action) - Input.get_action_strength(forward_action)
 		)
 
 
@@ -151,7 +153,9 @@ func _update_views_physics(delta):
 		_update_rotation(delta)
 
 	var space_state = get_world_3d().get_direct_space_state()
-	var obstacle = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(privot.global_position, global_position))
+	var obstacle = space_state.intersect_ray(
+		PhysicsRayQueryParameters3D.create(privot.global_position, global_position)
+	)
 	if not obstacle.is_empty():
 		global_position = obstacle.position
 

@@ -12,7 +12,7 @@ func _ready():
 	else:
 		Globals.physics_rate = 200
 	Engine.physics_ticks_per_second = Globals.physics_rate
-	$VBoxContainer/physicsRate.text = 'Physics: ' + str(Globals.physics_rate) + ' Hz'
+	$VBoxContainer/physicsRate.text = "Physics: " + str(Globals.physics_rate) + " Hz"
 	$VBoxContainer/physicsRateSlider.value = Globals.physics_rate
 
 
@@ -32,4 +32,4 @@ func _input(event):
 func _on_HSlider_value_changed(value):
 	Globals.physics_rate = value
 	Engine.physics_ticks_per_second = value
-	$VBoxContainer/physicsRate.text = 'Physics: ' + str(Globals.physics_rate) + 'Hz'
+	$VBoxContainer/physicsRate.text = "Physics: " + str(Globals.physics_rate) + "Hz"

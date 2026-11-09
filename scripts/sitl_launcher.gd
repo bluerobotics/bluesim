@@ -5,8 +5,14 @@ signal status_changed(message: String)
 const WINDOWS_BASE = "https://firmware.ardupilot.org/Tools/MissionPlanner/sitl/"
 const LINUX_URL = "https://firmware.ardupilot.org/Sub/latest/SITL_x86_64_linux_gnu/ardusub"
 const ARGUMENTS = [
-	"-S", "--model", "JSON", "--speedup", "1", "-I0",
-	"--home", "33.810313,-118.39386700000001,0.0,270.0"
+	"-S",
+	"--model",
+	"JSON",
+	"--speedup",
+	"1",
+	"-I0",
+	"--home",
+	"33.810313,-118.39386700000001,0.0,270.0"
 ]
 
 var process_id := -1

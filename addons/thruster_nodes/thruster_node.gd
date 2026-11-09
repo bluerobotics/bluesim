@@ -18,8 +18,10 @@ var m = StandardMaterial3D.new()
 # keeps track of transform changes to update motors matrix
 var last_transform
 
+
 func get_class():
 	return "Thruster"
+
 
 func _ready():
 	last_transform = transform
@@ -33,6 +35,7 @@ func _ready():
 		material_override = m
 	else:
 		set_process(false)
+
 
 func _process(_delta):
 	if last_transform != transform:
@@ -50,10 +53,10 @@ func _process(_delta):
 
 	mesh.surface_add_vertex(Vector3(0, -thickness, thickness))
 	mesh.surface_add_vertex(Vector3(0, thickness, thickness))
-	
+
 	mesh.surface_add_vertex(Vector3(0, thickness, thickness))
 	mesh.surface_add_vertex(Vector3(0, thickness, -thickness))
-	
+
 	mesh.surface_add_vertex(Vector3(0, thickness, -thickness))
 	mesh.surface_add_vertex(Vector3(0, -thickness, -thickness))
 
@@ -63,37 +66,36 @@ func _process(_delta):
 
 	mesh.surface_add_vertex(Vector3(0, -thickness, thickness))
 	mesh.surface_add_vertex(Vector3(height, -thickness, thickness))
-	
+
 	mesh.surface_add_vertex(Vector3(0, thickness, thickness))
 	mesh.surface_add_vertex(Vector3(height, thickness, thickness))
-	
+
 	mesh.surface_add_vertex(Vector3(0, thickness, -thickness))
 	mesh.surface_add_vertex(Vector3(height, thickness, -thickness))
 
 	# Hat
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*-thickness, 1.3*-thickness))
-	mesh.surface_add_vertex(Vector3(1.5*height, 0, 0))
-	
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*thickness, 1.3*-thickness))
-	mesh.surface_add_vertex(Vector3(1.5*height, 0, 0))
-	
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*thickness, 1.3*thickness))
-	mesh.surface_add_vertex(Vector3(1.5*height, 0, 0))
-	
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*-thickness, 1.3*thickness))
-	mesh.surface_add_vertex(Vector3(1.5*height, 0, 0))
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * -thickness, 1.3 * -thickness))
+	mesh.surface_add_vertex(Vector3(1.5 * height, 0, 0))
 
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*-thickness, 1.3*-thickness))
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*thickness, 1.3*-thickness))
-	
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*thickness, 1.3*-thickness))
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*thickness, 1.3*thickness))
-	
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*thickness, 1.3*thickness))
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*-thickness, 1.3*thickness))
-	
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*-thickness, 1.3*thickness))
-	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3*-thickness, 1.3*-thickness))
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * thickness, 1.3 * -thickness))
+	mesh.surface_add_vertex(Vector3(1.5 * height, 0, 0))
+
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * thickness, 1.3 * thickness))
+	mesh.surface_add_vertex(Vector3(1.5 * height, 0, 0))
+
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * -thickness, 1.3 * thickness))
+	mesh.surface_add_vertex(Vector3(1.5 * height, 0, 0))
+
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * -thickness, 1.3 * -thickness))
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * thickness, 1.3 * -thickness))
+
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * thickness, 1.3 * -thickness))
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * thickness, 1.3 * thickness))
+
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * thickness, 1.3 * thickness))
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * -thickness, 1.3 * thickness))
+
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * -thickness, 1.3 * thickness))
+	mesh.surface_add_vertex(Vector3(0.9 * height, 1.3 * -thickness, 1.3 * -thickness))
 	# End drawing.
 	mesh.surface_end()
-

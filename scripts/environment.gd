@@ -9,10 +9,14 @@ var surface_env = load("res://scenery/defaultEnvironment.tres")
 
 var fancy_water
 var fancy_underwater
-const simple_water = preload("res://assets/maujoe.basic_water_material/materials/basic_water_material.tres")
+const simple_water = preload(
+	"res://assets/maujoe.basic_water_material/materials/basic_water_material.tres"
+)
 
 @onready var depth = 0
 @onready var last_depth = 0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_physics_process(true)
@@ -42,7 +46,10 @@ func calculate_buoyancy_and_ballast():
 					buoyancy = 0
 				vehicle.add_force_local(Vector3(0, buoyancy, 0), buoy.transform.origin)
 		else:
-			var buoyancy = vehicle.buoyancy * clampf(surface_altitude + HEIGHT / 3.0 - vehicle.global_position.y, 0.0, 1.0)
+			var buoyancy = (
+				vehicle.buoyancy
+				* clampf(surface_altitude + HEIGHT / 3.0 - vehicle.global_position.y, 0.0, 1.0)
+			)
 			vehicle.apply_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y * 0.07)
 		var ballasts = vehicle.find_child("ballasts")
 		if ballasts:
@@ -67,9 +74,7 @@ func update_fog():
 		underwater_env.fog_depth_end = fog_distance
 		var deep_factor = min(max(-depth / 50, 0), 1.0)
 		Globals.deep_factor = deep_factor
-		var new_color = Globals.surface_ambient.lerp(
-			Globals.deep_ambient, deep_factor
-		)
+		var new_color = Globals.surface_ambient.lerp(Globals.deep_ambient, deep_factor)
 		Globals.current_ambient = new_color.darkened(0.5)
 		underwater_env.background_color = new_color
 		underwater_env.sky.sky_material.sky_horizon_color = new_color
