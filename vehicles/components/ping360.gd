@@ -1,6 +1,6 @@
-extends MeshInstance
+extends MeshInstance3D
 
-signal updatePing360Display
+signal updatePing360Display(angle, points)
 var last_points = [[0, 0], [0, 0], [0, 0]]
 var max_distance = 400
 var n_offsets = 40
@@ -27,7 +27,6 @@ func _ready():
 		new_targets.append(-max_offset + i * increment)
 		new_targets.append(max_offset - i * increment)
 	target_offsets = new_targets
-	print(target_offsets)
 
 
 func _physics_process(_delta):
@@ -35,7 +34,7 @@ func _physics_process(_delta):
 		return
 	if last_angle == angle:
 		return
-	var space_state = get_world().direct_space_state
+	var space_state = get_world_3d().direct_space_state
 	# use global coordinates, not local to node
 	var target_list = []
 	#var target_offsets = [0.0]
@@ -43,21 +42,26 @@ func _physics_process(_delta):
 		target_list.append(
 			(
 				global_transform.origin
-				+ self.global_transform.basis.xform(
-					Vector3(0, max_distance * offset, max_distance).rotated(
-						Vector3(0, 1, 0), deg2rad(angle)
-					)
+				+ (
+					self.global_transform.basis
+					* (Vector3(0, max_distance * offset, max_distance).rotated(
+						Vector3(0, 1, 0), deg_to_rad(angle)
+					))
 				)
 			)
 		)
 	last_points = []
+	var query := PhysicsRayQueryParameters3D.new()
+	query.from = global_position
+	query.exclude = [get_parent().get_rid()]
 	for cur_target in target_list:
-		var result = space_state.intersect_ray(global_transform.origin, cur_target, [self])
+		query.to = cur_target
+		var result = space_state.intersect_ray(query)
 		#$target.global_transform.origin = cur_target
-		if 'position' in result:
-			var distance_vector = global_transform.origin - result['position']
-			var distance = distance_vector.length() * 1000 / max_distance
-			var intensity = abs(result['normal'].dot(distance_vector.normalized()))
+		if "position" in result:
+			var distance_vector = global_transform.origin - result["position"]
+			var distance = distance_vector.length() * 100 / max_distance
+			var intensity = abs(result["normal"].dot(distance_vector.normalized()))
 			last_points.append([distance, intensity])
 	last_angle = angle
 

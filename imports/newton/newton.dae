@@ -63,6 +63,11 @@
       </profile_COMMON>
     </effect>
   </library_effects>
+  <library_materials>
+    <material id="Metallic_black-material" name="Metallic_black"><instance_effect url="#Metallic_black-effect"/></material>
+    <material id="Metallic_blue-material" name="Metallic_blue"><instance_effect url="#Metallic_blue-effect"/></material>
+    <material id="Plastic_black-material" name="Plastic_black"><instance_effect url="#Plastic_black-effect"/></material>
+  </library_materials>
   <library_images/>
   <library_materials>
   </library_materials>

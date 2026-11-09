@@ -1,25 +1,17 @@
-name: gd-test
+name: GDScript style
 
 on: [push, pull_request]
 
-jobs:
-  python-test:
-    runs-on: ubuntu-latest
+permissions:
+  contents: read
 
+jobs:
+  gdformat:
+    runs-on: ubuntu-latest
     steps:
-    -
-      uses: actions/checkout@v2
-    -
-      name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    -
-      name: Update tools
-      run: |
-        python -m pip install --upgrade pip
-        pip install git+https://github.com/Scony/godot-gdscript-toolkit.git
-    -
-      name: Check style
-      run: |
-        gdformat $(find . -name '*.gd')
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: python -m pip install gdtoolkit==4.5.0
+      - run: git ls-files -z '*.gd' | xargs -0 gdformat --check

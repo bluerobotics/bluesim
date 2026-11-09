@@ -2,30 +2,30 @@
 
 [ext_resource path="res://rope/section.gd" type="Script" id=1]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape3D" id=1]
 margin = 0.001
 radius = 0.00733885
 height = 0.140908
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="StandardMaterial3D" id=2]
 albedo_color = Color( 0.956863, 0.74902, 0.0392157, 1 )
 
 [sub_resource type="CapsuleMesh" id=3]
 material = SubResource( 2 )
 radius = 0.006
-mid_height = 0.145
+height = 0.145
 radial_segments = 6
 
-[node name="section" type="RigidBody"]
+[node name="section" type="RigidBody3D"]
 mass = 0.1
 gravity_scale = 0.01
 linear_damp = 0.726
 angular_damp = 0.302
 script = ExtResource( 1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource( 3 )
-material/0 = null
+surface_material_override/0 = null

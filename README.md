@@ -1,60 +1,47 @@
 # BlueSim
-BlueROV2 Simulator.
 
-A hosted version (in a pool, with 'fish') is available for short-duration testing at https://blueos.cloud/bluesim/, as part of a simulated vehicle running [BlueOS](https://github.com/bluerobotics/BlueOS), and interfaced with the [Cockpit](https://github.com/bluerobotics/cockpit) control station software. Click "Cockpit" from the BlueOS left sidebar to open the vehicle control interface.
+BlueROV2 Heavy simulator for Godot 4.7.2. The [hosted BlueSim demo](https://blueos.cloud/bluesim/) runs with BlueOS and the Cockpit control station.
 
-# Download
+## Run from source
 
- - [Windows](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-windows.zip)
- - [Mac](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-mac.zip)
- - [Linux](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-linux.zip)
- - [Web](https://github.com/bluerobotics/bluesim/releases/download/latest/bluesim-web.zip) (Works better on firefox)
+Install [Godot 4.7.2 standard](https://godotengine.org/download/archive/4.7.2-stable/), open `project.godot`, wait for the asset import, and press F5. Select **Pool** for keyboard play. The project uses the Compatibility renderer on desktop and Web.
 
-# Usage
+To build the distribution archives locally, install the matching export templates in the Godot editor and run the following from the project root. Pass the path to the Godot executable as the first argument if it is outside your PATH.
 
-  1. Open [QGroundControl](http://qgroundcontrol.com/)
-  2. Set up a new communication link at TCP 127.0.0.1, port 5760.
-  3. Launch BlueSim
-  4. Chooset BlueRov2 Heavy
-  5. Connect the new link in QGC
-  6. Drive around using the gamepad as if controlling a real BlueRov2.
+```sh
+godot --headless --editor --import
+bash .github/export.sh godot /tmp/bluesim-exports
+```
 
+The [Godot exports workflow](https://github.com/bluerobotics/bluesim/actions) attaches `bluesim-windows.zip`, `bluesim-linux.zip`, `bluesim-mac.zip`, and `bluesim-web.zip` to successful builds. Extract the desktop archive before launching. On Windows and Linux, run from the extracted directory so ArduSub can use its bundled `eeprom.bin`. The macOS archive contains a universal app with ad hoc signing for testing. For Web, serve the extracted files over HTTP and open `index.html`.
 
-# Default keys:
+## Controls
 
-If there is not SITL instance attached, these keys can be used to control the ROV:
+| Action | Key |
+| --- | --- |
+| Rise / dive | Space / Shift |
+| Forward / reverse | Up / Down |
+| Yaw left / right | Left / Right |
+| Strafe left / right | A / D |
+| Lights down / up | 1 / 2 |
+| Open / close gripper | 3 / 4 |
+| Tilt camera down / up | 5 / 6 |
+| Switch camera | C |
+| Reset position | R |
+| Help / graphics settings | H / Esc |
 
-|      Action      |  Key  |
-|:----------------:|:-----:|
-| Downwards        | Shift |
-| Upwards          | Space |
-| Forward          |   Up  |
-| Backwards        |  Down |
-| Rotate right     | Right |
-| Rotate left      |  Left |
-| Strafe right     |   D   |
-| Strafe left      |   A   |
-| Lights down      |   1   |
-| Lights up        |   2   |
-| Close gripper    |   3   |
-| Open gripper     |   4   |
-| Tilt camera down |   5   |
-| Tilt camera up   |   6   |
+## ArduSub SITL
 
-# SITL integration:
+On Windows and x86-64 Linux, BlueSim downloads and starts ArduSub when the menu opens. On macOS, start SITL separately. From an ArduPilot checkout with its SITL dependencies installed, run:
 
-    Before opening Bluesim (it launches its own SITL instance), run:
+```sh
+Tools/autotest/sim_vehicle.py -L RATBeach -v ArduSub -f vectored_6dof --model JSON:127.0.0.1
+```
 
- `sim_vehicle.py -j6 -L RATBeach -v ArduSub -f vectored_6dof --model JSON --out=udpout:0.0.0.0:14550`
+Select **Pool** and connect [QGroundControl](https://qgroundcontrol.com/) to SITL over TCP at `127.0.0.1:5760`. For an external simulator running on a different host, set the JSON backend address to the BlueSim host and point QGroundControl at the SITL host. BlueSim listens for servo packets on UDP port 9002 by default and replies to the sender. For an external SITL instance using a different port, set the vehicle’s `sitl_json_port` in the scene and use the matching destination port in SITL. Enable **Reply to SITL on incoming frames** before selecting the pool to send state only in response to incoming servo packets. Keyboard movement is available before a peer connects and resumes when the peer times out. The Web build supports keyboard play.
 
-# External Levels
+## External levels
 
-External levels can be loaded by placing a .pck file in the "levels" folder at the same level as the simulator executable (the folder is created at first run if it does not exist).
+Export a Godot 4 resource pack containing `res://custom_level.tscn` with a `Node3D` root. Use a Godot 4.7.2 project when rebuilding packs made for Godot 3. Place the `.pck` in `user://levels`, or create a `levels` directory next to the Windows or Linux executable and place the pack there. On macOS that is `~/Library/Application Support/Godot/app_userdata/BlueSim/levels`. Restart BlueSim and select the pack by filename. Use packs from sources you trust, since packs can contain scripts.
 
-The pck file must have a `custom_level.tscn` scene, which will be loaded in runtime and added as a child to `baselevel.tscn`, which contains the ROV, water, sky, and other basic functionality.
-The root node at "custom_level.tscn" should preferably be a spatial node with all your custom 3D scene within it.
-
-## Sunken Ship Level
-
-![image](https://user-images.githubusercontent.com/4013804/104868028-09e92800-5921-11eb-9b51-67f947707725.png)
-A sample level with a sunken ship can be downloaded [here](https://drive.google.com/file/d/1WH4l-l8qXnWUa5BHHtIDgaU-UnMEJ2H_/view?usp=share_link).
+The [original Sunken Ship sample](https://drive.google.com/file/d/1WH4l-l8qXnWUa5BHHtIDgaU-UnMEJ2H_/view?usp=share_link) was built for Godot 3.2.3 and Godot 4 rejects its pack format. To port an old level, open its source project in Godot 4.7.2, complete the project conversion, verify `custom_level.tscn`, and export a new PCK.

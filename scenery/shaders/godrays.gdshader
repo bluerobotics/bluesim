@@ -1,7 +1,7 @@
 shader_type spatial;
 render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx;
-uniform vec4 albedo : hint_color;
-uniform sampler2D texture_albedo : hint_albedo;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color;
 uniform float specular;
 uniform float metallic;
 uniform float roughness : hint_range(0,1);
@@ -14,11 +14,10 @@ uniform vec3 uv2_offset;
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],WORLD_MATRIX[1],WORLD_MATRIX[2],WORLD_MATRIX[3]);
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],MODEL_MATRIX[1],MODEL_MATRIX[2],MODEL_MATRIX[3]);
 	//MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(1.0, 0.0, 0.0, 0.0),vec4(0.0, 1.0/length(WORLD_MATRIX[1].xyz), 0.0, 0.0), vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0 ,1.0));
 }
 
-const float TAU = 6.28318530718;
 const int MAX_ITER = 5;
 // perf increase for god ray, eliminates Y
 float causticX(float x, float power, float gtime)

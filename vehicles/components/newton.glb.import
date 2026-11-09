@@ -11,7 +11,7 @@ dest_files=[ "res://.import/newton.glb-732fee26d49f82237172c695294e19f7.scn" ]
 
 [params]
 
-nodes/root_type="Spatial"
+nodes/root_type="Node3D"
 nodes/root_name="Scene Root"
 nodes/root_scale=1.0
 nodes/custom_script=""

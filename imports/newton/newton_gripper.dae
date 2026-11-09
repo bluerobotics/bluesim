@@ -29,6 +29,9 @@
       </profile_COMMON>
     </effect>
   </library_effects>
+  <library_materials>
+    <material id="Plastic_black-material" name="Plastic_black"><instance_effect url="#Plastic_black-effect"/></material>
+  </library_materials>
   <library_images/>
   <library_materials>
   </library_materials>
