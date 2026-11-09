@@ -3,14 +3,21 @@ extends RigidBody3D
 
 const THRUST = 50
 
-var interface = PacketPeerUDP.new()  # UDP socket for fdm in (server)
-var peer = null
-var start_time = Time.get_ticks_msec()
+const SERVO_PORT = 9002
+const MAX_PACKETS_PER_TICK = 32
+const PEER_TIMEOUT_MS = 1000
+
+var interface = PacketPeerUDP.new()
+var peer_seen_at := -PEER_TIMEOUT_MS
+var peer_ip := ""
+var peer_port := 0
+var last_servo_frame := -1
+var servos := PackedInt32Array()
 
 var last_velocity = Vector3(0, 0, 0)
 var calculated_acceleration = Vector3(0, 0, 0)
 
-var buoyancy = 1.6 + self.mass * 9.8  # Newtons
+@onready var buoyancy = 1.6 + self.mass * 9.8  # Newtons
 var _initial_position = 0
 var phys_time = 0
 
@@ -21,43 +28,42 @@ var phys_time = 0
 @onready var wait_SITL = Globals.wait_SITL
 
 
-func connect_fmd_in():
-	if interface.bind(9002) != OK:
-		print("Failed to connect fdm_in")
+func bind_sitl():
+	if interface.bind(SERVO_PORT) != OK:
+		push_warning("ArduSub UDP port %d is unavailable. Keyboard controls remain active." % SERVO_PORT)
 
 
-func get_servos():
-	if not interface.get_available_packet_count():
-		if wait_SITL:
-			interface.wait()
-		else:
-			return
+func receive_servos() -> bool:
+	var received := false
+	for _packet_index in range(mini(interface.get_available_packet_count(), MAX_PACKETS_PER_TICK)):
+		var packet := interface.get_packet()
+		if packet.size() != 40 and packet.size() != 72:
+			continue
+		var magic := packet.decode_u16(0)
+		if (packet.size() == 40 and magic != 18458) or (packet.size() == 72 and magic != 29569):
+			continue
+		var sender_ip := interface.get_packet_ip()
+		var sender_port := interface.get_packet_port()
+		if interface.set_dest_address(sender_ip, sender_port) != OK:
+			continue
+		var frame := packet.decode_u32(4)
+		if frame != last_servo_frame or not has_sitl_peer() or sender_ip != peer_ip or sender_port != peer_port:
+			servos.resize(16)
+			for i in range(servos.size()):
+				servos[i] = packet.decode_u16(8 + i * 2)
+			last_servo_frame = frame
+		peer_ip = sender_ip
+		peer_port = sender_port
+		peer_seen_at = Time.get_ticks_msec()
+		received = true
+	return received
 
-	var buffer = StreamPeerBuffer.new()
-	buffer.data_array = interface.get_packet()
-	if buffer.data_array.size() < 38:
-		return
 
-	var magic = buffer.get_u16()
-	buffer.seek(2)
-	var _framerate = buffer.get_u16()
-	#print(_framerate)
-	buffer.seek(4)
-	var _framecount = buffer.get_u16()
-
-	if magic != 18458:
-		return
-	peer = interface.set_dest_address(interface.get_packet_ip(), interface.get_packet_port()) == OK
-	for i in range(0, 15):
-		buffer.seek(8 + i * 2)
-		actuate_servo(i, (float(buffer.get_u16()) - 1000) / 1000)
+func has_sitl_peer() -> bool:
+	return Time.get_ticks_msec() - peer_seen_at < PEER_TIMEOUT_MS
 
 
 func send_fdm():
-	var buffer = StreamPeerBuffer.new()
-
-	buffer.put_double((Time.get_ticks_msec() - start_time) / 1000.0)
-
 	var _basis = transform.basis
 
 # These are the same but mean different things, let's keep both for now
@@ -95,8 +101,7 @@ func send_fdm():
 		"velocity": velo
 	}
 	var JSON_string = "\n" + JSON.stringify(JSON_fmt) + "\n"
-	buffer.put_utf8_string(JSON_string)
-	interface.put_packet(buffer.data_array)
+	interface.put_packet(JSON_string.to_utf8_buffer())
 
 
 func get_motors_table_entry(thruster):
@@ -148,21 +153,26 @@ func _ready():
 	else:
 		return
 	if not Globals.isHTML5:
-		connect_fmd_in()
+		bind_sitl()
 
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
-	phys_time = phys_time + 1.0 / Globals.physics_rate
-	process_keys()
-	if Globals.isHTML5:
+	phys_time += delta
+	if Globals.isHTML5 or not interface.is_bound():
+		process_keys()
 		return
-	calculated_acceleration = (self.linear_velocity - last_velocity) / delta
-	calculated_acceleration.y += 10
-	last_velocity = self.linear_velocity
-	get_servos()
-	if peer:
+	calculated_acceleration = (linear_velocity - last_velocity) / delta
+	calculated_acceleration.y += float(ProjectSettings.get_setting("physics/3d/default_gravity"))
+	last_velocity = linear_velocity
+	var received := receive_servos()
+	if not has_sitl_peer():
+		process_keys()
+		return
+	for i in range(servos.size()):
+		actuate_servo(i, clampf((servos[i] - 1000) / 1000.0, 0.0, 1.0))
+	if received or not wait_SITL:
 		send_fdm()
 
 
@@ -259,9 +269,9 @@ func _unhandled_input(event):
 			else:
 				$Camera3D.make_current()
 
-	if event.is_action("lights_up"):
+	if event.is_action_pressed("lights_up"):
 		var percentage = min(max(0, $light1.light_energy + 0.1), 5)
-		if percentage > 0:
+		if percentage > 0 and light_glows[0].get_parent() == null:
 			for light in light_glows:
 				self.add_child(light)
 		$light1.light_energy = percentage
@@ -270,14 +280,14 @@ func _unhandled_input(event):
 		$light4.light_energy = percentage
 		$scatterlight.light_energy = percentage * 0.5
 
-	if event.is_action("lights_down"):
+	if event.is_action_pressed("lights_down"):
 		var percentage = min(max(0, $light1.light_energy - 0.1), 5)
 		$light1.light_energy = percentage
 		$light2.light_energy = percentage
 		$light3.light_energy = percentage
 		$light4.light_energy = percentage
 		$scatterlight.light_energy = percentage * 0.5
-		if percentage == 0:
+		if percentage == 0 and light_glows[0].get_parent() != null:
 			for light in light_glows:
 				self.remove_child(light)
 

@@ -42,10 +42,7 @@ func calculate_buoyancy_and_ballast():
 					buoyancy = 0
 				vehicle.add_force_local(Vector3(0, buoyancy, 0), buoy.transform.origin)
 		else:
-			var buoyancy = min(
-				vehicle.buoyancy,
-				abs(vehicle.buoyancy * (vehicle.position.y - HEIGHT / 3 - surface_altitude))
-			)
+			var buoyancy = vehicle.buoyancy * clampf(surface_altitude + HEIGHT / 3.0 - vehicle.global_position.y, 0.0, 1.0)
 			vehicle.apply_force(Vector3(0, buoyancy, 0), vehicle.transform.basis.y * 0.07)
 		var ballasts = vehicle.find_child("ballasts")
 		if ballasts:
@@ -106,18 +103,14 @@ func _physics_process(_delta):
 	calculate_buoyancy_and_ballast()
 
 
-func _notification(what):
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		if Globals.sitl_pid > 0:
-			OS.kill(Globals.sitl_pid)
-		get_tree().quit()
-
-
 func _on_godrayToggle_toggled(button_pressed):
+	$Godrays.visible = button_pressed
 	$Godrays.emitting = button_pressed
 
 
 func _on_dirtparticlesToggle_toggled(button_pressed):
+	$SuspendedParticleHolder.visible = button_pressed
+	$SuspendedParticleHolder/SuspendedParticles.visible = button_pressed
 	$SuspendedParticleHolder/SuspendedParticles.emitting = button_pressed
 
 

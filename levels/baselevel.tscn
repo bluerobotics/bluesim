@@ -397,28 +397,28 @@ offset_bottom = 217.0
 [node name="godrayToggle" type="CheckButton" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
 offset_right = 158.0
 offset_bottom = 40.0
-pressed = true
+button_pressed = false
 text = "GodRays"
 
 [node name="dirtparticlesToggle" type="CheckButton" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
 offset_top = 44.0
 offset_right = 158.0
 offset_bottom = 84.0
-pressed = true
+button_pressed = false
 text = "Particles"
 
 [node name="fancyWaterToggle" type="CheckButton" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
 offset_top = 88.0
 offset_right = 158.0
 offset_bottom = 128.0
-pressed = true
+button_pressed = true
 text = "Fancy Water"
 
 [node name="Ping360Toggle" type="CheckButton" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
 offset_top = 132.0
 offset_right = 158.0
 offset_bottom = 172.0
-pressed = true
+button_pressed = true
 text = "Ping360"
 
 [node name="physicsRate" type="Label" parent="ViewportCamera/SettingsPanel/VBoxContainer"]
@@ -603,5 +603,4 @@ __meta__ = {
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/dirtparticlesToggle" to="ViewportGlobal/SubViewport/Scene" method="_on_dirtparticlesToggle_toggled"]
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/fancyWaterToggle" to="ViewportGlobal/SubViewport/Scene" method="_on_fancyWaterToggle_toggled"]
 [connection signal="toggled" from="ViewportCamera/SettingsPanel/VBoxContainer/Ping360Toggle" to="Ping360Viewport" method="_on_Ping360Toggle_toggled"]
-[connection signal="ready" from="ViewportCamera/SettingsPanel/VBoxContainer/physicsRateSlider" to="ViewportCamera/SettingsPanel" method="_on_HSlider_ready"]
 [connection signal="value_changed" from="ViewportCamera/SettingsPanel/VBoxContainer/physicsRateSlider" to="ViewportCamera/SettingsPanel" method="_on_HSlider_value_changed"]

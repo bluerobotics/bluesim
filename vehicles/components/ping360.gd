@@ -27,7 +27,6 @@ func _ready():
 		new_targets.append(-max_offset + i * increment)
 		new_targets.append(max_offset - i * increment)
 	target_offsets = new_targets
-	print(target_offsets)
 
 
 func _physics_process(_delta):

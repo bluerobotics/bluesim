@@ -25,6 +25,7 @@ config/icon="res://icon.png"
 
 Globals="*res://Globals.tscn"
 SceneLoader="*res://scripts/scene_loader.gd"
+SitlLauncher="*res://scripts/sitl_launcher.gd"
 
 [debug]
 

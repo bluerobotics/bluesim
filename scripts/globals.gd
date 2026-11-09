@@ -18,7 +18,6 @@ const colors = {
 @export var wind_speed = 5
 var active_vehicle = null
 var active_level = ""
-var sitl_pid = 0
 
 
 func _ready():

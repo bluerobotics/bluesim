@@ -139,7 +139,7 @@ text = "Ship Level"
 offset_top = 55.0
 offset_right = 375.0
 offset_bottom = 79.0
-text = "Sync with SITL (only run frames when new input arrive)"
+text = "Reply to SITL on incoming frames"
 script = SubResource( 3 )
 
 [node name="statusLabel" type="Label" parent="HBoxContainer/Menu"]
