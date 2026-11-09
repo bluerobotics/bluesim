@@ -2,34 +2,21 @@ extends Control
 
 
 class LevelLoader:
-	var levels_path = (
-		"user://levels"
-		if OS.get_name() in ["macOS", "Web"] or OS.has_feature("editor")
-		else OS.get_executable_path().get_base_dir().path_join("levels")
-	)
-
-	func ensure_levels_folder_exists():
-		DirAccess.make_dir_recursive_absolute(levels_path)
-
-	func list_available_external_levels():
-		var dir = DirAccess.open(levels_path)
-		if dir == null:
-			return []
-		print("Looking for additional levels at %s" % ProjectSettings.globalize_path(levels_path))
-		dir.list_dir_begin()
-		var found = []
-
-		# list .pck files
-		while true:
-			var file = dir.get_next()
-			if file.is_empty():
-				break
-			elif not file.begins_with(".") and file.ends_with(".pck"):
-				found.append(file)
-		dir.list_dir_end()
-
-		found.sort()
-		return found
+	func find_packs() -> Dictionary:
+		var user_levels := "user://levels"
+		DirAccess.make_dir_recursive_absolute(user_levels)
+		var directories := [user_levels]
+		if OS.get_name() in ["Windows", "Linux"] and not OS.has_feature("editor"):
+			directories.append(OS.get_executable_path().get_base_dir().path_join("levels"))
+		var packs := {}
+		for directory in directories:
+			if not DirAccess.dir_exists_absolute(directory):
+				continue
+			for filename in DirAccess.get_files_at(directory):
+				if filename.begins_with(".") or filename.get_extension().to_lower() != "pck":
+					continue
+				packs[filename] = ProjectSettings.globalize_path(directory.path_join(filename))
+		return packs
 
 
 func add_status(text: String):
@@ -43,28 +30,24 @@ func set_version():
 	)
 
 
-func create_level_buttons(levels):
-	for filename in levels:
-		var button = Button.new()
+func create_level_buttons():
+	var packs := LevelLoader.new().find_packs()
+	var filenames := packs.keys()
+	filenames.sort()
+	for filename in filenames:
+		var button := Button.new()
 		button.text = filename.get_basename()
 		button.add_theme_font_override(
 			"font", $HBoxContainer/Menu/Buttons/poolLevel.get_theme_font("font")
 		)
-		button.connect("pressed", Callable(self, "_on_customLevel_pressed").bind(filename))
+		button.pressed.connect(_on_custom_level_pressed.bind(packs[filename]))
 		$HBoxContainer/Menu/Buttons.add_child(button)
 
 
-func find_external_levels():
-	var loader = LevelLoader.new()
-	loader.ensure_levels_folder_exists()
-	var levels = loader.list_available_external_levels()
-	self.create_level_buttons(levels)
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	set_version()
-	find_external_levels()
+	if not Globals.isHTML5:
+		create_level_buttons()
 	if Globals.isHTML5:
 		add_status("Keyboard control available")
 	elif OS.get_name() in ["Windows", "Linux"]:
@@ -84,9 +67,9 @@ func _on_CheckBox_toggled(button_pressed):
 	Globals.wait_SITL = button_pressed
 
 
-func _on_customLevel_pressed(filename):
-	var path = ProjectSettings.globalize_path(LevelLoader.new().levels_path.path_join(filename))
-	if not ProjectSettings.load_resource_pack(path, false):
+func _on_custom_level_pressed(pack_path: String):
+	var filename := pack_path.get_file()
+	if not ProjectSettings.load_resource_pack(pack_path, false):
 		add_status("Could not open " + filename)
 		return
 	if not ResourceLoader.exists("res://custom_level.tscn", "PackedScene"):

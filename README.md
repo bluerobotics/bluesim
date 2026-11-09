@@ -42,6 +42,6 @@ Select **Pool** and connect [QGroundControl](https://qgroundcontrol.com/) to SIT
 
 ## External levels
 
-Export a Godot 4 resource pack containing `res://custom_level.tscn` with a `Node3D` root. Use a Godot 4.7.2 project when rebuilding packs made for Godot 3. Place the `.pck` in the `levels` directory next to the Windows or Linux executable, or in `user://levels` for macOS and source runs. On macOS that is `~/Library/Application Support/Godot/app_userdata/BlueSim/levels`. Restart BlueSim and select the pack by filename. Use packs from sources you trust, since packs can contain scripts.
+Export a Godot 4 resource pack containing `res://custom_level.tscn` with a `Node3D` root. Use a Godot 4.7.2 project when rebuilding packs made for Godot 3. Place the `.pck` in `user://levels`, or create a `levels` directory next to the Windows or Linux executable and place the pack there. On macOS that is `~/Library/Application Support/Godot/app_userdata/BlueSim/levels`. Restart BlueSim and select the pack by filename. Use packs from sources you trust, since packs can contain scripts.
 
-The [original Sunken Ship sample](https://drive.google.com/file/d/1WH4l-l8qXnWUa5BHHtIDgaU-UnMEJ2H_/view?usp=share_link) was built for the original BlueSim. To port an old level, open its source project in Godot 4.7.2, complete the project conversion, verify `custom_level.tscn`, and export a new PCK.
+The [original Sunken Ship sample](https://drive.google.com/file/d/1WH4l-l8qXnWUa5BHHtIDgaU-UnMEJ2H_/view?usp=share_link) was built for Godot 3.2.3 and Godot 4 rejects its pack format. To port an old level, open its source project in Godot 4.7.2, complete the project conversion, verify `custom_level.tscn`, and export a new PCK.

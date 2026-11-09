@@ -42,5 +42,33 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: bluesim-exports
-          path: ${{ runner.temp }}/bluesim-exports/bluesim-*.zip
+          path: |
+            ${{ runner.temp }}/bluesim-exports/bluesim-linux.zip
+            ${{ runner.temp }}/bluesim-exports/bluesim-mac.zip
+            ${{ runner.temp }}/bluesim-exports/bluesim-web.zip
           if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: bluesim-windows
+          path: ${{ runner.temp }}/bluesim-exports/bluesim-windows.zip
+          if-no-files-found: error
+
+  windows-startup:
+    needs: export
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: bluesim-windows
+      - name: Launch Windows release
+        shell: pwsh
+        run: |
+          Expand-Archive bluesim-windows.zip -DestinationPath bluesim
+          Push-Location bluesim
+          $app = Start-Process -FilePath ".\bluesim.exe" -ArgumentList "--headless", "--quit-after", "90", "--log-file", "startup.log" -Wait -PassThru
+          Get-Content startup.log
+          if ($app.ExitCode -ne 0 -or (Select-String -Path startup.log -Pattern "SCRIPT ERROR|SHADER ERROR")) {
+            throw "BlueSim Windows startup failed."
+          }
+          Pop-Location

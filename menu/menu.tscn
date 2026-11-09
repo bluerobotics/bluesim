@@ -127,14 +127,6 @@ offset_bottom = 51.0
 theme_override_fonts/font = ExtResource( 1 )
 text = "Pool"
 
-[node name="customLevel" type="Button" parent="HBoxContainer/Menu/Buttons"]
-visible = false
-offset_top = 55.0
-offset_right = 375.0
-offset_bottom = 106.0
-theme_override_fonts/font = ExtResource( 1 )
-text = "Ship Level"
-
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer/Menu"]
 offset_top = 55.0
 offset_right = 375.0
@@ -152,5 +144,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="HBoxContainer/Menu/Buttons/poolLevel" to="." method="_on_poolLevel_pressed"]
-[connection signal="pressed" from="HBoxContainer/Menu/Buttons/customLevel" to="." method="_on_customLevel_pressed"]
 [connection signal="toggled" from="HBoxContainer/Menu/CheckBox" to="." method="_on_CheckBox_toggled"]
